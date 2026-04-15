@@ -32,29 +32,53 @@ girly-fitness-app/
 │   └── style.css    # wraps the original project styles via @import
 
 ├── js/
+
 │   ├── main.js      # application entrypoint
+
 │   ├── navigation.js# handles tab switching
+
 │   ├── storage.js   # localStorage helpers
+
 │   ├── profile.js   # profile editing/display logic
+
 │   ├── schedule.js  # four‑week schedule generator
+
 │   ├── workouts.js  # placeholder for future workout data
+
 │   └── render.js    # placeholder for future dynamic rendering
+
 │   ├── supabase.js  # initialise a Supabase client and helpers
+
 │   ├── timer.js     # rest timer implementation
+
 │   └── slider.js    # simple slider for multi‑GIF exercise cards
+
 ├── data/
+
 │   └── workouts.json# placeholder for future exercise definitions
+
 ├── images/
+
 │   └── hello-kitty-icon.png # favicon used by the app
+
 ├── .env.example     # template for environment variables (Cloudinary and Supabase)
+
 └── README.md        # this file
+
 Running Locally
+
 Simply open index.html in a modern web browser. No build step or server is required. Because the application uses localStorage to persist state it will remember your progress as long as you return to the page from the same origin. To start a new week click the “Reset my Diary” button on the home page.
+
 Optional Supabase setup
+
 All features in this app work offline using localStorage. If you want to sync data across devices or add user accounts you can connect Supabase:
+
 1.	Create a free project on supabase.com. In the project settings copy the Project URL and Anon Key.
+
 2.	Edit js/supabase.js to set SUPABASE_URL and SUPABASE_ANON_KEY to your own values. Do not commit your real keys to a public repository.
+
 3.	Create a table called workout_logs in your Supabase project (with columns like id, created_at, user_name, exercise, sets_completed, etc.). The helper functions expect this table name but you can customise them in supabase.js.
+
 4.	Call window.supabaseHelper.saveWorkoutLog() to insert rows and window.supabaseHelper.getWorkoutLogs() to retrieve them.
 Configuring Cloudinary
 All of the animated GIFs and images in this app are served from Cloudinary. If you’d like to use your own Cloudinary account to manage your media, create a .env file (or set environment variables on your hosting platform) with

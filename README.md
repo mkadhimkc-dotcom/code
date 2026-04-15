@@ -1,4 +1,5 @@
 🎀 Girly Shape & Core Definition
+
 This simple browser‑based workout diary has been rebuilt from a single HTML/CSS/JS file into a modular, maintainable project. Instead of generic “Day A/B/C” workouts the program now organises your training by body part: Glutes, Back, Core and an optional Cardio day. A separate Wrist‑care block rounds out the program. Users can tick off sets, save their progress in localStorage, record their name and start date, and view a four‑week schedule that highlights the current week and the deload at the end.
 Features
 
@@ -9,12 +10,19 @@ Features
 •	🌸 Profile & Schedule – enter your name and program start date to generate a personalised four‑week timeline. The current week is automatically highlighted and the final week is labelled as a deload.
 
 •	🔄 Reset Button – clear the entire diary when you begin a new training week.
+
 •	⏱ Rest Timer – every exercise card includes a rest timer button. The app parses the “Rest” value from the card’s description and appends a small button labelled Start Xs. Tap the button to count down your rest period; the remaining time updates every second and lets you know when to start your next set.
+
 •	🎞 Multi‑GIF Sliders – some exercises (such as Squats and Glute Bridges) contain multiple variations. A miniature slider lets you cycle through different demonstration GIFs without leaving the card.
+
 •	🎀 Custom App Icon – the project includes a Hello Kitty favicon (images/hello-kitty-icon.png) referenced in index.html. You can swap this for your own PNG by replacing the file and updating the <link rel="icon" …> tag.
+
 •	🔧 Optional Supabase Integration – a lightweight wrapper around the Supabase JavaScript client is included if you want to add cloud persistence (e.g. saving weights, notes or workout history). To use it, supply your project URL and anon key in js/supabase.js. For local/offline use this integration is not required; all functionality works with just localStorage.
+
 Project Structure
+
 The app lives in the girly-fitness-app folder and is organised as follows:
+
 girly-fitness-app/
 ├── index.html       # markup for the app pages
 ├── css/

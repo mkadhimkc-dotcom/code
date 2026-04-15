@@ -12,6 +12,19 @@
     <!-- App icon / favicon -->
     <link rel="icon" type="image/png" href="images/hello-kitty-icon.png" sizes="32x32">
 
+    <!-- iOS home screen icon and PWA meta tags -->
+    <!--
+      Apple devices look for an "apple-touch-icon" link to use as the
+      homescreen icon when a website is saved to the home screen.  The
+      default favicon is not used for web clips, so we explicitly
+      reference the same Hello Kitty icon here.  The meta tags below
+      tell Safari this app can run in standalone mode and define the
+      title that appears beneath the icon.
+    -->
+    <link rel="apple-touch-icon" href="images/hello-kitty-icon.png" sizes="180x180">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Girly Shape & Core">
+
     <!-- Supabase and helpers -->
     <!--
       Load the Supabase JS client via CDN.  This script defines a global

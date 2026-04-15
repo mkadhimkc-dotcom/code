@@ -24,9 +24,13 @@ Project Structure
 The app lives in the girly-fitness-app folder and is organised as follows:
 
 girly-fitness-app/
+
 ├── index.html       # markup for the app pages
+
 ├── css/
+
 │   └── style.css    # wraps the original project styles via @import
+
 ├── js/
 │   ├── main.js      # application entrypoint
 │   ├── navigation.js# handles tab switching

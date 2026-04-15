@@ -88,6 +88,24 @@ your app up to Supabase:
    insert new rows and `window.supabaseHelper.getWorkoutLogs()` to
    retrieve them.
 
+### Configuring Cloudinary
+
+All of the animated GIFs and images in this app are served from
+[Cloudinary](https://cloudinary.com/).  If you’d like to use your own
+Cloudinary account to manage your media, create a `.env` file (or set
+environment variables on your hosting platform) with
+
+```
+CLOUDINARY_URL=cloudinary://<api_key>:<api_secret>@<cloud_name>
+```
+
+where `<api_key>`, `<api_secret>` and `<cloud_name>` come from your
+Cloudinary dashboard.  When deploying to Vercel or a similar
+platform you can define the `CLOUDINARY_URL` environment variable in
+their dashboard.  Avoid committing real API credentials to public
+repositories.
+
+
 ## Extending the App
 
 At the moment exercises and cards are hardcoded into `index.html`.

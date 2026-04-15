@@ -7,7 +7,14 @@
  * simply replace this import with your consolidated sheets.
  */
 
-@import url("../../styles.css");
+/*
+ * Import the original Sanrio-inspired stylesheet. When deploying the
+ * girly-fitness-app directory as the root of your site (e.g. on Vercel),
+ * ensure that a copy of styles.css sits one level above this file. We
+ * bundle a copy at girly-fitness-app/styles.css, so the relative path
+ * below will resolve correctly (../styles.css).
+ */
+@import url("../styles.css");
 
 /* -----------------------------------------------------------------
    Custom overrides for Clulee redesign

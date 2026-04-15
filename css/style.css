@@ -157,3 +157,53 @@ p, .hero-subtitle {
   height: 100%;
   object-fit: cover;
 }
+
+/* -----------------------------------------------------------------
+   Slider styles for exercises with multiple GIFs
+   The slider-container wraps several images and prev/next buttons.
+   Only the active slide is visible. Buttons are positioned over the
+   image to allow cycling. These rules complement the existing
+   image-container sizing (height: 180px).
+   ----------------------------------------------------------------- */
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slider-container .slide {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.slider-container .slide.active {
+  display: block;
+}
+
+.slider-container .prev,
+.slider-container .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.slider-container .prev {
+  left: 4px;
+}
+
+.slider-container .next {
+  right: 4px;
+}

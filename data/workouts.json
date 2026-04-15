@@ -1,0 +1,3 @@
+{
+  "description": "Placeholder file for future workout definitions. In a future version this JSON could hold arrays of exercises for each training day (e.g. dayA, dayB, dayC, dayD, wrist). Each exercise would include properties like title, sets, reps, rest, cue, badges and image."
+}

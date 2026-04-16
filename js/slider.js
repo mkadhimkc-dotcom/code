@@ -6,11 +6,15 @@
 // time. The first slide is visible on load.
 
 (() => {
-  document.addEventListener('DOMContentLoaded', () => {
+  function setupSliders() {
     const sliders = document.querySelectorAll('.slider-container');
     sliders.forEach((container) => {
+      if (container.dataset.sliderReady === 'true') return;
+
       const slides = container.querySelectorAll('.slide');
       if (!slides || slides.length === 0) return;
+      container.dataset.sliderReady = 'true';
+
       let index = 0;
       // Show the first slide
       slides[index].classList.add('active');
@@ -32,5 +36,11 @@
         });
       }
     });
-  });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupSliders);
+
+  window.slider = {
+    setupSliders
+  };
 })();

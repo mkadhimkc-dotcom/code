@@ -1,3 +1,269 @@
 {
-  "description": "Placeholder file for future workout definitions. In a future version this JSON could hold arrays of exercises for each training day (e.g. dayA, dayB, dayC, dayD, wrist). Each exercise would include properties like title, sets, reps, rest, cue, badges and image."
+  "sections": [
+    {
+      "id": "glutes",
+      "exercises": [
+        {
+          "title": "Barbell Hip Thrust",
+          "meta": "4 Sets x 8-10 Reps | Rest: 90s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Explosive up, pause and squeeze the peach hard at the top! 🍑",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1776288486/Barbell-Hip-Thrust_yvvyzy.gif", "alt": "Barbell Hip Thrust GIF" }],
+          "sets": [
+            { "id": "A1-1", "label": "1" },
+            { "id": "A1-2", "label": "2" },
+            { "id": "A1-3", "label": "3" },
+            { "id": "A1-4", "label": "4" }
+          ]
+        },
+        {
+          "title": "Cable Kickback",
+          "meta": "3 Sets x 12 / Side | Rest: 60s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Lean forward and kick back the leg, keep core tight! 🎀",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1771918329/Cable-Glute-Kickbacks_ugz3yw.gif", "alt": "Cable Kickback" }],
+          "sets": [
+            { "id": "G2-1", "label": "1" },
+            { "id": "G2-2", "label": "2" },
+            { "id": "G2-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "Leg Press (Glute Bias)",
+          "meta": "3 Sets x 12 Reps | Rest: 75-90s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Feet high and wide on the platform. Push through heels! 👟",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/IMG_4508_rx6k9r.gif", "alt": "Leg Press GIF" }],
+          "sets": [
+            { "id": "A3-1", "label": "1" },
+            { "id": "A3-2", "label": "2" },
+            { "id": "A3-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "Romanian Deadlift",
+          "meta": "4 Sets x 8 Reps | Rest: 90s",
+          "badges": [{ "label": "Straps Recommended" }],
+          "cue": "Cue: Push your hips back like you're closing a door. Long spine! 🚪",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/Romanian-Deadlift_kc6v6l.gif", "alt": "Romanian Deadlift" }],
+          "sets": [
+            { "id": "G4-1", "label": "1" },
+            { "id": "G4-2", "label": "2" },
+            { "id": "G4-3", "label": "3" },
+            { "id": "G4-4", "label": "4" }
+          ]
+        },
+        {
+          "title": "Squats",
+          "meta": "3 Sets x 10 Reps | Rest: 60s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Keep chest up and drive through your heels. Sit back into the squat! 🏋️‍♀️",
+          "images": [
+            { "src": "https://res.cloudinary.com/db1domes8/image/upload/v1776285598/Dumbbell_squat_soyxxl.gif", "alt": "Dumbbell Squat" },
+            { "src": "https://res.cloudinary.com/db1domes8/image/upload/v1776285599/Barbell_Back_Squat2_b3xcqc.gif", "alt": "Barbell Back Squat" },
+            { "src": "https://res.cloudinary.com/db1domes8/image/upload/v1776285599/Goblet_squat_cts3ny.gif", "alt": "Goblet Squat" },
+            { "src": "https://res.cloudinary.com/db1domes8/image/upload/v1776285623/bodyweight_squat_ldleq5.gif", "alt": "Bodyweight Squat" }
+          ],
+          "sets": [
+            { "id": "G5-1", "label": "1" },
+            { "id": "G5-2", "label": "2" },
+            { "id": "G5-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "Glute Bridges",
+          "meta": "3 Sets x 10 Reps | Rest: 60s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Squeeze the peach at the top and keep your ribs down. Don't over-arch! 🍑",
+          "images": [
+            { "src": "https://res.cloudinary.com/db1domes8/image/upload/v1776285890/Glute_bridges-2_j0u5ux.gif", "alt": "Glute Bridges Variation 1" },
+            { "src": "https://res.cloudinary.com/db1domes8/image/upload/v1776285887/Glute_bridges-1_p84g1u.gif", "alt": "Glute Bridges Variation 2" }
+          ],
+          "sets": [
+            { "id": "G6-1", "label": "1" },
+            { "id": "G6-2", "label": "2" },
+            { "id": "G6-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "Bulgarian Split Squat",
+          "meta": "3 Sets x 8-10 / Side | Rest: 90s",
+          "badges": [{ "label": "Use Bench or Step" }],
+          "cue": "Cue: Sit back into the split squat. Let the back knee hover! 🙆‍♀️",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1776284772/Dumbbell-Bulgarian-Split-Squat_w6aerh.gif", "alt": "Bulgarian Split Squat" }],
+          "sets": [
+            { "id": "C1-1", "label": "1" },
+            { "id": "C1-2", "label": "2" },
+            { "id": "C1-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "💦 Optional Conditioning",
+          "meta": "Stair climber (10 min) OR Incline walk (12-15 min)",
+          "fullWidth": true,
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/IMG_4514_ftm2s5.gif", "alt": "Stairmaster Cardio GIF" }],
+          "sets": [{ "id": "A-Cardio", "label": "Done!" }]
+        }
+      ]
+    },
+    {
+      "id": "back",
+      "exercises": [
+        {
+          "title": "Back Extension",
+          "meta": "3 Sets x 12-15 Reps | Rest: 75s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Round your upper back slightly. Squeeze glutes at the top! 🍑",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1771918336/back-extention_nr8xge.gif", "alt": "Back Extension" }],
+          "sets": [
+            { "id": "B1-1", "label": "1" },
+            { "id": "B1-2", "label": "2" },
+            { "id": "B1-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "Neutral-Grip Lat Pulldown",
+          "meta": "4 Sets x 10 Reps | Rest: 75-90s",
+          "badges": [{ "label": "Wrist Friendly Grip", "type": "wrist" }],
+          "cue": "Cue: Keep wrists straight! Pull elbows to your back pockets. 🐾",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1771920893/pulldown_xkieyq.webp", "alt": "Lat Pulldown" }],
+          "sets": [
+            { "id": "B2-1", "label": "1" },
+            { "id": "B2-2", "label": "2" },
+            { "id": "B2-3", "label": "3" },
+            { "id": "B2-4", "label": "4" }
+          ]
+        },
+        {
+          "title": "Chest-Supported Row",
+          "meta": "3 Sets x 10 Reps | Rest: 75-90s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Pull the handles toward your hips while keeping your chest supported. Pinch your shoulder blades together!",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/IMG_4512_r2olpi.gif", "alt": "Chest-Supported Row" }],
+          "sets": [
+            { "id": "B3-1", "label": "1" },
+            { "id": "B3-2", "label": "2" },
+            { "id": "B3-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "💦 Optional Conditioning",
+          "meta": "Steady-state cardio (10-15 min) OR Light incline walk (12-15 min)",
+          "fullWidth": true,
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/IMG_4514_ftm2s5.gif", "alt": "Stairmaster Cardio GIF" }],
+          "sets": [{ "id": "B-Cardio", "label": "Done!" }]
+        }
+      ]
+    },
+    {
+      "id": "core",
+      "exercises": [
+        {
+          "title": "Back Extension (45°)",
+          "meta": "3 Sets x 12-15 Reps | Rest: 75s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Round your upper back slightly. Squeeze glutes at the top! 🍑",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1771918336/back-extention_nr8xge.gif", "alt": "Back Extension" }],
+          "sets": [
+            { "id": "C2-1", "label": "1" },
+            { "id": "C2-2", "label": "2" },
+            { "id": "C2-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "Cable Kickback",
+          "meta": "3 Sets x 12 / Side | Rest: 60s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Lean forward and kick back the leg, keep core tight! 🎀",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1771918329/Cable-Glute-Kickbacks_ugz3yw.gif", "alt": "Cable Kickback" }],
+          "sets": [
+            { "id": "C3-1", "label": "1" },
+            { "id": "C3-2", "label": "2" },
+            { "id": "C3-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "Hip Abductors Machine",
+          "meta": "3 Sets x 12-15 Reps | Rest: 45s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Press knees out wide and sit up tall. Use arms for momentum! 🙋‍♀️",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1771918330/Hip-Abduction-Machine_it9rus.gif", "alt": "Hip Abductors Machine" }],
+          "sets": [
+            { "id": "C4-1", "label": "1" },
+            { "id": "C4-2", "label": "2" },
+            { "id": "C4-3", "label": "3" }
+          ]
+        },
+        {
+          "title": "💦 Optional Conditioning",
+          "meta": "Any steady-state cardio (10-15 min) OR Light incline walk (12-15 min)",
+          "fullWidth": true,
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/IMG_4514_ftm2s5.gif", "alt": "Stairmaster Cardio GIF" }],
+          "sets": [{ "id": "C-Cardio", "label": "Done!" }]
+        }
+      ]
+    },
+    {
+      "id": "cardio",
+      "exercises": [
+        {
+          "title": "Gentle Mobility & Stretching",
+          "meta": "20-30 minutes of full body mobility & stretching",
+          "fullWidth": true,
+          "cue": "Guided mobility to ease sore muscles. Breathe deeply and relax! 🧘‍♀️",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/Stretching_ukwlxf.gif", "alt": "Stretching" }],
+          "sets": [{ "id": "D-Activity", "label": "Done!" }]
+        }
+      ]
+    },
+    {
+      "id": "wrist",
+      "exercises": [
+        {
+          "title": "Wrist Circles",
+          "meta": "2 Sets x 15 / Direction | Rest: 30s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Move wrists in slow controlled circles, both directions. 🌀",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/Wrist-Mobility_Care_1.gif", "alt": "Wrist Mobility 1" }],
+          "sets": [
+            { "id": "W1-1", "label": "1" },
+            { "id": "W1-2", "label": "2" }
+          ]
+        },
+        {
+          "title": "Prayer Stretch",
+          "meta": "2 Sets x 30s Hold | Rest: 30s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Place palms together and gently lower hands to feel the stretch. 🙏",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/Wrist-Mobility_Care_2.gif", "alt": "Wrist Mobility 2" }],
+          "sets": [
+            { "id": "W2-1", "label": "1" },
+            { "id": "W2-2", "label": "2" }
+          ]
+        },
+        {
+          "title": "Finger Flexor Stretch",
+          "meta": "2 Sets x 30s Hold | Rest: 30s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Gently pull fingers back with the opposite hand. Feel the forearm stretch! ✋",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/Wrist-Mobility_Care_3.gif", "alt": "Wrist Mobility 3" }],
+          "sets": [
+            { "id": "W3-1", "label": "1" },
+            { "id": "W3-2", "label": "2" }
+          ]
+        },
+        {
+          "title": "Wrist Extension Stretch",
+          "meta": "2 Sets x 30s Hold | Rest: 30s",
+          "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
+          "cue": "Cue: Place palms on a table, fingers facing back, gently lean back to stretch. 🧘",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/Wrist-Mobility_Care_4.gif", "alt": "Wrist Mobility 4" }],
+          "sets": [
+            { "id": "W4-1", "label": "1" },
+            { "id": "W4-2", "label": "2" }
+          ]
+        }
+      ]
+    }
+  ]
 }

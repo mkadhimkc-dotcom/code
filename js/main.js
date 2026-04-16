@@ -9,11 +9,18 @@
  * ─────────────────────────────────────────────────────────────────
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  if (window.renderWorkouts && typeof window.renderWorkouts.loadAndRenderWorkouts === 'function') {
+    await window.renderWorkouts.loadAndRenderWorkouts();
+  }
+
   window.navigation.setupNavigation();
   window.profile.setupProfile();
   if (window.timer && typeof window.timer.setupTimers === 'function') {
     window.timer.setupTimers();
+  }
+  if (window.slider && typeof window.slider.setupSliders === 'function') {
+    window.slider.setupSliders();
   }
   setupCheckboxTracking();
   setupResetButton();

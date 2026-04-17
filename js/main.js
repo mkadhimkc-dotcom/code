@@ -6,6 +6,7 @@
  *  BUG-05: "Done!" checkboxes now write to workout_logs
  *  BUG-08: Calendar shows loading state while fetching
  *  FEAT-02: Toast notifications for save/reset
+ *  FEAT-07: Streak counter
  * ─────────────────────────────────────────────────────────────────
  */
 

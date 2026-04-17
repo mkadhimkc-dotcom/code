@@ -269,7 +269,6 @@
     // Show loading state
     calendarGrid.innerHTML = '<p style="text-align:center;color:#999;">Loading your calendar… 🌸</p>';
 
-    const start = new Date(startDate);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -291,11 +290,27 @@
       streakEl.textContent = streak > 0 ? `🔥 ${streak}-day streak!` : '';
     }
 
-    // Render calendar
+    // Render calendar - show current month
     calendarGrid.innerHTML = '';
-    let current = new Date(start);
-
-    while (current <= today) {
+    
+    // Get first day of current month
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    
+    // Get day of week for first day (0 = Sunday)
+    const startDayOfWeek = firstDay.getDay();
+    
+    // Add empty cells for days before month starts
+    for (let i = 0; i < startDayOfWeek; i++) {
+      const emptyCell = document.createElement('div');
+      emptyCell.className = 'calendar-day';
+      emptyCell.style.opacity = '0';
+      calendarGrid.appendChild(emptyCell);
+    }
+    
+    // Add actual days of the month
+    let current = new Date(firstDay);
+    while (current <= lastDay) {
       const dateKey = current.toISOString().split('T')[0];
       const workouts = workoutMap[dateKey] || [];
 
@@ -304,7 +319,23 @@
       if (workouts.length > 0) {
         cell.classList.add('has-workouts');
       }
-      cell.dataset.date = dateKey;
+      
+      // Highlight today
+      if (current.toDateString() === today.toDateString()) {
+        cell.style.borderColor = 'var(--kitty-pink)';
+        cell.style.background = 'var(--kitty-pastel)';
+      }
+      
+      // Disable future dates
+      if (current > today) {
+        cell.style.opacity = '0.3';
+        cell.style.cursor = 'default';
+      } else {
+        cell.dataset.date = dateKey;
+        cell.addEventListener('click', () => {
+          openCalendarModal(dateKey);
+        });
+      }
 
       const dateNum = document.createElement('div');
       dateNum.className = 'day-number';
@@ -322,11 +353,6 @@
         });
         cell.appendChild(dots);
       }
-
-      // Click handler
-      cell.addEventListener('click', () => {
-        openCalendarModal(dateKey);
-      });
 
       calendarGrid.appendChild(cell);
       current.setDate(current.getDate() + 1);

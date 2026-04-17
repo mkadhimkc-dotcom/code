@@ -718,23 +718,6 @@ h2 {
     padding: 1rem 0;
 }
 
-/* 🎀 MOBILE 🎀 */
-@media (max-width: 600px) {
-    nav {
-        position: fixed;
-        bottom: 0;
-        top: auto;
-        left: 0;
-        right: 0;
-        border-radius: 20px 20px 0 0;
-        margin-bottom: 0;
-        padding: 15px 10px;
-    }
-
-    .nav-btn { font-size: 0.8rem; padding: 10px 2px; }
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.8rem; }
-}
 /* 🎀 TOAST NOTIFICATIONS 🎀 */
 .app-toast {
     position: fixed;
@@ -773,4 +756,22 @@ h2 {
     border-radius: 12px;
     padding: 8px 12px;
     margin-bottom: 0.75rem;
+}
+
+/* 🎀 MOBILE 🎀 */
+@media (max-width: 600px) {
+    nav {
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        right: 0;
+        border-radius: 20px 20px 0 0;
+        margin-bottom: 0;
+        padding: 15px 10px;
+    }
+
+    .nav-btn { font-size: 0.8rem; padding: 10px 2px; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.8rem; }
 }

@@ -1,0 +1,303 @@
+/*
+ * customWorkouts.js — Sprint 3B
+ * ─────────────────────────────────────────────────────────────────
+ * Handles custom workout assignment from library to workout pages
+ * ─────────────────────────────────────────────────────────────────
+ */
+
+(function () {
+  let allExercises = [];
+  let currentPage = null;
+  let customWorkouts = [];
+
+  // ── INITIALIZE ──────────────────────────────────────────────────
+  async function initialize() {
+    // Load workout data to get all exercises
+    const response = await fetch('data/workouts.json');
+    const data = await response.json();
+    
+    // Flatten all exercises from all sections
+    data.sections.forEach(section => {
+      section.exercises.forEach(exercise => {
+        allExercises.push({
+          ...exercise,
+          section: section.id
+        });
+      });
+    });
+
+    // Add "Customize" buttons to workout pages
+    addCustomizeButtons();
+    
+    // Create modal
+    createModal();
+    
+    // Load and render custom workouts if user is logged in
+    const profileId = localStorage.getItem('profile_id');
+    if (profileId) {
+      await loadCustomWorkouts(profileId);
+    }
+  }
+
+  // ── ADD CUSTOMIZE BUTTONS ───────────────────────────────────────
+  function addCustomizeButtons() {
+    const pages = ['glutes', 'back', 'core', 'cardio'];
+    
+    pages.forEach(pageId => {
+      const grid = document.querySelector(`[data-workout-grid="${pageId}"]`);
+      if (!grid) return;
+      
+      // Create button
+      const btn = document.createElement('button');
+      btn.className = 'btn-customize';
+      btn.innerHTML = '➕ Add Exercise from Library';
+      btn.onclick = () => openLibraryPicker(pageId);
+      
+      // Insert before grid
+      grid.parentElement.insertBefore(btn, grid);
+    });
+  }
+
+  // ── CREATE MODAL ────────────────────────────────────────────────
+  function createModal() {
+    const modal = document.createElement('div');
+    modal.id = 'library-modal';
+    modal.className = 'library-modal';
+    modal.innerHTML = `
+      <div class="library-modal-content">
+        <div class="library-modal-header">
+          <h3>📚 Choose an Exercise</h3>
+          <button class="library-modal-close" onclick="window.customWorkouts.closeModal()">✕</button>
+        </div>
+        <div class="library-modal-body" id="library-modal-body"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  // ── OPEN LIBRARY PICKER ─────────────────────────────────────────
+  function openLibraryPicker(pageId) {
+    currentPage = pageId;
+    const modal = document.getElementById('library-modal');
+    const body = document.getElementById('library-modal-body');
+    
+    body.innerHTML = '';
+    
+    // Render all exercises as cards
+    allExercises.forEach(exercise => {
+      const card = document.createElement('div');
+      card.className = 'library-card';
+      
+      const img = exercise.images && exercise.images[0] 
+        ? `<img src="${exercise.images[0].src}" alt="${exercise.title}">`
+        : '';
+      
+      card.innerHTML = `
+        ${img}
+        <div class="library-card-info">
+          <div class="library-card-title">${exercise.title}</div>
+          <div class="library-card-meta">${exercise.meta || ''}</div>
+        </div>
+        <button class="library-card-add" data-exercise-id="${exercise.exercise_id}">Add</button>
+      `;
+      
+      // Add click handler
+      card.querySelector('.library-card-add').addEventListener('click', () => {
+        addExerciseToPage(exercise.exercise_id);
+      });
+      
+      body.appendChild(card);
+    });
+    
+    modal.classList.add('visible');
+  }
+
+  // ── CLOSE MODAL ─────────────────────────────────────────────────
+  function closeModal() {
+    const modal = document.getElementById('library-modal');
+    modal.classList.remove('visible');
+  }
+
+  // ── ADD EXERCISE TO PAGE ────────────────────────────────────────
+  async function addExerciseToPage(exerciseId) {
+    const profileId = localStorage.getItem('profile_id');
+    if (!profileId) {
+      alert('Please save your profile first! 🎀');
+      return;
+    }
+    
+    // Get next sort order
+    const existingOnPage = customWorkouts.filter(w => w.page === currentPage);
+    const sortOrder = existingOnPage.length;
+    
+    const assignment = {
+      profile_id: profileId,
+      page: currentPage,
+      exercise_id: exerciseId,
+      sort_order: sortOrder
+    };
+    
+    const saved = await window.supabaseHelper.addCustomWorkout(assignment);
+    
+    if (saved) {
+      customWorkouts.push(saved);
+      renderCustomWorkouts();
+      closeModal();
+      window.appMain.showToast('Exercise added! 💖');
+    } else {
+      alert('Could not add exercise. Please try again! 🌸');
+    }
+  }
+
+  // ── LOAD CUSTOM WORKOUTS ────────────────────────────────────────
+  async function loadCustomWorkouts(profileId) {
+    customWorkouts = await window.supabaseHelper.getCustomWorkouts(profileId);
+    renderCustomWorkouts();
+  }
+
+  // ── RENDER CUSTOM WORKOUTS ──────────────────────────────────────
+  function renderCustomWorkouts() {
+    const pages = ['glutes', 'back', 'core', 'cardio'];
+    
+    pages.forEach(pageId => {
+      // Remove existing custom section
+      const existingSection = document.getElementById(`custom-${pageId}`);
+      if (existingSection) existingSection.remove();
+      
+      // Get workouts for this page
+      const pageWorkouts = customWorkouts.filter(w => w.page === pageId);
+      if (pageWorkouts.length === 0) return;
+      
+      // Create custom section
+      const grid = document.querySelector(`[data-workout-grid="${pageId}"]`);
+      if (!grid) return;
+      
+      const section = document.createElement('div');
+      section.id = `custom-${pageId}`;
+      section.className = 'custom-workouts-section';
+      section.innerHTML = '<h3 class="custom-section-title">✨ Your Custom Exercises</h3>';
+      
+      const customGrid = document.createElement('div');
+      customGrid.className = 'exercise-grid';
+      
+      pageWorkouts.forEach(workout => {
+        const exercise = allExercises.find(e => e.exercise_id === workout.exercise_id);
+        if (!exercise) return;
+        
+        const card = createCustomCard(exercise, workout.id);
+        customGrid.appendChild(card);
+      });
+      
+      section.appendChild(customGrid);
+      grid.parentElement.insertBefore(section, grid.nextSibling);
+    });
+  }
+
+  // ── CREATE CUSTOM CARD ──────────────────────────────────────────
+  function createCustomCard(exercise, assignmentId) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    
+    // Image
+    if (exercise.images && exercise.images.length > 0) {
+      const imgContainer = document.createElement('div');
+      imgContainer.className = 'image-container';
+      const img = document.createElement('img');
+      img.src = exercise.images[0].src;
+      img.alt = exercise.title;
+      imgContainer.appendChild(img);
+      card.appendChild(imgContainer);
+    }
+    
+    // Title
+    const title = document.createElement('div');
+    title.className = 'card-title';
+    title.textContent = exercise.title;
+    card.appendChild(title);
+    
+    // Meta
+    if (exercise.meta) {
+      const meta = document.createElement('div');
+      meta.className = 'card-meta';
+      meta.textContent = exercise.meta;
+      card.appendChild(meta);
+    }
+    
+    // Badges
+    if (exercise.badges) {
+      const badgesDiv = document.createElement('div');
+      badgesDiv.className = 'badges';
+      exercise.badges.forEach(badge => {
+        const span = document.createElement('span');
+        span.className = badge.type ? `badge ${badge.type}` : 'badge';
+        span.textContent = badge.label;
+        badgesDiv.appendChild(span);
+      });
+      card.appendChild(badgesDiv);
+    }
+    
+    // Cue
+    if (exercise.cue) {
+      const cue = document.createElement('div');
+      cue.className = 'cue';
+      cue.textContent = exercise.cue;
+      card.appendChild(cue);
+    }
+    
+    // Sets tracker
+    if (exercise.sets) {
+      const tracker = document.createElement('div');
+      tracker.className = 'sets-tracker';
+      exercise.sets.forEach(set => {
+        const label = document.createElement('label');
+        label.className = 'set-checkbox';
+        
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.dataset.id = `custom-${assignmentId}-${set.id}`;
+        
+        const indicator = document.createElement('span');
+        indicator.className = 'heart-indicator';
+        
+        const number = document.createElement('span');
+        number.className = 'set-number';
+        number.textContent = set.label;
+        
+        label.append(input, indicator, number);
+        tracker.appendChild(label);
+      });
+      card.appendChild(tracker);
+    }
+    
+    // Remove button
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'btn-remove-custom';
+    removeBtn.textContent = '🗑️ Remove';
+    removeBtn.onclick = () => removeExercise(assignmentId);
+    card.appendChild(removeBtn);
+    
+    return card;
+  }
+
+  // ── REMOVE EXERCISE ─────────────────────────────────────────────
+  async function removeExercise(assignmentId) {
+    if (!confirm('Remove this exercise from your workout? 🎀')) return;
+    
+    await window.supabaseHelper.removeCustomWorkout(assignmentId);
+    customWorkouts = customWorkouts.filter(w => w.id !== assignmentId);
+    renderCustomWorkouts();
+    window.appMain.showToast('Exercise removed! 💖');
+  }
+
+  // ── EXPOSE ──────────────────────────────────────────────────────
+  window.customWorkouts = {
+    initialize,
+    closeModal,
+    loadCustomWorkouts
+  };
+})();

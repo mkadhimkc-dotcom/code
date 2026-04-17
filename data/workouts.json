@@ -4,6 +4,7 @@
       "id": "glutes",
       "exercises": [
         {
+          "exercise_id": "G1",
           "title": "Barbell Hip Thrust",
           "meta": "4 Sets x 8-10 Reps | Rest: 90s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -17,6 +18,7 @@
           ]
         },
         {
+          "exercise_id": "G2",
           "title": "Cable Kickback",
           "meta": "3 Sets x 12 / Side | Rest: 60s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -29,6 +31,7 @@
           ]
         },
         {
+          "exercise_id": "G3",
           "title": "Leg Press (Glute Bias)",
           "meta": "3 Sets x 12 Reps | Rest: 75-90s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -41,6 +44,7 @@
           ]
         },
         {
+          "exercise_id": "G4",
           "title": "Romanian Deadlift",
           "meta": "4 Sets x 8 Reps | Rest: 90s",
           "badges": [{ "label": "Straps Recommended" }],
@@ -54,6 +58,7 @@
           ]
         },
         {
+          "exercise_id": "G5",
           "title": "Squats",
           "meta": "3 Sets x 10 Reps | Rest: 60s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -71,6 +76,7 @@
           ]
         },
         {
+          "exercise_id": "G6",
           "title": "Glute Bridges",
           "meta": "3 Sets x 10 Reps | Rest: 60s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -86,6 +92,7 @@
           ]
         },
         {
+          "exercise_id": "G7",
           "title": "Bulgarian Split Squat",
           "meta": "3 Sets x 8-10 / Side | Rest: 90s",
           "badges": [{ "label": "Use Bench or Step" }],
@@ -98,6 +105,7 @@
           ]
         },
         {
+          "exercise_id": "G8",
           "title": "💦 Optional Conditioning",
           "meta": "Stair climber (10 min) OR Incline walk (12-15 min)",
           "fullWidth": true,
@@ -110,6 +118,7 @@
       "id": "back",
       "exercises": [
         {
+          "exercise_id": "B1",
           "title": "Back Extension",
           "meta": "3 Sets x 12-15 Reps | Rest: 75s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -122,11 +131,12 @@
           ]
         },
         {
+          "exercise_id": "B2",
           "title": "Neutral-Grip Lat Pulldown",
           "meta": "4 Sets x 10 Reps | Rest: 75-90s",
           "badges": [{ "label": "Wrist Friendly Grip", "type": "wrist" }],
           "cue": "Cue: Keep wrists straight! Pull elbows to your back pockets. 🐾",
-          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1771920893/pulldown_xkieyq.webp", "alt": "Lat Pulldown" }],
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/Neutral-Grip-Lat-Pulldown.gif", "alt": "Lat Pulldown" }],
           "sets": [
             { "id": "B2-1", "label": "1" },
             { "id": "B2-2", "label": "2" },
@@ -135,6 +145,7 @@
           ]
         },
         {
+          "exercise_id": "B3",
           "title": "Chest-Supported Row",
           "meta": "3 Sets x 10 Reps | Rest: 75-90s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -147,6 +158,7 @@
           ]
         },
         {
+          "exercise_id": "B4",
           "title": "💦 Optional Conditioning",
           "meta": "Steady-state cardio (10-15 min) OR Light incline walk (12-15 min)",
           "fullWidth": true,
@@ -159,6 +171,7 @@
       "id": "core",
       "exercises": [
         {
+          "exercise_id": "C1",
           "title": "Back Extension (45°)",
           "meta": "3 Sets x 12-15 Reps | Rest: 75s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -171,11 +184,25 @@
           ]
         },
         {
+          "exercise_id": "C2",
           "title": "Cable Kickback",
           "meta": "3 Sets x 12 / Side | Rest: 60s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
           "cue": "Cue: Lean forward and kick back the leg, keep core tight! 🎀",
           "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/v1771918329/Cable-Glute-Kickbacks_ugz3yw.gif", "alt": "Cable Kickback" }],
+          "sets": [
+            { "id": "CC3-1", "label": "1" },
+            { "id": "CC3-2", "label": "2" },
+            { "id": "CC3-3", "label": "3" }
+          ]
+        },
+        {
+          "exercise_id": "C3",
+          "title": "Cable Crunch",
+          "meta": "3 Sets x 12-15 Reps | Rest: 60s",
+          "badges": [{ "label": "Hold rope neutrally" }],
+          "cue": "Cue: Pin ribs down and curl your spine. Squeeze abs! 🎀",
+          "images": [{ "src": "https://res.cloudinary.com/db1domes8/image/upload/f_auto,q_auto/Cable-Crunch_cpwqp6.gif", "alt": "Cable Crunch" }],
           "sets": [
             { "id": "C3-1", "label": "1" },
             { "id": "C3-2", "label": "2" },
@@ -183,6 +210,7 @@
           ]
         },
         {
+          "exercise_id": "C4",
           "title": "Hip Abductors Machine",
           "meta": "3 Sets x 12-15 Reps | Rest: 45s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -195,6 +223,7 @@
           ]
         },
         {
+          "exercise_id": "C5",
           "title": "💦 Optional Conditioning",
           "meta": "Any steady-state cardio (10-15 min) OR Light incline walk (12-15 min)",
           "fullWidth": true,
@@ -207,6 +236,7 @@
       "id": "cardio",
       "exercises": [
         {
+          "exercise_id": "D1",
           "title": "Gentle Mobility & Stretching",
           "meta": "20-30 minutes of full body mobility & stretching",
           "fullWidth": true,
@@ -217,9 +247,10 @@
       ]
     },
     {
-      "id": "wrist",
+      "id": "library",
       "exercises": [
         {
+          "exercise_id": "W1",
           "title": "Wrist Circles",
           "meta": "2 Sets x 15 / Direction | Rest: 30s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -231,6 +262,7 @@
           ]
         },
         {
+          "exercise_id": "W2",
           "title": "Prayer Stretch",
           "meta": "2 Sets x 30s Hold | Rest: 30s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -242,6 +274,7 @@
           ]
         },
         {
+          "exercise_id": "W3",
           "title": "Finger Flexor Stretch",
           "meta": "2 Sets x 30s Hold | Rest: 30s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],
@@ -253,6 +286,7 @@
           ]
         },
         {
+          "exercise_id": "W4",
           "title": "Wrist Extension Stretch",
           "meta": "2 Sets x 30s Hold | Rest: 30s",
           "badges": [{ "label": "Wrist Friendly", "type": "wrist" }],

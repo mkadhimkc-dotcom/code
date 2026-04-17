@@ -261,13 +261,13 @@
     const startDate = localStorage.getItem('profile_startDate');
 
     if (!profileId || !startDate) {
-      calendarGrid.innerHTML = '<p style="text-align:center;color:#999;">Save your profile to see your calendar! 🌸</p>';
+      calendarGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column: 1 / -1;">Save your profile to see your calendar! 🌸</p>';
       if (streakEl) streakEl.textContent = '';
       return;
     }
 
     // Show loading state
-    calendarGrid.innerHTML = '<p style="text-align:center;color:#999;">Loading your calendar… 🌸</p>';
+    calendarGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column: 1 / -1;">Loading your calendar… 🌸</p>';
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -293,7 +293,16 @@
     // Render calendar - show current month
     calendarGrid.innerHTML = '';
     
-    // Get first day of current month
+    // Add weekday headers
+    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    weekdays.forEach(day => {
+      const header = document.createElement('div');
+      header.style.cssText = 'text-align: center; font-size: 0.75rem; font-weight: 900; color: var(--kitty-pink); padding: 4px;';
+      header.textContent = day;
+      calendarGrid.appendChild(header);
+    });
+    
+    // Get first and last day of current month
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
     
@@ -304,7 +313,7 @@
     for (let i = 0; i < startDayOfWeek; i++) {
       const emptyCell = document.createElement('div');
       emptyCell.className = 'calendar-day';
-      emptyCell.style.opacity = '0';
+      emptyCell.style.visibility = 'hidden';
       calendarGrid.appendChild(emptyCell);
     }
     
@@ -324,17 +333,20 @@
       if (current.toDateString() === today.toDateString()) {
         cell.style.borderColor = 'var(--kitty-pink)';
         cell.style.background = 'var(--kitty-pastel)';
+        cell.style.fontWeight = '900';
       }
       
-      // Disable future dates
-      if (current > today) {
-        cell.style.opacity = '0.3';
-        cell.style.cursor = 'default';
-      } else {
+      // Make clickable (all dates, past and present)
+      if (current <= today) {
         cell.dataset.date = dateKey;
+        cell.style.cursor = 'pointer';
         cell.addEventListener('click', () => {
           openCalendarModal(dateKey);
         });
+      } else {
+        // Future dates - make them look disabled
+        cell.style.opacity = '0.3';
+        cell.style.cursor = 'default';
       }
 
       const dateNum = document.createElement('div');

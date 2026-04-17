@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase.js"></script>
 </head>
 <body>
 <div class="container">
@@ -17,7 +16,7 @@
         <a href="#home" class="hero-cta">Start Now</a>
     </section>
 
-    <nav>
+    <nav class="workout-nav">
         <button class="nav-btn active" data-page="home">🏠 Home</button>
         <button class="nav-btn" data-page="glutes">🍑 Glutes</button>
         <button class="nav-btn" data-page="back">🎀 Back</button>
@@ -26,7 +25,7 @@
         <button class="nav-btn" data-page="library">📚 Library</button>
     </nav>
 
-    <div id="home" class="page active">
+    <div id="home" class="page active workout-page">
         <header>
             <h1>🎀 Cutie Shape & Core 🎀</h1>
             <p class="subtitle">Your 3-4 day premium protocol for glutes, back, and core! (Wrist friendly!) 💖</p>
@@ -50,7 +49,7 @@
             </ul>
         </section>
 
-        <button class="btn-reset" id="resetBtn">🔄 Reset My Diary for a New Week!</button>
+        <button class="btn-reset" id="reset-diary">🔄 Reset My Diary for a New Week!</button>
 
         <div class="profile-card" id="profileSection">
             <h3>🌸 My Profile 🌸</h3>
@@ -74,31 +73,32 @@
 
         <div class="calendar-section">
             <h3>📅 My Workout Calendar</h3>
-            <div id="calendar"></div>
+            <div id="streak-counter" class="calendar-streak"></div>
+            <div id="calendar-grid" class="calendar-grid"></div>
         </div>
     </div>
 
-    <div id="glutes" class="page">
+    <div id="glutes" class="page workout-page">
         <h2>🍑 Glutes</h2>
         <div class="exercise-grid" data-workout-grid="glutes"></div>
     </div>
 
-    <div id="back" class="page">
+    <div id="back" class="page workout-page">
         <h2>🎀 Back</h2>
         <div class="exercise-grid" data-workout-grid="back"></div>
     </div>
 
-    <div id="core" class="page">
+    <div id="core" class="page workout-page">
         <h2>💪 Core</h2>
         <div class="exercise-grid" data-workout-grid="core"></div>
     </div>
 
-    <div id="cardio" class="page">
+    <div id="cardio" class="page workout-page">
         <h2>💦 Cardio &amp; Active Recovery</h2>
         <div class="exercise-grid" data-workout-grid="cardio"></div>
     </div>
 
-    <div id="library" class="page">
+    <div id="library" class="page workout-page">
         <h2>📚 Exercise Library</h2>
         <p style="text-align:center; color: var(--kitty-pink); font-weight:700; margin-bottom:1.5rem;">
             All exercises available for your custom workouts 💖
@@ -108,7 +108,6 @@
 </div>
 
 <script src="js/supabase.js"></script>
-<script src="js/schedule.js"></script>
 <script src="js/profile.js"></script>
 <script src="js/customWorkouts.js"></script>
 <script src="js/main.js"></script>

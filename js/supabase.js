@@ -10,8 +10,8 @@
  */
 
 (function () {
-  const SUPABASE_URL = 'https://xragzrjatiudhbrubejf.supabase.co';  // ← replace this
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM';         // ← replace this
+  const SUPABASE_URL = 'https://xragzrjatiudhbrubejf.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM';
 
   if (typeof supabase === 'undefined') {
     console.error('Supabase CDN not loaded.');
@@ -22,8 +22,6 @@
   const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // ── PROFILES ────────────────────────────────────────────────────
-  // Saves or updates a user profile by username.
-  // Called when user taps "Save My Profile".
   async function saveProfile(profile) {
     const { data, error } = await client
       .from('profiles')
@@ -37,8 +35,6 @@
     return data;
   }
 
-  // Fetches a profile from Supabase by username.
-  // Called on app load to auto-login returning users.
   async function loadProfile(username) {
     const { data, error } = await client
       .from('profiles')
@@ -50,15 +46,11 @@
   }
 
   // ── WORKOUT LOGS ────────────────────────────────────────────────
-  // Saves a completed workout to the workout_logs table.
-  // log = { profile_id, workout_type }
   async function saveWorkoutLog(log) {
     const { error } = await client.from('workout_logs').insert([log]);
     if (error) console.error('saveWorkoutLog error:', error.message);
   }
 
-  // Fetches all workout logs for a profile, newest first.
-  // Used to populate the calendar view.
   async function getWorkoutLogs(profileId) {
     const { data, error } = await client
       .from('workout_logs')
@@ -70,8 +62,6 @@
   }
 
   // ── CHECKBOX STATES ─────────────────────────────────────────────
-  // Saves a single checkbox tick to Supabase.
-  // Called every time a user checks/unchecks a set.
   async function saveCheckboxState(profileId, checkboxId, checked) {
     const { error } = await client
       .from('checkbox_states')
@@ -82,9 +72,6 @@
     if (error) console.error('saveCheckboxState error:', error.message);
   }
 
-  // Fetches all checkbox states for a profile.
-  // Returns an object like { 'A1-1': true, 'B2-3': false, ... }
-  // Used to restore ticked sets when user returns to the app.
   async function getCheckboxStates(profileId) {
     const { data, error } = await client
       .from('checkbox_states')
@@ -96,8 +83,6 @@
     return map;
   }
 
-  // Deletes all checkbox states for a profile.
-  // Called when user hits "Reset My Diary for a New Week".
   async function clearCheckboxStates(profileId) {
     const { error } = await client
       .from('checkbox_states')
@@ -105,9 +90,8 @@
       .eq('profile_id', profileId);
     if (error) console.error('clearCheckboxStates error:', error.message);
   }
-// ── USER WORKOUTS (CUSTOM ASSIGNMENTS) ─────────────────────────
-  // Adds a custom exercise to a user's workout page.
-  // assignment = { profile_id, page, exercise_id, sort_order }
+
+  // ── USER WORKOUTS (CUSTOM ASSIGNMENTS) ─────────────────────────
   async function addCustomWorkout(assignment) {
     const { data, error } = await client
       .from('user_workouts')
@@ -118,8 +102,6 @@
     return data;
   }
 
-  // Fetches all custom workout assignments for a profile.
-  // Returns array grouped by page.
   async function getCustomWorkouts(profileId) {
     const { data, error } = await client
       .from('user_workouts')
@@ -130,7 +112,6 @@
     return data;
   }
 
-  // Removes a custom workout assignment by ID.
   async function removeCustomWorkout(assignmentId) {
     const { error } = await client
       .from('user_workouts')
@@ -138,9 +119,8 @@
       .eq('id', assignmentId);
     if (error) console.error('removeCustomWorkout error:', error.message);
   }
+
   // ── EXPOSE ──────────────────────────────────────────────────────
-  // All functions are attached to window.supabaseHelper so every
-  // other JS file in the app can call them via window.supabaseHelper.X
   window.supabaseHelper = {
     client,
     saveProfile,
@@ -150,5 +130,8 @@
     saveCheckboxState,
     getCheckboxStates,
     clearCheckboxStates,
+    addCustomWorkout,
+    getCustomWorkouts,
+    removeCustomWorkout,
   };
 })();

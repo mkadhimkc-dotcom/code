@@ -1,9 +1,5 @@
 /*
- * profile.js — Sprint 2 + 3
- * ─────────────────────────────────────────────────────────────────
- *  BUG-04: Calls setupCalendar() after auto-login completes
- *  BUG-06: Saves start_date to localStorage for Edit prefill
- *  FEAT-02: Success toast on save
+ * profile.js — Sprint 2 & 3B
  * ─────────────────────────────────────────────────────────────────
  */
 
@@ -16,7 +12,9 @@
     profileGreeting.textContent =
       '✨ Hey ' + profile.name + '! Your 4‑week journey started ' +
       startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' 💖';
-    window.schedule.buildWeekSchedule(profile.startDate, weekSchedule);
+    
+    // Build week schedule
+    buildWeekSchedule(profile.startDate, weekSchedule);
   }
 
   function showForm(profile, profileForm, profileDisplay) {
@@ -26,6 +24,45 @@
       document.getElementById('userName').value = profile.name || '';
       document.getElementById('startDate').value = profile.startDate || '';
     }
+  }
+
+  // Build 4-week schedule
+  function buildWeekSchedule(startDateStr, container) {
+    if (!container) return;
+    const start = new Date(startDateStr + 'T00:00:00');
+    container.innerHTML = '';
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const weekEmojis = ['🌸 Week 1', '🎀 Week 2', '💪 Week 3', '⭐ Week 4'];
+    const weekTypes = ['Build', 'Build', 'Push', 'Deload 🧘'];
+    
+    for (let w = 0; w < 4; w++) {
+      const weekStart = new Date(start);
+      weekStart.setDate(start.getDate() + w * 7);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+      
+      const isCurrentWeek = today >= weekStart && today <= weekEnd;
+      const isDeload = w === 3;
+      
+      const row = document.createElement('div');
+      row.className = 'week-row';
+      if (isCurrentWeek) row.classList.add('current-week');
+      if (isDeload) row.classList.add('deload-week');
+      
+      row.innerHTML =
+        '<span class="week-badge">' + weekEmojis[w] + (isCurrentWeek ? ' ← Now' : '') + '</span>' +
+        '<div>' +
+          '<div class="week-dates">' + formatDate(weekStart) + ' – ' + formatDate(weekEnd) + '</div>' +
+          '<div class="week-label">' + weekTypes[w] + '</div>' +
+        '</div>';
+      container.appendChild(row);
+    }
+  }
+
+  function formatDate(date) {
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   }
 
   async function setupProfile() {
@@ -48,21 +85,19 @@
       const dbProfile = await window.supabaseHelper.loadProfile(cachedName);
       if (dbProfile) {
         const profile = { name: dbProfile.username, startDate: dbProfile.start_date };
-        // BUG-06: Cache start_date for edit prefill
         localStorage.setItem('profile_startDate', dbProfile.start_date);
         showProfileDisplay(profile, profileForm, profileDisplay, profileGreeting, weekSchedule);
-        await window.appMain.restoreCheckboxes(cachedId);
-        // BUG-04: Calendar renders only AFTER auto-login completes
+        await window.appMain.restoreCheckboxStates(cachedId);
         await window.appMain.setupCalendar();
       } else {
         localStorage.removeItem('profile_id');
         localStorage.removeItem('profile_name');
         localStorage.removeItem('profile_startDate');
         showForm(null, profileForm, profileDisplay);
-        await window.appMain.setupCalendar(); // Shows empty state
+        await window.appMain.setupCalendar();
       }
     } else {
-      await window.appMain.setupCalendar(); // Shows empty state
+      await window.appMain.setupCalendar();
     }
 
     // ── SAVE HANDLER ──
@@ -88,13 +123,13 @@
 
         localStorage.setItem('profile_id', saved.id);
         localStorage.setItem('profile_name', saved.username);
-        localStorage.setItem('profile_startDate', date); // BUG-06
+        localStorage.setItem('profile_startDate', date);
 
         saveProfileBtn.textContent = '💾 Save My Profile';
         saveProfileBtn.disabled = false;
 
         showProfileDisplay({ name, startDate: date }, profileForm, profileDisplay, profileGreeting, weekSchedule);
-        await window.appMain.restoreCheckboxes(saved.id);
+        await window.appMain.restoreCheckboxStates(saved.id);
         await window.appMain.setupCalendar();
         window.appMain.showToast(`Profile saved! Welcome ${name} 💖`);
       });
@@ -110,5 +145,8 @@
     }
   }
 
-  window.profile = { setupProfile };
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', setupProfile);
+
+  window.profileManager = { setupProfile };
 })();

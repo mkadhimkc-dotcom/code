@@ -105,7 +105,39 @@
       .eq('profile_id', profileId);
     if (error) console.error('clearCheckboxStates error:', error.message);
   }
+// ── USER WORKOUTS (CUSTOM ASSIGNMENTS) ─────────────────────────
+  // Adds a custom exercise to a user's workout page.
+  // assignment = { profile_id, page, exercise_id, sort_order }
+  async function addCustomWorkout(assignment) {
+    const { data, error } = await client
+      .from('user_workouts')
+      .insert([assignment])
+      .select()
+      .single();
+    if (error) { console.error('addCustomWorkout error:', error.message); return null; }
+    return data;
+  }
 
+  // Fetches all custom workout assignments for a profile.
+  // Returns array grouped by page.
+  async function getCustomWorkouts(profileId) {
+    const { data, error } = await client
+      .from('user_workouts')
+      .select('*')
+      .eq('profile_id', profileId)
+      .order('sort_order', { ascending: true });
+    if (error) { console.error('getCustomWorkouts error:', error.message); return []; }
+    return data;
+  }
+
+  // Removes a custom workout assignment by ID.
+  async function removeCustomWorkout(assignmentId) {
+    const { error } = await client
+      .from('user_workouts')
+      .delete()
+      .eq('id', assignmentId);
+    if (error) console.error('removeCustomWorkout error:', error.message);
+  }
   // ── EXPOSE ──────────────────────────────────────────────────────
   // All functions are attached to window.supabaseHelper so every
   // other JS file in the app can call them via window.supabaseHelper.X

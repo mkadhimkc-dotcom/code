@@ -1,20 +1,22 @@
 /*
- * main.js — Sprint 2 & 3A
+ * main.js — Sprint 2 & 3C
  * ─────────────────────────────────────────────────────────────────
  * Main application logic for Claire Workout App
+ * Includes: Calendar with clickable dates, workout completion tracking
  * ─────────────────────────────────────────────────────────────────
  */
 
 (function () {
   let workoutData = null;
+  let workoutLogsCache = [];
 
   // ── DONE CHECKBOX MAP ───────────────────────────────────────────
   // Maps "Done!" checkbox IDs to workout types for logging
   const DONE_CHECKBOX_MAP = {
-    'G-done': 'glutes',
-    'B-done': 'back',
-    'C-done': 'core',
-    'CR-done': 'cardio'
+    'A-Cardio': 'glutes',
+    'B-Cardio': 'back',
+    'C-Cardio': 'core',
+    'D-Activity': 'cardio'
   };
 
   // ── LOAD WORKOUT DATA ───────────────────────────────────────────
@@ -57,6 +59,9 @@
       const img = document.createElement('img');
       img.src = exercise.images[0].src;
       img.alt = exercise.title;
+      img.onerror = function() {
+        this.style.display = 'none';
+      };
       imgContainer.appendChild(img);
       card.appendChild(imgContainer);
     }
@@ -150,7 +155,7 @@
 
   // ── SETUP HERO SCROLL ───────────────────────────────────────────
   function setupHeroScroll() {
-    const heroBtn = document.querySelector('.hero .cta');
+    const heroBtn = document.querySelector('.hero-cta');
     if (!heroBtn) return;
 
     heroBtn.addEventListener('click', (e) => {
@@ -229,9 +234,7 @@
     await window.supabaseHelper.saveWorkoutLog(log);
     
     // Refresh calendar to show new workout
-    if (window.profileManager && window.profileManager.setupCalendar) {
-      await window.profileManager.setupCalendar();
-    }
+    await setupCalendar();
 
     showToast(`${workoutType.charAt(0).toUpperCase() + workoutType.slice(1)} workout logged! 💪`);
   }
@@ -259,6 +262,7 @@
 
     if (!profileId || !startDate) {
       calendarGrid.innerHTML = '<p style="text-align:center;color:#999;">Save your profile to see your calendar! 🌸</p>';
+      if (streakEl) streakEl.textContent = '';
       return;
     }
 
@@ -270,6 +274,7 @@
     today.setHours(0, 0, 0, 0);
 
     const logs = await window.supabaseHelper.getWorkoutLogs(profileId);
+    workoutLogsCache = logs; // Cache for modal
 
     // Build workout map
     const workoutMap = {};
@@ -296,6 +301,10 @@
 
       const cell = document.createElement('div');
       cell.className = 'calendar-day';
+      if (workouts.length > 0) {
+        cell.classList.add('has-workouts');
+      }
+      cell.dataset.date = dateKey;
 
       const dateNum = document.createElement('div');
       dateNum.className = 'day-number';
@@ -314,9 +323,81 @@
         cell.appendChild(dots);
       }
 
+      // Click handler
+      cell.addEventListener('click', () => {
+        openCalendarModal(dateKey);
+      });
+
       calendarGrid.appendChild(cell);
       current.setDate(current.getDate() + 1);
     }
+  }
+
+  // ── OPEN CALENDAR MODAL ─────────────────────────────────────────
+  function openCalendarModal(dateKey) {
+    const modal = document.getElementById('calendar-modal');
+    const dateTitle = document.getElementById('calendar-modal-date');
+    const workoutsBody = document.getElementById('calendar-modal-workouts');
+
+    // Format date
+    const date = new Date(dateKey + 'T00:00:00');
+    const formatted = date.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric' 
+    });
+    dateTitle.textContent = formatted;
+
+    // Filter workouts for this date
+    const dayWorkouts = workoutLogsCache.filter(log => {
+      const logDate = new Date(log.created_at);
+      return logDate.toISOString().split('T')[0] === dateKey;
+    });
+
+    // Render workouts
+    workoutsBody.innerHTML = '';
+    
+    if (dayWorkouts.length === 0) {
+      workoutsBody.innerHTML = '<div class="calendar-modal-empty">No workouts logged this day 🌸</div>';
+    } else {
+      const emojiMap = { glutes: '🍑', back: '🎀', core: '💪', cardio: '💦' };
+      const nameMap = { glutes: 'Glutes', back: 'Back', core: 'Core', cardio: 'Cardio' };
+      
+      dayWorkouts.forEach(log => {
+        const entry = document.createElement('div');
+        entry.className = 'workout-entry';
+        
+        const time = new Date(log.created_at);
+        const timeStr = time.toLocaleTimeString('en-US', { 
+          hour: 'numeric', 
+          minute: '2-digit', 
+          hour12: true 
+        });
+        
+        entry.innerHTML = `
+          <div class="workout-entry-type">${emojiMap[log.workout_type] || '✨'} ${nameMap[log.workout_type] || log.workout_type}</div>
+          <div class="workout-entry-time">${timeStr}</div>
+        `;
+        
+        workoutsBody.appendChild(entry);
+      });
+    }
+
+    modal.classList.add('visible');
+
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeCalendarModal();
+      }
+    });
+  }
+
+  // ── CLOSE CALENDAR MODAL ────────────────────────────────────────
+  function closeCalendarModal() {
+    const modal = document.getElementById('calendar-modal');
+    modal.classList.remove('visible');
   }
 
   // ── CALCULATE STREAK ────────────────────────────────────────────
@@ -358,7 +439,8 @@
   window.appMain = {
     setupCalendar,
     restoreCheckboxStates,
-    showToast
+    showToast,
+    closeCalendarModal
   };
 
   // ── INITIALIZE ──────────────────────────────────────────────────

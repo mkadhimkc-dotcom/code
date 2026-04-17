@@ -1,245 +1,373 @@
 /*
- * main.js — Sprint 2
+ * main.js — Sprint 2 & 3A
  * ─────────────────────────────────────────────────────────────────
- *  BUG-04: setupCalendar removed from DOMContentLoaded
- *          it is now called from profile.js after login completes
- *  BUG-05: "Done!" checkboxes now write to workout_logs
- *  BUG-08: Calendar shows loading state while fetching
- *  FEAT-02: Toast notifications for save/reset
- *  FEAT-07: Streak counter
+ * Main application logic for Claire Workout App
  * ─────────────────────────────────────────────────────────────────
  */
 
-document.addEventListener('DOMContentLoaded', async () => {
-  if (window.renderWorkouts && typeof window.renderWorkouts.loadAndRenderWorkouts === 'function') {
-    await window.renderWorkouts.loadAndRenderWorkouts();
+(function () {
+  let workoutData = null;
+
+  // ── DONE CHECKBOX MAP ───────────────────────────────────────────
+  // Maps "Done!" checkbox IDs to workout types for logging
+  const DONE_CHECKBOX_MAP = {
+    'G-done': 'glutes',
+    'B-done': 'back',
+    'C-done': 'core',
+    'CR-done': 'cardio'
+  };
+
+  // ── LOAD WORKOUT DATA ───────────────────────────────────────────
+  async function loadWorkoutData() {
+    try {
+      const response = await fetch('data/workouts.json');
+      workoutData = await response.json();
+      renderWorkouts();
+    } catch (err) {
+      console.error('Failed to load workout data:', err);
+    }
   }
 
-  window.navigation.setupNavigation();
-  window.profile.setupProfile();
-  if (window.timer && typeof window.timer.setupTimers === 'function') {
-    window.timer.setupTimers();
+  // ── RENDER WORKOUTS ─────────────────────────────────────────────
+  function renderWorkouts() {
+    if (!workoutData) return;
+
+    workoutData.sections.forEach(section => {
+      const grid = document.querySelector(`[data-workout-grid="${section.id}"]`);
+      if (!grid) return;
+
+      grid.innerHTML = '';
+
+      section.exercises.forEach(exercise => {
+        const card = createCard(exercise);
+        grid.appendChild(card);
+      });
+    });
   }
-  if (window.slider && typeof window.slider.setupSliders === 'function') {
-    window.slider.setupSliders();
+
+  // ── CREATE CARD ─────────────────────────────────────────────────
+  function createCard(exercise) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // Image
+    if (exercise.images && exercise.images.length > 0) {
+      const imgContainer = document.createElement('div');
+      imgContainer.className = 'image-container';
+      const img = document.createElement('img');
+      img.src = exercise.images[0].src;
+      img.alt = exercise.title;
+      imgContainer.appendChild(img);
+      card.appendChild(imgContainer);
+    }
+
+    // Title
+    const title = document.createElement('div');
+    title.className = 'card-title';
+    title.textContent = exercise.title;
+    card.appendChild(title);
+
+    // Meta
+    if (exercise.meta) {
+      const meta = document.createElement('div');
+      meta.className = 'card-meta';
+      meta.textContent = exercise.meta;
+      card.appendChild(meta);
+    }
+
+    // Badges
+    if (exercise.badges) {
+      const badgesDiv = document.createElement('div');
+      badgesDiv.className = 'badges';
+      exercise.badges.forEach(badge => {
+        const span = document.createElement('span');
+        span.className = badge.type ? `badge ${badge.type}` : 'badge';
+        span.textContent = badge.label;
+        badgesDiv.appendChild(span);
+      });
+      card.appendChild(badgesDiv);
+    }
+
+    // Cue
+    if (exercise.cue) {
+      const cue = document.createElement('div');
+      cue.className = 'cue';
+      cue.textContent = exercise.cue;
+      card.appendChild(cue);
+    }
+
+    // Sets tracker
+    if (exercise.sets) {
+      const tracker = document.createElement('div');
+      tracker.className = 'sets-tracker';
+      exercise.sets.forEach(set => {
+        const label = document.createElement('label');
+        label.className = 'set-checkbox';
+
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.dataset.id = set.id;
+
+        const indicator = document.createElement('span');
+        indicator.className = 'heart-indicator';
+
+        const number = document.createElement('span');
+        number.className = 'set-number';
+        number.textContent = set.label;
+
+        label.append(input, indicator, number);
+        tracker.appendChild(label);
+      });
+      card.appendChild(tracker);
+    }
+
+    return card;
   }
-  setupCheckboxTracking();
-  setupResetButton();
-  setupHeroScroll();
-  // ⚠️ setupCalendar is NOT called here anymore
-  // It is called from profile.js after login/auto-login completes
-});
 
-// ── DONE CHECKBOX MAP ──────────────────────────────────────────
-// Maps each section's "Done!" checkbox data-id → workout_type
-// so we can log the right type to Supabase when ticked
-const DONE_CHECKBOX_MAP = {
-  'A-Cardio':   'glutes',
-  'B-Cardio':   'back',
-  'C-Cardio':   'core',
-  'D-Activity': 'cardio',
-};
+  // ── SETUP TABS ──────────────────────────────────────────────────
+  function setupTabs() {
+    const nav = document.querySelector('.workout-nav');
+    const pages = document.querySelectorAll('.workout-page');
 
-// ── CHECKBOX TRACKING ──────────────────────────────────────────
-// Saves every tick to localStorage + Supabase in real time.
-// If it's a "Done!" checkbox, also logs the workout to the
-// workout_logs table so the calendar gets populated.
+    if (!nav) return;
 
-function setupCheckboxTracking() {
-  const checkboxes = document.querySelectorAll('.set-checkbox input[type="checkbox"]');
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', async (event) => {
-      const profileId = localStorage.getItem('profile_id');
-      const id = checkbox.getAttribute('data-id');
+    nav.addEventListener('click', (e) => {
+      const btn = e.target.closest('.nav-btn');
+      if (!btn) return;
 
-      // Always save to localStorage as instant fallback
-      window.storage.setCheckboxState(id, event.target.checked);
+      const targetPage = btn.dataset.page;
 
-      if (profileId) {
-        // Save checkbox state to Supabase
-        await window.supabaseHelper.saveCheckboxState(profileId, id, event.target.checked);
+      // Update active button
+      nav.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
-        // BUG-05: If this is a "Done!" checkbox being ticked,
-        // write a workout log so the calendar populates
-        if (event.target.checked && DONE_CHECKBOX_MAP[id]) {
-          await window.supabaseHelper.saveWorkoutLog({
-            profile_id: profileId,
-            workout_type: DONE_CHECKBOX_MAP[id],
-          });
-          showToast(`Workout logged! ${getWorkoutEmoji(DONE_CHECKBOX_MAP[id])}`);
-          // Refresh the calendar to show the new dot
-          await setupCalendar();
-        }
+      // Update active page
+      pages.forEach(page => {
+        page.classList.toggle('active', page.id === targetPage);
+      });
+    });
+  }
+
+  // ── SETUP HERO SCROLL ───────────────────────────────────────────
+  function setupHeroScroll() {
+    const heroBtn = document.querySelector('.hero .cta');
+    if (!heroBtn) return;
+
+    heroBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const callout = document.querySelector('.callout');
+      if (callout) {
+        callout.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
-  });
-}
+  }
 
-function getWorkoutEmoji(type) {
-  const map = { glutes: '🍑', back: '🎀', core: '💪', cardio: '💦' };
-  return map[type] || '✅';
-}
+  // ── SETUP RESET BUTTON ──────────────────────────────────────────
+  function setupResetButton() {
+    const resetBtn = document.getElementById('reset-diary');
+    if (!resetBtn) return;
 
-// ── RESTORE CHECKBOXES ─────────────────────────────────────────
-// Called by profile.js after login to re-tick saved sets.
+    resetBtn.addEventListener('click', async () => {
+      if (!confirm('Reset all checkboxes? This cannot be undone! 🎀')) return;
 
-async function restoreCheckboxes(profileId) {
-  const states = await window.supabaseHelper.getCheckboxStates(profileId);
-  document.querySelectorAll('.set-checkbox input[type="checkbox"]').forEach(cb => {
-    const id = cb.getAttribute('data-id');
-    if (states[id] === true) cb.checked = true;
-  });
-}
+      const profileId = localStorage.getItem('profile_id');
+      if (!profileId) {
+        alert('Please save your profile first! 🌸');
+        return;
+      }
 
-// ── RESET BUTTON ───────────────────────────────────────────────
-// Clears all checkboxes from Supabase + screen with confirmation.
+      // Clear from database
+      await window.supabaseHelper.clearCheckboxStates(profileId);
 
-function setupResetButton() {
-  const resetBtn = document.getElementById('resetBtn');
-  if (!resetBtn) return;
-  resetBtn.addEventListener('click', async () => {
-    if (!confirm('Clear your cute diary for a new week? This cannot be undone! 🎀')) return;
+      // Uncheck all checkboxes
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+      });
 
-    document.querySelectorAll('.set-checkbox input[type="checkbox"]').forEach(cb => {
-      cb.checked = false;
+      showToast('Diary reset! Starting fresh 💖');
     });
+  }
 
-    window.storage.clearAllCheckboxStates();
+  // ── ATTACH CHECKBOX LISTENERS ───────────────────────────────────
+  function attachCheckboxListeners() {
+    document.addEventListener('change', async (e) => {
+      if (e.target.type !== 'checkbox') return;
+
+      const checkboxId = e.target.dataset.id;
+      if (!checkboxId) return;
+
+      const profileId = localStorage.getItem('profile_id');
+      if (!profileId) {
+        alert('Please save your profile first! 🌸');
+        e.target.checked = false;
+        return;
+      }
+
+      // Save checkbox state
+      await window.supabaseHelper.saveCheckboxState(
+        profileId,
+        checkboxId,
+        e.target.checked
+      );
+
+      // Check if this is a "Done!" checkbox
+      if (DONE_CHECKBOX_MAP[checkboxId] && e.target.checked) {
+        const workoutType = DONE_CHECKBOX_MAP[checkboxId];
+        await saveWorkoutLog(profileId, workoutType);
+      }
+    });
+  }
+
+  // ── SAVE WORKOUT LOG ────────────────────────────────────────────
+  async function saveWorkoutLog(profileId, workoutType) {
+    const log = {
+      profile_id: profileId,
+      workout_type: workoutType,
+      created_at: new Date().toISOString()
+    };
+
+    await window.supabaseHelper.saveWorkoutLog(log);
+    
+    // Refresh calendar to show new workout
+    if (window.profileManager && window.profileManager.setupCalendar) {
+      await window.profileManager.setupCalendar();
+    }
+
+    showToast(`${workoutType.charAt(0).toUpperCase() + workoutType.slice(1)} workout logged! 💪`);
+  }
+
+  // ── RESTORE CHECKBOX STATES ─────────────────────────────────────
+  async function restoreCheckboxStates(profileId) {
+    const states = await window.supabaseHelper.getCheckboxStates(profileId);
+
+    Object.entries(states).forEach(([checkboxId, checked]) => {
+      const checkbox = document.querySelector(`input[data-id="${checkboxId}"]`);
+      if (checkbox) {
+        checkbox.checked = checked;
+      }
+    });
+  }
+
+  // ── SETUP CALENDAR ──────────────────────────────────────────────
+  async function setupCalendar() {
+    const calendarGrid = document.getElementById('calendar-grid');
+    const streakEl = document.getElementById('streak-counter');
+    if (!calendarGrid) return;
 
     const profileId = localStorage.getItem('profile_id');
-    if (profileId) {
-      await window.supabaseHelper.clearCheckboxStates(profileId);
+    const startDate = localStorage.getItem('profile_startDate');
+
+    if (!profileId || !startDate) {
+      calendarGrid.innerHTML = '<p style="text-align:center;color:#999;">Save your profile to see your calendar! 🌸</p>';
+      return;
     }
 
-    showToast("Diary reset! Let's crush this week! 💖");
-  });
-}
+    // Show loading state
+    calendarGrid.innerHTML = '<p style="text-align:center;color:#999;">Loading your calendar… 🌸</p>';
 
-// ── CALENDAR ───────────────────────────────────────────────────
-// Called from profile.js after login — never directly on load.
-// BUG-04 fix: this ensures profile_id is always ready.
+    const start = new Date(startDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-async function setupCalendar() {
-  const calendarEl = document.getElementById('calendar');
-  if (!calendarEl) return;
+    const logs = await window.supabaseHelper.getWorkoutLogs(profileId);
 
-  const profileId = localStorage.getItem('profile_id');
-  if (!profileId) {
-    calendarEl.innerHTML = '<p class="calendar-empty">Save your profile to see your workout calendar! 🌸</p>';
-    return;
-  }
+    // Build workout map
+    const workoutMap = {};
+    logs.forEach(log => {
+      const date = new Date(log.created_at);
+      const dateKey = date.toISOString().split('T')[0];
+      if (!workoutMap[dateKey]) workoutMap[dateKey] = [];
+      workoutMap[dateKey].push(log.workout_type);
+    });
 
-  // BUG-08: Show loading state while fetching
-  calendarEl.innerHTML = '<p class="calendar-empty">Loading your calendar… 🌸</p>';
+    // Calculate streak
+    const streak = calculateStreak(workoutMap, today);
+    if (streakEl) {
+      streakEl.textContent = streak > 0 ? `🔥 ${streak}-day streak!` : '';
+    }
 
-  const logs = await window.supabaseHelper.getWorkoutLogs(profileId);
-  renderCalendar(calendarEl, logs);
-}
+    // Render calendar
+    calendarGrid.innerHTML = '';
+    let current = new Date(start);
 
-function renderCalendar(container, logs) {
-  const emojiMap = { glutes: '🍑', back: '🎀', core: '💪', cardio: '💦' };
+    while (current <= today) {
+      const dateKey = current.toISOString().split('T')[0];
+      const workouts = workoutMap[dateKey] || [];
 
-  // Build date → workouts map
-  const dateMap = {};
-  logs.forEach(log => {
-    const key = new Date(log.created_at).toLocaleDateString('en-CA');
-    if (!dateMap[key]) dateMap[key] = [];
-    const type = (log.workout_type || '').toLowerCase();
-    if (!dateMap[key].includes(type)) dateMap[key].push(type);
-  });
+      const cell = document.createElement('div');
+      cell.className = 'calendar-day';
 
-  const now         = new Date();
-  const year        = now.getFullYear();
-  const month       = now.getMonth();
-  const monthName   = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  const firstDay    = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const todayStr    = now.toLocaleDateString('en-CA');
-  const streak      = calculateStreak(dateMap, now);
+      const dateNum = document.createElement('div');
+      dateNum.className = 'day-number';
+      dateNum.textContent = current.getDate();
+      cell.appendChild(dateNum);
 
-  let html = `
-    <div class="calendar-header">${monthName}</div>
-    ${streak > 0 ? `<div class="calendar-streak">🔥 ${streak}-day streak!</div>` : ''}
-    <div class="calendar-legend">
-      ${Object.entries(emojiMap).map(([k, v]) => `<span>${v} ${k}</span>`).join('')}
-    </div>
-    <div class="calendar-grid">
-      ${['Su','Mo','Tu','We','Th','Fr','Sa'].map(d => `<div class="cal-day-label">${d}</div>`).join('')}
-      ${'<div class="cal-day empty"></div>'.repeat(firstDay)}
-  `;
-
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr  = `${year}-${String(month + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const workouts = dateMap[dateStr] || [];
-    const isToday  = dateStr === todayStr;
-    const dots     = workouts.map(w => `<span class="cal-dot">${emojiMap[w] || '✅'}</span>`).join('');
-    html += `
-      <div class="cal-day ${isToday ? 'today' : ''} ${workouts.length ? 'has-workout' : ''}">
-        <span class="cal-date">${d}</span>
-        <div class="cal-dots">${dots}</div>
-      </div>
-    `;
-  }
-
-  html += `</div>`;
-  container.innerHTML = html;
-}
-
-// ── STREAK CALCULATOR ──────────────────────────────────────────
-// Walks backwards from today counting consecutive workout days.
-
-function calculateStreak(dateMap, today) {
-  let streak = 0;
-  const d = new Date(today);
-  d.setHours(0, 0, 0, 0);
-
-  while (true) {
-    const key = d.toLocaleDateString('en-CA');
-    if (dateMap[key] && dateMap[key].length > 0) {
-      streak++;
-      d.setDate(d.getDate() - 1);
-    } else {
-      // If today has no workout yet, don't break the streak — skip today
-      if (streak === 0 && key === today.toLocaleDateString('en-CA')) {
-        d.setDate(d.getDate() - 1);
-        continue;
+      if (workouts.length > 0) {
+        const dots = document.createElement('div');
+        dots.className = 'workout-dots';
+        const emojiMap = { glutes: '🍑', back: '🎀', core: '💪', cardio: '💦' };
+        workouts.forEach(type => {
+          const dot = document.createElement('span');
+          dot.textContent = emojiMap[type] || '✨';
+          dots.appendChild(dot);
+        });
+        cell.appendChild(dots);
       }
-      break;
+
+      calendarGrid.appendChild(cell);
+      current.setDate(current.getDate() + 1);
     }
   }
-  return streak;
-}
 
-// ── HERO SCROLL (BUG-01) ───────────────────────────────────────
-// "Start Now" button smoothly scrolls to the quick start guide.
+  // ── CALCULATE STREAK ────────────────────────────────────────────
+  function calculateStreak(workoutMap, today) {
+    let streak = 0;
+    let current = new Date(today);
 
-function setupHeroScroll() {
-  const cta = document.querySelector('.hero-cta');
-  if (!cta) return;
-  cta.addEventListener('click', (e) => {
-    e.preventDefault();
-    const target = document.querySelector('.callout') || document.getElementById('home');
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-}
+    while (true) {
+      const dateKey = current.toISOString().split('T')[0];
+      if (workoutMap[dateKey] && workoutMap[dateKey].length > 0) {
+        streak++;
+        current.setDate(current.getDate() - 1);
+      } else {
+        break;
+      }
+    }
 
-// ── TOAST NOTIFICATIONS (FEAT-02) ─────────────────────────────
-// Shows a brief pink notification at the bottom of the screen.
-
-function showToast(message) {
-  let toast = document.getElementById('app-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'app-toast';
-    toast.className = 'app-toast';
-    document.body.appendChild(toast);
+    return streak;
   }
-  toast.textContent = message;
-  toast.classList.add('visible');
-  clearTimeout(toast._hideTimer);
-  toast._hideTimer = setTimeout(() => toast.classList.remove('visible'), 2500);
-}
 
-// ── EXPOSE ─────────────────────────────────────────────────────
-// profile.js calls these after login/auto-login completes
-window.appMain = { restoreCheckboxes, setupCalendar, showToast };
+  // ── SHOW TOAST ──────────────────────────────────────────────────
+  function showToast(message) {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.classList.add('visible'), 10);
+    setTimeout(() => {
+      toast.classList.remove('visible');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // ── EXPOSE ──────────────────────────────────────────────────────
+  window.appMain = {
+    setupCalendar,
+    restoreCheckboxStates,
+    showToast
+  };
+
+  // ── INITIALIZE ──────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', async () => {
+    await loadWorkoutData();
+    setupTabs();
+    setupHeroScroll();
+    setupResetButton();
+    attachCheckboxListeners();
+    window.customWorkouts.initialize();
+  });
+})();

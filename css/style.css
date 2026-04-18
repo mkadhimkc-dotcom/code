@@ -1071,3 +1071,301 @@ h2 {
         font-size: 0.55rem;
     }
 }
+/* ═══════════════════════════════════════════════════════════════
+   MODERN THEME — 2026 Fitness App Style
+   ═══════════════════════════════════════════════════════════════ */
+
+body.modern-theme {
+    background: linear-gradient(135deg, #fef5f8 0%, #fff0f5 50%, #ffe4f0 100%);
+    background-image: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Modern Navigation */
+body.modern-theme nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 182, 217, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(233, 30, 99, 0.1);
+}
+
+body.modern-theme .nav-btn {
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    box-shadow: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.modern-theme .nav-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    transform: translateY(-1px);
+    box-shadow: none;
+}
+
+body.modern-theme .nav-btn.active {
+    background: linear-gradient(135deg, #ff69b4 0%, #e91e63 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+    transform: translateY(0);
+}
+
+/* Modern Headers */
+body.modern-theme header {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 182, 217, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+body.modern-theme h1 {
+    background: linear-gradient(135deg, #ff69b4 0%, #e91e63 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+}
+
+body.modern-theme h2 {
+    color: #1a1a1a;
+    text-shadow: none;
+    font-weight: 700;
+}
+
+/* Modern Cards */
+body.modern-theme .card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 182, 217, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.modern-theme .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(233, 30, 99, 0.15);
+}
+
+body.modern-theme .image-container {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+body.modern-theme .image-container::after {
+    display: none;
+}
+
+body.modern-theme .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.modern-theme .card-meta {
+    color: #666;
+    font-weight: 500;
+}
+
+body.modern-theme .badge {
+    background: linear-gradient(135deg, #ffe4f0 0%, #ffd4e8 100%);
+    color: #e91e63;
+    border: 1px solid rgba(233, 30, 99, 0.2);
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: none;
+}
+
+body.modern-theme .badge.wrist {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #1976d2;
+    border-color: rgba(25, 118, 210, 0.2);
+}
+
+/* Modern Callouts */
+body.modern-theme .callout {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 182, 217, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+body.modern-theme .callout h3 {
+    background: linear-gradient(135deg, #ff69b4 0%, #e91e63 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Modern Profile Card */
+body.modern-theme .profile-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 182, 217, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+body.modern-theme .form-group input {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 182, 217, 0.3);
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+body.modern-theme .form-group input:focus {
+    border-color: #ff69b4;
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
+}
+
+body.modern-theme .btn-save {
+    background: linear-gradient(135deg, #ff69b4 0%, #e91e63 100%);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+body.modern-theme .btn-save:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(233, 30, 99, 0.3);
+}
+
+/* Modern Calendar */
+body.modern-theme .calendar-section {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 182, 217, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+body.modern-theme .calendar-day {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 182, 217, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.modern-theme .calendar-day:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: #ff69b4;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.2);
+}
+
+body.modern-theme .calendar-day.has-workouts {
+    background: linear-gradient(135deg, #ffe4f0 0%, #ffd4e8 100%);
+    border-color: rgba(233, 30, 99, 0.3);
+}
+
+/* Modern Buttons */
+body.modern-theme .btn-reset {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.modern-theme .btn-customize {
+    background: linear-gradient(135deg, #ff69b4 0%, #e91e63 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    border: 3px solid var(--kitty-black);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    box-shadow: 2px 2px 0px var(--kitty-black);
+}
+
+.theme-toggle:hover {
+    transform: rotate(180deg) scale(1.1);
+    box-shadow: 4px 4px 0px var(--kitty-black);
+}
+
+.theme-toggle:active {
+    transform: rotate(180deg) scale(0.95);
+}
+
+.theme-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+body.modern-theme .theme-toggle {
+    background: linear-gradient(135deg, #ff69b4 0%, #e91e63 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+body.modern-theme .theme-toggle:hover {
+    box-shadow: 0 8px 20px rgba(233, 30, 99, 0.4);
+}
+
+/* Modern Toast */
+body.modern-theme .toast {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    color: #e91e63;
+    border: 1px solid rgba(233, 30, 99, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Modern Heart Checkboxes */
+body.modern-theme .sets-tracker {
+    border-top: 2px solid rgba(255, 182, 217, 0.3);
+}
+
+body.modern-theme .heart-indicator {
+    filter: drop-shadow(0 2px 4px rgba(233, 30, 99, 0.2));
+}
+
+/* Modern Week Schedule */
+body.modern-theme .week-row {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 182, 217, 0.2);
+    border-radius: 16px;
+    transition: all 0.3s;
+}
+
+body.modern-theme .week-row:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateX(8px);
+}
+
+body.modern-theme .week-row.current-week {
+    background: linear-gradient(135deg, #ffe4f0 0%, #ffd4e8 100%);
+    border-color: #ff69b4;
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.2);
+}
+
+body.modern-theme .week-badge {
+    background: linear-gradient(135deg, #ff69b4 0%, #e91e63 100%);
+    border: none;
+    box-shadow: 0 2px 8px rgba(233, 30, 99, 0.3);
+}
+
+@media (max-width: 600px) {
+    body.modern-theme nav {
+        border-radius: 20px 20px 0 0;
+    }
+}

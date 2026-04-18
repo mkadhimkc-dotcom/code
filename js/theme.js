@@ -1,7 +1,7 @@
 /*
  * theme.js — Theme Toggle System
  * ─────────────────────────────────────────────────────────────────
- * Switches between Classic Sanrio and Modern 2026 themes
+ * Switches between Classic Sanrio and Modern 2026 themes.
  * ─────────────────────────────────────────────────────────────────
  */
 

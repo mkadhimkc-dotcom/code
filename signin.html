@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+F
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #fff0f5;
@@ -234,8 +234,11 @@
             btn.textContent = 'Sending... 💌';
 
             const { error } = await client.auth.signInWithOtp({
-                email,
-                options: { shouldCreateUser: true }
+            email,
+            options: { 
+            shouldCreateUser: true,
+            emailRedirectTo: null
+        }
             });
 
             if (error) {

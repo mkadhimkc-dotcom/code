@@ -74,8 +74,7 @@
 const session = await window.supabaseHelper.getSession();
 
 if (!session) {
-  // Auth coming soon — continue without session for now
-  await window.appMain.setupCalendar();
+  window.location.href = '/signin.html';
   return;
 }
     // ── AUTO-LOAD PROFILE BY AUTH ID ──

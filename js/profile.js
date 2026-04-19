@@ -1,5 +1,5 @@
 /*
- * profile.js — Sprint 2 & 3B
+ * profile.js — Auth-aware version
  * ─────────────────────────────────────────────────────────────────
  */
 
@@ -12,8 +12,6 @@
     profileGreeting.textContent =
       '✨ Hey ' + profile.name + '! Your 4‑week journey started ' +
       startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' 💖';
-    
-    // Build week schedule
     buildWeekSchedule(profile.startDate, weekSchedule);
   }
 
@@ -26,31 +24,30 @@
     }
   }
 
-  // Build 4-week schedule
   function buildWeekSchedule(startDateStr, container) {
     if (!container) return;
     const start = new Date(startDateStr + 'T00:00:00');
     container.innerHTML = '';
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     const weekEmojis = ['🌸 Week 1', '🎀 Week 2', '💪 Week 3', '⭐ Week 4'];
     const weekTypes = ['Build', 'Build', 'Push', 'Deload 🧘'];
-    
+
     for (let w = 0; w < 4; w++) {
       const weekStart = new Date(start);
       weekStart.setDate(start.getDate() + w * 7);
       const weekEnd = new Date(weekStart);
       weekEnd.setDate(weekStart.getDate() + 6);
-      
+
       const isCurrentWeek = today >= weekStart && today <= weekEnd;
       const isDeload = w === 3;
-      
+
       const row = document.createElement('div');
       row.className = 'week-row';
       if (isCurrentWeek) row.classList.add('current-week');
       if (isDeload) row.classList.add('deload-week');
-      
+
       row.innerHTML =
         '<span class="week-badge">' + weekEmojis[w] + (isCurrentWeek ? ' ← Now' : '') + '</span>' +
         '<div>' +
@@ -73,30 +70,29 @@
     const profileGreeting = document.getElementById('profileGreeting');
     const weekSchedule    = document.getElementById('weekSchedule');
 
-    // ── AUTO-LOGIN ──
-    const cachedId   = localStorage.getItem('profile_id');
-    const cachedName = localStorage.getItem('profile_name');
+    // ── CHECK AUTH SESSION ──
+    const session = await window.supabaseHelper.getSession();
 
-    if (cachedId && cachedName) {
-      profileGreeting.textContent = 'Loading your profile… 🌸';
-      profileDisplay.style.display = 'flex';
-      profileForm.style.display = 'none';
+    if (!session) {
+      // Not logged in — redirect to sign in
+      window.location.href = '/signin.html';
+      return;
+    }
 
-      const dbProfile = await window.supabaseHelper.loadProfile(cachedName);
-      if (dbProfile) {
-        const profile = { name: dbProfile.username, startDate: dbProfile.start_date };
-        localStorage.setItem('profile_startDate', dbProfile.start_date);
-        showProfileDisplay(profile, profileForm, profileDisplay, profileGreeting, weekSchedule);
-        await window.appMain.restoreCheckboxStates(cachedId);
-        await window.appMain.setupCalendar();
-      } else {
-        localStorage.removeItem('profile_id');
-        localStorage.removeItem('profile_name');
-        localStorage.removeItem('profile_startDate');
-        showForm(null, profileForm, profileDisplay);
-        await window.appMain.setupCalendar();
-      }
+    // ── AUTO-LOAD PROFILE BY AUTH ID ──
+    const dbProfile = await window.supabaseHelper.loadProfileByAuthId();
+
+    if (dbProfile) {
+      const profile = { name: dbProfile.username, startDate: dbProfile.start_date };
+      localStorage.setItem('profile_id', dbProfile.id);
+      localStorage.setItem('profile_name', dbProfile.username);
+      localStorage.setItem('profile_startDate', dbProfile.start_date);
+      showProfileDisplay(profile, profileForm, profileDisplay, profileGreeting, weekSchedule);
+      await window.appMain.restoreCheckboxStates(dbProfile.id);
+      await window.appMain.setupCalendar();
     } else {
+      // Logged in but no profile yet — show form
+      showForm(null, profileForm, profileDisplay);
       await window.appMain.setupCalendar();
     }
 
@@ -115,7 +111,7 @@
         const saved = await window.supabaseHelper.saveProfile({ name, startDate: date });
 
         if (!saved) {
-          alert('Could not save your profile. Check your Supabase connection. 🌸');
+          alert('Could not save your profile. Please try again! 🌸');
           saveProfileBtn.textContent = '💾 Save My Profile';
           saveProfileBtn.disabled = false;
           return;

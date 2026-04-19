@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎀 Sign In — Claire Workout App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .signin-container {
+            max-width: 420px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: var(--kitty-white);
+            border: 4px solid var(--kitty-black);
+            border-radius: 25px;
+            box-shadow: 6px 6px 0px var(--kitty-pink);
+            text-align: center;
+        }
+        .signin-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--kitty-pink);
+            margin-bottom: 0.5rem;
+        }
+        .signin-subtitle {
+            color: var(--kitty-black);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        .signin-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 3px solid var(--kitty-black);
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .signin-input:focus {
+            border-color: var(--kitty-pink);
+            box-shadow: 3px 3px 0px var(--kitty-pink);
+        }
+        .signin-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--kitty-pink);
+            color: white;
+            border: 4px solid var(--kitty-black);
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--kitty-black);
+            transition: all 0.1s;
+            text-transform: uppercase;
+        }
+        .signin-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: none;
+        }
+        .signin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .signin-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            display: none;
+        }
+        .signin-message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #a5d6a7;
+            display: block;
+        }
+        .signin-message.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #ef9a9a;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="signin-container">
+        <div class="signin-title">🎀 Welcome Back!</div>
+        <div class="signin-subtitle">Enter your email and we'll send you a magic link to sign in 💖</div>
+        
+        <input 
+            type="email" 
+            id="email-input" 
+            class="signin-input" 
+            placeholder="your@email.com"
+            autocomplete="email"
+        />
+        
+        <button class="signin-btn" id="signin-btn">
+            ✨ Send Magic Link
+        </button>
+        
+        <div class="signin-message" id="signin-message"></div>
+    </div>
+</div>
+
+<script>
+    const SUPABASE_URL = 'https://xragzrjatiudhbrubejf.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM';
+
+    const { createClient } = supabase;
+    const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const btn = document.getElementById('signin-btn');
+    const input = document.getElementById('email-input');
+    const message = document.getElementById('signin-message');
+
+    btn.addEventListener('click', async () => {
+        const email = input.value.trim();
+        
+        if (!email) {
+            showMessage('Please enter your email address 🌸', 'error');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Sending... 💌';
+
+        const { error } = await client.auth.signInWithOtp({
+            email,
+            options: {
+                emailRedirectTo: 'https://code-7of.pages.dev'
+            }
+        });
+
+        if (error) {
+            showMessage('Something went wrong. Please try again! 🌸', 'error');
+            btn.disabled = false;
+            btn.textContent = '✨ Send Magic Link';
+        } else {
+            showMessage('Magic link sent! Check your email and click the link to sign in 💖', 'success');
+            btn.textContent = '✅ Email Sent!';
+        }
+    });
+
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') btn.click();
+    });
+
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = `signin-message ${type}`;
+    }
+</script>
+</body>
+</html>

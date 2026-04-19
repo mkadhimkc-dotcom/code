@@ -29,6 +29,7 @@
             font-weight: 700;
             margin-bottom: 2rem;
             font-size: 1rem;
+            line-height: 1.5;
         }
         .signin-input {
             width: 100%;
@@ -41,10 +42,16 @@
             margin-bottom: 1rem;
             box-sizing: border-box;
             outline: none;
+            text-align: center;
         }
         .signin-input:focus {
             border-color: var(--kitty-pink);
             box-shadow: 3px 3px 0px var(--kitty-pink);
+        }
+        .otp-input {
+            font-size: 2rem;
+            letter-spacing: 0.5rem;
+            font-weight: 900;
         }
         .signin-btn {
             width: 100%;
@@ -60,6 +67,7 @@
             box-shadow: 4px 4px 0px var(--kitty-black);
             transition: all 0.1s;
             text-transform: uppercase;
+            margin-bottom: 1rem;
         }
         .signin-btn:active {
             transform: translate(4px, 4px);
@@ -69,12 +77,29 @@
             opacity: 0.6;
             cursor: not-allowed;
         }
+        .signin-btn-secondary {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            color: var(--kitty-pink);
+            border: 3px solid var(--kitty-pink);
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+        .signin-btn-secondary:hover {
+            background: var(--kitty-pastel);
+        }
         .signin-message {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             padding: 1rem;
             border-radius: 12px;
             font-weight: 700;
             display: none;
+            line-height: 1.5;
         }
         .signin-message.success {
             background: #e8f5e9;
@@ -88,77 +113,26 @@
             border: 2px solid #ef9a9a;
             display: block;
         }
+        .step { display: none; }
+        .step.active { display: block; }
+        .email-display {
+            font-weight: 900;
+            color: var(--kitty-pink);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        .countdown {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="signin-container">
-        <div class="signin-title">🎀 Welcome Back!</div>
-        <div class="signin-subtitle">Enter your email and we'll send you a magic link to sign in 💖</div>
         
-        <input 
-            type="email" 
-            id="email-input" 
-            class="signin-input" 
-            placeholder="your@email.com"
-            autocomplete="email"
-        />
-        
-        <button class="signin-btn" id="signin-btn">
-            ✨ Send Magic Link
-        </button>
-        
-        <div class="signin-message" id="signin-message"></div>
-    </div>
-</div>
-
-<script>
-    const SUPABASE_URL = 'https://xragzrjatiudhbrubejf.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM';
-
-    const { createClient } = supabase;
-    const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const btn = document.getElementById('signin-btn');
-    const input = document.getElementById('email-input');
-    const message = document.getElementById('signin-message');
-
-    btn.addEventListener('click', async () => {
-        const email = input.value.trim();
-        
-        if (!email) {
-            showMessage('Please enter your email address 🌸', 'error');
-            return;
-        }
-
-        btn.disabled = true;
-        btn.textContent = 'Sending... 💌';
-
-        const { error } = await client.auth.signInWithOtp({
-            email,
-            options: {
-                emailRedirectTo: 'https://code-7of.pages.dev'
-            }
-        });
-
-        if (error) {
-            showMessage('Something went wrong. Please try again! 🌸', 'error');
-            btn.disabled = false;
-            btn.textContent = '✨ Send Magic Link';
-        } else {
-            showMessage('Magic link sent! Check your email and click the link to sign in 💖', 'success');
-            btn.textContent = '✅ Email Sent!';
-        }
-    });
-
-    input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') btn.click();
-    });
-
-    function showMessage(text, type) {
-        message.textContent = text;
-        message.className = `signin-message ${type}`;
-    }
-</script>
-</body>
-</html>
+        <!-- Step 1: Enter Email -->
+        <div class="step active" id="step-email">
+            <div class="signin-title">🎀 Welcome!</div>
+            <div class="signin-subtitle">Enter your email and we'll send you a 6

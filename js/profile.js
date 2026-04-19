@@ -70,15 +70,14 @@
     const profileGreeting = document.getElementById('profileGreeting');
     const weekSchedule    = document.getElementById('weekSchedule');
 
-    // ── CHECK AUTH SESSION ──
-    const session = await window.supabaseHelper.getSession();
+// ── CHECK AUTH SESSION ──
+const session = await window.supabaseHelper.getSession();
 
-    if (!session) {
-      // Not logged in — redirect to sign in
-      window.location.href = '/signin.html';
-      return;
-    }
-
+if (!session) {
+  // Auth coming soon — continue without session for now
+  await window.appMain.setupCalendar();
+  return;
+}
     // ── AUTO-LOAD PROFILE BY AUTH ID ──
     const dbProfile = await window.supabaseHelper.loadProfileByAuthId();
 

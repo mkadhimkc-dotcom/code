@@ -1,25 +1,22 @@
 /*
- * supabase.js — Vite bundled version
- * ─────────────────────────────────────────────────────────────────
- * Client is created in src/main.js and exposed as window.supabaseClient
- * ─────────────────────────────────────────────────────────────────
+ * supabase.js — Sprint 3 + Auth
  */
 
 (function () {
-const { createClient } = window.supabase;
-const client = createClient(
-  'https://xragzrjatiudhbrubejf.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM',
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-      flowType: 'pkce'
+  const { createClient } = window.supabase;
+
+  const client = createClient(
+    'https://xragzrjatiudhbrubejf.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM',
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        flowType: 'pkce'
+      }
     }
-  }
-);
-  // ── AUTH HELPERS ─────────────────────────────────────────────────
+  );
 
   async function getSession() {
     const { data: { session }, error } = await client.auth.getSession();
@@ -43,7 +40,6 @@ const client = createClient(
     return client.auth.onAuthStateChange(callback);
   }
 
-  // ── PROFILES ────────────────────────────────────────────────────
   async function saveProfile(profile) {
     const user = await getUser();
     if (!user) return null;
@@ -51,8 +47,8 @@ const client = createClient(
     const { data, error } = await client
       .from('profiles')
       .upsert(
-        { 
-          username: profile.name, 
+        {
+          username: profile.name,
           start_date: profile.startDate,
           auth_user_id: user.id
         },
@@ -87,7 +83,6 @@ const client = createClient(
     return data;
   }
 
-  // ── WORKOUT LOGS ────────────────────────────────────────────────
   async function saveWorkoutLog(log) {
     const { error } = await client.from('workout_logs').insert([log]);
     if (error) console.error('saveWorkoutLog error:', error.message);
@@ -103,7 +98,6 @@ const client = createClient(
     return data;
   }
 
-  // ── CHECKBOX STATES ─────────────────────────────────────────────
   async function saveCheckboxState(profileId, checkboxId, checked) {
     const { error } = await client
       .from('checkbox_states')
@@ -133,7 +127,6 @@ const client = createClient(
     if (error) console.error('clearCheckboxStates error:', error.message);
   }
 
-  // ── USER WORKOUTS ───────────────────────────────────────────────
   async function addCustomWorkout(assignment) {
     const { data, error } = await client
       .from('user_workouts')
@@ -162,7 +155,6 @@ const client = createClient(
     if (error) console.error('removeCustomWorkout error:', error.message);
   }
 
-  // ── EXPOSE ──────────────────────────────────────────────────────
   window.supabaseHelper = {
     client,
     getSession,

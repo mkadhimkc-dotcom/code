@@ -22,7 +22,7 @@
   // ── LOAD WORKOUT DATA ───────────────────────────────────────────
   async function loadWorkoutData() {
     try {
-      const response = await fetch('data/workouts.json');
+      const response = await fetch('/data/workouts.json');
       workoutData = await response.json();
       renderWorkouts();
     } catch (err) {

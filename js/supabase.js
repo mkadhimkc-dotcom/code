@@ -6,8 +6,19 @@
  */
 
 (function () {
-  const client = window.supabaseClient;
-
+const { createClient } = window.supabase;
+const client = createClient(
+  'https://xragzrjatiudhbrubejf.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM',
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      flowType: 'pkce'
+    }
+  }
+);
   // ── AUTH HELPERS ─────────────────────────────────────────────────
 
   async function getSession() {

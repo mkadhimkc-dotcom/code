@@ -1,28 +1,13 @@
 /*
- * supabase.js — Sprint 3 + Auth
+ * supabase.js — Vite bundled version
  * ─────────────────────────────────────────────────────────────────
- * Supabase client with proper Auth session management
+ * Client is created in src/main.js and exposed as window.supabase
  * ─────────────────────────────────────────────────────────────────
  */
 
 (function () {
-  const SUPABASE_URL = 'https://xragzrjatiudhbrubejf.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM';
-
-  if (typeof supabase === 'undefined') {
-    console.error('Supabase CDN not loaded.');
-    return;
-  }
-
-  const { createClient } = supabase;
-  const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-      flowType: 'pkce'
-    }
-  });
+  const { createClient } = window.supabase;
+  const client = createClient();
 
   // ── AUTH HELPERS ─────────────────────────────────────────────────
 

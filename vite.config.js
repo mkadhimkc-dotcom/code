@@ -7,6 +7,11 @@ export default defineConfig({
       input: {
         main: 'index.html',
         signin: 'signin.html'
+      },
+      output: {
+        entryFileNames: `assets/[name]-[hash]-v2.js`,
+        chunkFileNames: `assets/[name]-[hash]-v2.js`,
+        assetFileNames: `assets/[name]-[hash]-v2.[ext]`
       }
     }
   },

@@ -1,0 +1,101 @@
+[33mcommit 86847880b4d6c1c3b6870461bd4680f6c46f55a5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: mkadhimkc-dotcom <mkadhimkc@gmail.com>
+Date:   Tue Apr 21 12:46:14 2026 -0700
+
+    Refactor supabase.js for Sprint 3 Auth
+
+[1mdiff --git a/js/supabase.js b/js/supabase.js[m
+[1mindex a28814f..a1d4603 100644[m
+[1m--- a/js/supabase.js[m
+[1m+++ b/js/supabase.js[m
+[36m@@ -1,25 +1,22 @@[m
+ /*[m
+[31m- * supabase.js — Vite bundled version[m
+[31m- * ─────────────────────────────────────────────────────────────────[m
+[31m- * Client is created in src/main.js and exposed as window.supabaseClient[m
+[31m- * ─────────────────────────────────────────────────────────────────[m
+[32m+[m[32m * supabase.js — Sprint 3 + Auth[m
+  */[m
+ [m
+ (function () {[m
+[31m-const { createClient } = window.supabase;[m
+[31m-const client = createClient([m
+[31m-  'https://xragzrjatiudhbrubejf.supabase.co',[m
+[31m-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM',[m
+[31m-  {[m
+[31m-    auth: {[m
+[31m-      persistSession: true,[m
+[31m-      autoRefreshToken: true,[m
+[31m-      detectSessionInUrl: true,[m
+[31m-      flowType: 'pkce'[m
+[32m+[m[32m  const { createClient } = window.supabase;[m
+[32m+[m
+[32m+[m[32m  const client = createClient([m
+[32m+[m[32m    'https://xragzrjatiudhbrubejf.supabase.co',[m
+[32m+[m[32m    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWd6cmphdGl1ZGhicnViZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY4MTIsImV4cCI6MjA5MTg4MjgxMn0.JyX4aWIK6TTHPeyITWMYGLRRvgANVR2j20wSti5-WUM',[m
+[32m+[m[32m    {[m
+[32m+[m[32m      auth: {[m
+[32m+[m[32m        persistSession: true,[m
+[32m+[m[32m        autoRefreshToken: true,[m
+[32m+[m[32m        detectSessionInUrl: true,[m
+[32m+[m[32m        flowType: 'pkce'[m
+[32m+[m[32m      }[m
+     }[m
+[31m-  }[m
+[31m-);[m
+[31m-  // ── AUTH HELPERS ─────────────────────────────────────────────────[m
+[32m+[m[32m  );[m
+ [m
+   async function getSession() {[m
+     const { data: { session }, error } = await client.auth.getSession();[m
+[36m@@ -43,7 +40,6 @@[m [mconst client = createClient([m
+     return client.auth.onAuthStateChange(callback);[m
+   }[m
+ [m
+[31m-  // ── PROFILES ────────────────────────────────────────────────────[m
+   async function saveProfile(profile) {[m
+     const user = await getUser();[m
+     if (!user) return null;[m
+[36m@@ -51,8 +47,8 @@[m [mconst client = createClient([m
+     const { data, error } = await client[m
+       .from('profiles')[m
+       .upsert([m
+[31m-        { [m
+[31m-          username: profile.name, [m
+[32m+[m[32m        {[m
+[32m+[m[32m          username: profile.name,[m
+           start_date: profile.startDate,[m
+           auth_user_id: user.id[m
+         },[m
+[36m@@ -87,7 +83,6 @@[m [mconst client = createClient([m
+     return data;[m
+   }[m
+ [m
+[31m-  // ── WORKOUT LOGS ────────────────────────────────────────────────[m
+   async function saveWorkoutLog(log) {[m
+     const { error } = await client.from('workout_logs').insert([log]);[m
+     if (error) console.error('saveWorkoutLog error:', error.message);[m
+[36m@@ -103,7 +98,6 @@[m [mconst client = createClient([m
+     return data;[m
+   }[m
+ [m
+[31m-  // ── CHECKBOX STATES ─────────────────────────────────────────────[m
+   async function saveCheckboxState(profileId, checkboxId, checked) {[m
+     const { error } = await client[m
+       .from('checkbox_states')[m
+[36m@@ -133,7 +127,6 @@[m [mconst client = createClient([m
+     if (error) console.error('clearCheckboxStates error:', error.message);[m
+   }[m
+ [m
+[31m-  // ── USER WORKOUTS ───────────────────────────────────────────────[m
+   async function addCustomWorkout(assignment) {[m
+     const { data, error } = await client[m
+       .from('user_workouts')[m
+[36m@@ -162,7 +155,6 @@[m [mconst client = createClient([m
+     if (error) console.error('removeCustomWorkout error:', error.message);[m
+   }[m
+ [m
+[31m-  // ── EXPOSE ──────────────────────────────────────────────────────[m
+   window.supabaseHelper = {[m
+     client,[m
+     getSession,[m

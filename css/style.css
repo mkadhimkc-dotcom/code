@@ -1,3 +1,32 @@
+/* ── SELF-HOSTED NUNITO FONTS ─────────────────────────────── */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/nunito-v32-latin-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/nunito-v32-latin-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/nunito-v32-latin-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../fonts/nunito-v32-latin-900.woff2') format('woff2');
+}
 /* 🎀 SANRIO INSPIRED COLOR PALETTE & VARIABLES 🎀 */
 :root {
     --kitty-white: #ffffff;

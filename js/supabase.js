@@ -1,13 +1,12 @@
 /*
  * supabase.js — Vite bundled version
  * ─────────────────────────────────────────────────────────────────
- * Client is created in src/main.js and exposed as window.supabase
+ * Client is created in src/main.js and exposed as window.supabaseClient
  * ─────────────────────────────────────────────────────────────────
  */
 
 (function () {
-  const { createClient } = window.supabase;
-  const client = createClient();
+  const client = window.supabaseClient;
 
   // ── AUTH HELPERS ─────────────────────────────────────────────────
 

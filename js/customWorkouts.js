@@ -13,7 +13,7 @@
   // ── INITIALIZE ──────────────────────────────────────────────────
   async function initialize() {
     // Load workout data to get all exercises
-    const response = await fetch('data/workouts.json');
+    const response = await fetch('/data/workouts.json');
     const data = await response.json();
     
     // Flatten all exercises from all sections

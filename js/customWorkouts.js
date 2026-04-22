@@ -123,6 +123,8 @@
     }
 
 // Check local array first (fast), then DB (accurate)
+console.log('customWorkouts array:', customWorkouts.length, customWorkouts);
+    const localDuplicate = customWorkouts.some(w => w.page === currentPage && w.exercise_id === exerciseId);
     const localDuplicate = customWorkouts.some(w => w.page === currentPage && w.exercise_id === exerciseId);
     if (localDuplicate) {
       window.appMain.showToast('Already in this section! 🎀');

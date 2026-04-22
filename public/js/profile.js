@@ -48,13 +48,24 @@
       if (isCurrentWeek) row.classList.add('current-week');
       if (isDeload) row.classList.add('deload-week');
 
-      row.innerHTML =
-        '<span class="week-badge">' + weekEmojis[w] + (isCurrentWeek ? ' ← Now' : '') + '</span>' +
-        '<div>' +
-          '<div class="week-dates">' + formatDate(weekStart) + ' – ' + formatDate(weekEnd) + '</div>' +
-          '<div class="week-label">' + weekTypes[w] + '</div>' +
-        '</div>';
-      container.appendChild(row);
+      const badge = document.createElement('span');
+        badge.className = 'week-badge';
+        badge.textContent = weekEmojis[w] + (isCurrentWeek ? ' ← Now' : '');
+
+        const info = document.createElement('div');
+
+        const dates = document.createElement('div');
+        dates.className = 'week-dates';
+        dates.textContent = formatDate(weekStart) + ' – ' + formatDate(weekEnd);
+
+        const label = document.createElement('div');
+        label.className = 'week-label';
+        label.textContent = weekTypes[w];
+
+        info.appendChild(dates);
+        info.appendChild(label);
+        row.appendChild(badge);
+        row.appendChild(info);pendChild(row);
     }
   }
 

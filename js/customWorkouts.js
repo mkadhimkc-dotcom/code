@@ -122,15 +122,14 @@
       return;
     }
 
-// Check local array first (fast), then DB (accurate)
-console.log('customWorkouts array:', customWorkouts.length, customWorkouts);
-    const localDuplicate = customWorkouts.some(w => w.page === currentPage && w.exercise_id === exerciseId);
+    // Check local array first (fast)
     const localDuplicate = customWorkouts.some(w => w.page === currentPage && w.exercise_id === exerciseId);
     if (localDuplicate) {
       window.appMain.showToast('Already in this section! 🎀');
       return;
     }
 
+    // Double-check with DB (accurate)
     const existing = await window.supabaseHelper.getCustomWorkouts(profileId);
     const isDuplicate = existing.some(w => w.page === currentPage && w.exercise_id === exerciseId);
     if (isDuplicate) {

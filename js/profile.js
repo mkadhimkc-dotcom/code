@@ -65,8 +65,8 @@
         info.appendChild(dates);
         info.appendChild(label);
         row.appendChild(badge);
-        row.appendChild(info);pendChild(row);
-    }
+		row.appendChild(info);
+        container.appendChild(row);    }
   }
 
   function formatDate(date) {

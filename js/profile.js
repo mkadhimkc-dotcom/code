@@ -140,7 +140,15 @@ if (!session) {
   }
 
   // Initialize on DOM ready
-  document.addEventListener('DOMContentLoaded', setupProfile);
+async function waitForSupabase() {
+  while (!window.supabaseHelper) {
+    await new Promise(resolve => setTimeout(resolve, 10));
+  }
+}
 
+document.addEventListener('DOMContentLoaded', async () => {
+  await waitForSupabase();
+  setupProfile();
+});
   window.profileManager = { setupProfile };
 })();

@@ -295,8 +295,17 @@
   }
 
   // ── EXPOSE ──────────────────────────────────────────────────────
+async function waitForSupabase() {
+    while (!window.supabaseHelper) {
+      await new Promise(resolve => setTimeout(resolve, 10));
+    }
+  }
+
   window.customWorkouts = {
-    initialize,
+    initialize: async function() {
+      await waitForSupabase();
+      return initialize();
+    },
     closeModal,
     loadCustomWorkouts
   };

@@ -122,7 +122,13 @@
       return;
     }
 
-    // Fetch fresh from DB to check for duplicates
+// Check local array first (fast), then DB (accurate)
+    const localDuplicate = customWorkouts.some(w => w.page === currentPage && w.exercise_id === exerciseId);
+    if (localDuplicate) {
+      window.appMain.showToast('Already in this section! 🎀');
+      return;
+    }
+
     const existing = await window.supabaseHelper.getCustomWorkouts(profileId);
     const isDuplicate = existing.some(w => w.page === currentPage && w.exercise_id === exerciseId);
     if (isDuplicate) {

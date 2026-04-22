@@ -93,18 +93,34 @@
       const card = document.createElement('div');
       card.className = 'library-card';
       
-      const img = exercise.images && exercise.images[0] 
-        ? `<img src="${exercise.images[0].src}" alt="${exercise.title}">`
-        : '';
       
-      card.innerHTML = `
-        ${img}
-        <div class="library-card-info">
-          <div class="library-card-title">${exercise.title}</div>
-          <div class="library-card-meta">${exercise.meta || ''}</div>
-        </div>
-        <button class="library-card-add" data-exercise-id="${exercise.exercise_id}">Add</button>
-      `;
+if (exercise.images && exercise.images[0]) {
+        const imgEl = document.createElement('img');
+        imgEl.src = exercise.images[0].src;
+        imgEl.alt = exercise.title;
+        card.appendChild(imgEl);
+      }
+
+      const info = document.createElement('div');
+      info.className = 'library-card-info';
+
+      const cardTitle = document.createElement('div');
+      cardTitle.className = 'library-card-title';
+      cardTitle.textContent = exercise.title;
+
+      const cardMeta = document.createElement('div');
+      cardMeta.className = 'library-card-meta';
+      cardMeta.textContent = exercise.meta || '';
+
+      info.appendChild(cardTitle);
+      info.appendChild(cardMeta);
+      card.appendChild(info);
+
+      const addBtn = document.createElement('button');
+      addBtn.className = 'library-card-add';
+      addBtn.dataset.exerciseId = exercise.exercise_id;
+      addBtn.textContent = 'Add';
+      card.appendChild(addBtn);
       
       // Add click handler
       card.querySelector('.library-card-add').addEventListener('click', () => {

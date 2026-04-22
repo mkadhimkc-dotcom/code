@@ -413,10 +413,16 @@
           hour12: true 
         });
         
-        entry.innerHTML = `
-          <div class="workout-entry-type">${emojiMap[log.workout_type] || '✨'} ${nameMap[log.workout_type] || log.workout_type}</div>
-          <div class="workout-entry-time">${timeStr}</div>
-        `;
+const entryType = document.createElement('div');
+        entryType.className = 'workout-entry-type';
+        entryType.textContent = `${emojiMap[log.workout_type] || '✨'} ${nameMap[log.workout_type] || log.workout_type}`;
+        
+        const entryTime = document.createElement('div');
+        entryTime.className = 'workout-entry-time';
+        entryTime.textContent = timeStr;
+        
+        entry.appendChild(entryType);
+        entry.appendChild(entryTime);
         
         workoutsBody.appendChild(entry);
       });

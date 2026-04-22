@@ -111,8 +111,8 @@ if (!session) {
         const name = document.getElementById('userName').value.trim();
         const date = document.getElementById('startDate').value;
 
-        if (!name) { alert('Please enter your name, cutie! 🎀'); return; }
-        if (!date) { alert('Please pick a start date! 📅'); return; }
+		if (!name) { window.appMain.showToast('Please enter your name, cutie! 🎀'); return; }
+        if (!date) { window.appMain.showToast('Please pick a start date! 📅'); return; }
 
         saveProfileBtn.textContent = 'Saving… 💾';
         saveProfileBtn.disabled = true;
@@ -120,7 +120,7 @@ if (!session) {
         const saved = await window.supabaseHelper.saveProfile({ name, startDate: date });
 
         if (!saved) {
-          alert('Could not save your profile. Please try again! 🌸');
+		window.appMain.showToast('Could not save your profile. Please try again! 🌸');
           saveProfileBtn.textContent = '💾 Save My Profile';
           saveProfileBtn.disabled = false;
           return;

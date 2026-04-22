@@ -118,7 +118,7 @@
   async function addExerciseToPage(exerciseId) {
     const profileId = localStorage.getItem('profile_id');
     if (!profileId) {
-      alert('Please save your profile first! 🎀');
+      window.appMain.showToast('Please save your profile first! 🎀');
       return;
     }
 
@@ -154,7 +154,7 @@
       closeModal();
       window.appMain.showToast('Exercise added! 💖');
     } else {
-      alert('Could not add exercise. Please try again! 🌸');
+      window.appMain.showToast('Could not add exercise. Please try again! 🌸');
     }
   }
 
@@ -273,11 +273,12 @@
 
   // ── REMOVE EXERCISE ─────────────────────────────────────────────
   async function removeExercise(assignmentId) {
-    if (!confirm('Remove this exercise from your workout? 🎀')) return;
-    await window.supabaseHelper.removeCustomWorkout(assignmentId);
-    customWorkouts = customWorkouts.filter(w => w.id !== assignmentId);
-    renderCustomWorkouts();
-    window.appMain.showToast('Exercise removed! 💖');
+	window.appMain.showConfirm('Remove this exercise from your workout? 🎀', async () => {
+      await window.supabaseHelper.removeCustomWorkout(assignmentId);
+      customWorkouts = customWorkouts.filter(w => w.id !== assignmentId);
+      renderCustomWorkouts();
+      window.appMain.showToast('Exercise removed! 💖');
+    });
   }
 
   // ── EXPOSE ──────────────────────────────────────────────────────

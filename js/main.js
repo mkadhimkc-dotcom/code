@@ -173,8 +173,7 @@
     if (!resetBtn) return;
 
     resetBtn.addEventListener('click', async () => {
-      if (!confirm('Reset all checkboxes? This cannot be undone! 🎀')) return;
-
+	window.appMain.showConfirm('Reset all checkboxes? This cannot be undone! 🎀', async () => {
       const profileId = localStorage.getItem('profile_id');
       if (!profileId) {
         alert('Please save your profile first! 🌸');
@@ -189,7 +188,8 @@
         cb.checked = false;
       });
 
-      showToast('Diary reset! Starting fresh 💖');
+     showToast('Diary reset! Starting fresh 💖');
+      });
     });
   }
 
@@ -203,7 +203,7 @@
 
       const profileId = localStorage.getItem('profile_id');
       if (!profileId) {
-        alert('Please save your profile first! 🌸');
+        showToast('Please save your profile first! 🌸');
         e.target.checked = false;
         return;
       }
@@ -479,11 +479,49 @@ const entryType = document.createElement('div');
     }, 3000);
   }
 
+// ── SHOW CONFIRM MODAL ──────────────────────────────────────────
+  function showConfirm(message, onConfirm) {
+    const existing = document.querySelector('.confirm-modal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.className = 'confirm-modal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;';
+
+    const box = document.createElement('div');
+    box.style.cssText = 'background:white;border:4px solid #1a1a1a;border-radius:20px;padding:2rem;max-width:360px;width:100%;text-align:center;box-shadow:6px 6px 0 #ff52a3;';
+
+    const msg = document.createElement('p');
+    msg.style.cssText = 'font-weight:700;font-size:1rem;margin-bottom:1.5rem;color:#1a1a1a;';
+    msg.textContent = message;
+
+    const btnRow = document.createElement('div');
+    btnRow.style.cssText = 'display:flex;gap:12px;justify-content:center;';
+
+    const confirmBtn = document.createElement('button');
+    confirmBtn.textContent = 'Yes, do it!';
+    confirmBtn.style.cssText = 'padding:10px 20px;background:#ff52a3;color:white;border:3px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;';
+    confirmBtn.onclick = () => { modal.remove(); onConfirm(); };
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = 'Cancel';
+    cancelBtn.style.cssText = 'padding:10px 20px;background:white;color:#1a1a1a;border:3px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;';
+    cancelBtn.onclick = () => modal.remove();
+
+    btnRow.appendChild(cancelBtn);
+    btnRow.appendChild(confirmBtn);
+    box.appendChild(msg);
+    box.appendChild(btnRow);
+    modal.appendChild(box);
+    document.body.appendChild(modal);
+  }
+
   // ── EXPOSE ──────────────────────────────────────────────────────
   window.appMain = {
     setupCalendar,
     restoreCheckboxStates,
     showToast,
+    showConfirm,
     closeCalendarModal
   };
 

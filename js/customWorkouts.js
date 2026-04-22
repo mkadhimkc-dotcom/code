@@ -150,7 +150,15 @@ if (exercise.images && exercise.images[0]) {
     }
     
     // Get next sort order
-    const existingOnPage = customWorkouts.filter(w => w.page === currentPage);
+ const existingOnPage = customWorkouts.filter(w => w.page === currentPage);
+    
+    // Check for duplicate
+    const isDuplicate = existingOnPage.some(w => w.exercise_id === exerciseId);
+    if (isDuplicate) {
+      window.appMain.showToast('This exercise is already in this section! 🎀');
+      return;
+    }
+
     const sortOrder = existingOnPage.length;
     
     const assignment = {

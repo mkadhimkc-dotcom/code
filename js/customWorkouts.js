@@ -117,11 +117,13 @@ if (exercise.images && exercise.images[0]) {
       card.appendChild(info);
 
       const addBtn = document.createElement('button');
-      addBtn.className = 'library-card-add';
+   addBtn.className = 'library-card-add';
       addBtn.dataset.exerciseId = exercise.exercise_id;
       addBtn.textContent = 'Add';
-      card.appendChild(addBtn);
-      
+      addBtn.addEventListener('click', () => {
+        addExerciseToPage(exercise.exercise_id);
+      });
+      card.appendChild(addBtn);   
       // Add click handler
       card.querySelector('.library-card-add').addEventListener('click', () => {
         addExerciseToPage(exercise.exercise_id);

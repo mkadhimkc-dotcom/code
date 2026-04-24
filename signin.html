@@ -154,6 +154,7 @@
  <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fcf22b5ff2e443269c842dcc3e850a1e"}'></script>
     <!-- End Cloudflare Web Analytics -->
+     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
     <div class="signin-box">
@@ -163,6 +164,7 @@
             <div class="signin-title">🎀 Welcome!</div>
             <div class="signin-subtitle">Enter your email and we'll send you a 6-digit code to sign in 💖</div>
             <input type="email" id="email-input" class="signin-input" placeholder="your@email.com" autocomplete="email" />
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAADCn04Mxrbi4x6ax" data-theme="light" style="margin-bottom:1rem;display:flex;justify-content:center;"></div>
             <button class="signin-btn" id="send-code-btn">✨ Send Code</button>
             <div class="signin-message" id="email-message"></div>
         </div>
@@ -229,6 +231,8 @@
         document.getElementById('send-code-btn').addEventListener('click', async () => {
             const email = document.getElementById('email-input').value.trim();
             if (!email) { showMessage('email-message', 'Please enter your email 🌸', 'error'); return; }
+            const tsResponse = window.turnstile?.getResponse();
+            if (!tsResponse) { showMessage('email-message', 'Please complete the security check 🌸', 'error'); return; }
 
             const btn = document.getElementById('send-code-btn');
             btn.disabled = true;
@@ -246,6 +250,7 @@
                 showMessage('email-message', 'Something went wrong. Try again! 🌸', 'error');
                 btn.disabled = false;
                 btn.textContent = '✨ Send Code';
+                window.turnstile?.reset();
             } else {
                 userEmail = email;
                 document.getElementById('email-display').textContent = `Code sent to: ${email}`;

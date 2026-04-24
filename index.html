@@ -9,6 +9,20 @@
  <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fcf22b5ff2e443269c842dcc3e850a1e"}'></script>
     <!-- End Cloudflare Web Analytics -->
+	<script
+  src="https://js.sentry-cdn.com/ea6057fb19615722bb3cdf845aa326a9.min.js"
+  crossorigin="anonymous"
+></script>
+<script>
+  Sentry.onLoad(function() {
+    Sentry.init({
+      environment: "production",
+      tracesSampleRate: 0.2,
+      replaysSessionSampleRate: 0,
+      replaysOnErrorSampleRate: 0,
+    });
+  });
+</script>
 </head>
 <body>
 <div class="container">

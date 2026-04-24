@@ -322,6 +322,12 @@
         client.auth.getSession().then(({ data: { session } }) => {
             if (session) window.location.href = '/';
         });
+		// Show deletion confirmation
+const params = new URLSearchParams(window.location.search);
+if (params.get('deleted') === '1') {
+  const sub = document.querySelector('.subtitle');
+  if (sub) sub.textContent = 'Your account has been deleted. Sorry to see you go! 💔';
+}
     </script>
 <footer style="text-align:center;padding:1.5rem;font-size:0.75rem;color:#999;border-top:1px solid #eee;margin-top:2rem;">
   <a href="https://www.iubenda.com/privacy-policy/59601073" target="_blank" rel="noopener" style="color:#999;text-decoration:none;margin:0 8px;">Privacy Policy</a>

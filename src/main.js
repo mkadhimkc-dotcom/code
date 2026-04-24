@@ -3,7 +3,6 @@ import * as Sentry from "@sentry/browser";
 Sentry.init({
   dsn: "https://ea6057fb19615722bb3cdf845aa326a9@o4511265294909440.ingest.us.sentry.io/4511265304805376",
   environment: "production",
-  tracesSampleRate: 0.2,
   sendDefaultPii: false,
 });
 import { createClient } from '@supabase/supabase-js'

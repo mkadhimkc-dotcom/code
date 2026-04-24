@@ -9,23 +9,30 @@
  <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fcf22b5ff2e443269c842dcc3e850a1e"}'></script>
     <!-- End Cloudflare Web Analytics -->
+	<script src="https://unpkg.com/@phosphor-icons/web" defer></script>
 </head>
 <body>
 <div class="container">
   
 
 <nav class="workout-nav">
-    <button class="nav-btn active" data-page="home">🏠 Home</button>
-    <button class="nav-btn" data-page="glutes">🍑 Glutes</button>
-    <button class="nav-btn" data-page="back">🎀 Back</button>
-    <button class="nav-btn" data-page="core">💪 Core</button>
-    <button class="nav-btn" data-page="cardio">💦 Cardio</button>
-    <button class="nav-btn" data-page="library">📚 Library</button>
-    <button class="theme-toggle" id="theme-toggle" title="Switch Theme">
-        <span class="theme-icon">✨</span>
+    <button class="nav-btn active" data-page="home">
+        <i class="ph ph-house"></i>
+        <span>Home</span>
     </button>
-    <button class="nav-btn" id="signout-btn" title="Sign Out" onclick="window.supabaseHelper.signOut()">
-        🚪 Out
+    <button class="nav-btn" data-page="workouts">
+        <i class="ph ph-barbell"></i>
+        <span>My Workouts</span>
+    </button>
+    <button class="nav-btn" data-page="profile">
+        <i class="ph ph-user"></i>
+        <span>Profile</span>
+    </button>
+    <button class="theme-toggle" id="theme-toggle" title="Switch Theme">
+        <i class="ph ph-sun" id="theme-icon"></i>
+    </button>
+    <button class="nav-btn" id="signout-btn" title="Sign Out" onclick="window.supabaseHelper.signOut()" aria-label="Sign out">
+        <i class="ph ph-sign-out"></i>
     </button>
 </nav>
 
@@ -83,33 +90,16 @@
         </div>
     </div>
 
-    <div id="glutes" class="page workout-page">
-        <h2>🍑 Glutes</h2>
-        <div class="exercise-grid" data-workout-grid="glutes"></div>
-    </div>
 
-    <div id="back" class="page workout-page">
-        <h2>🎀 Back</h2>
-        <div class="exercise-grid" data-workout-grid="back"></div>
-    </div>
+	<div id="workouts" class="page workout-page">
+    <h2>My Workouts</h2>
+    <p style="text-align:center;color:#999;padding:2rem;">Your workout program will appear here. Coming soon!</p>
+	</div>
 
-    <div id="core" class="page workout-page">
-        <h2>💪 Core</h2>
-        <div class="exercise-grid" data-workout-grid="core"></div>
-    </div>
-
-    <div id="cardio" class="page workout-page">
-        <h2>💦 Cardio &amp; Active Recovery</h2>
-        <div class="exercise-grid" data-workout-grid="cardio"></div>
-    </div>
-
-    <div id="library" class="page workout-page">
-        <h2>📚 Exercise Library</h2>
-        <p style="text-align:center; color: var(--kitty-pink); font-weight:700; margin-bottom:1.5rem;">
-            All exercises available for your custom workouts 💖
-        </p>
-        <div class="exercise-grid" data-workout-grid="library"></div>
-    </div>
+<div id="profile-page" class="page workout-page">
+    <h2>My Profile</h2>
+    <p style="text-align:center;color:#999;padding:2rem;">Full profile view coming soon!</p>
+</div>
 </div>
 
 <!-- Calendar Modal -->

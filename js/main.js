@@ -1,8 +1,8 @@
 /*
- * main.js — Sprint 2 & 3C
+ * main.js — Clulee Phase 2
  * ─────────────────────────────────────────────────────────────────
- * Main application logic for Claire Workout App
- * Includes: Calendar with clickable dates, workout completion tracking
+ * Main application logic for Clulee
+ * Includes: Calendar, workout tracking, card redesign, rest timer
  * ─────────────────────────────────────────────────────────────────
  */
 
@@ -11,7 +11,6 @@
   let workoutLogsCache = [];
 
   // ── DONE CHECKBOX MAP ───────────────────────────────────────────
-  // Maps "Done!" checkbox IDs to workout types for logging
   const DONE_CHECKBOX_MAP = {
     'A-Cardio': 'glutes',
     'B-Cardio': 'back',
@@ -33,13 +32,10 @@
   // ── RENDER WORKOUTS ─────────────────────────────────────────────
   function renderWorkouts() {
     if (!workoutData) return;
-
     workoutData.sections.forEach(section => {
       const grid = document.querySelector(`[data-workout-grid="${section.id}"]`);
       if (!grid) return;
-
       grid.innerHTML = '';
-
       section.exercises.forEach(exercise => {
         const card = createCard(exercise);
         grid.appendChild(card);
@@ -47,130 +43,183 @@
     });
   }
 
-/* ══════════════════════════════════════════════════════════════
-   CARD REDESIGN — US-6.1 / US-6.2
-   ══════════════════════════════════════════════════════════════ */
+  // ── CREATE CARD ─────────────────────────────────────────────────
+  function createCard(exercise) {
+    const card = document.createElement('div');
+    card.className = 'card';
 
-.card-body {
-  padding: var(--space-3) var(--space-1) var(--space-1);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  flex: 1;
-}
+    // ── MEDIA (full width, top) ──
+    const imgContainer = document.createElement('div');
+    imgContainer.className = 'image-container';
 
-.image-container {
-  aspect-ratio: 16 / 9;
-  height: auto;
-  min-height: 160px;
-}
+    if (exercise.images && exercise.images.length > 0) {
+      const img = document.createElement('img');
+      img.src = exercise.images[0].src;
+      img.alt = exercise.title;
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.parentElement.classList.add('no-media');
+        this.remove();
+      };
+      imgContainer.appendChild(img);
+    } else {
+      imgContainer.classList.add('no-media');
+    }
+    card.appendChild(imgContainer);
 
-.image-container.no-media {
-  background: var(--clr-primary-soft);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 120px;
-}
+    // ── CARD BODY ──
+    const body = document.createElement('div');
+    body.className = 'card-body';
 
-.image-container.no-media::after {
-  content: '💪';
-  font-size: 3rem;
-  opacity: 0.4;
-}
+    // Title
+    const title = document.createElement('div');
+    title.className = 'card-title';
+    title.textContent = exercise.title;
+    body.appendChild(title);
 
-/* Stat pills */
-.stat-pills {
-  display: flex;
-  gap: var(--space-2);
-  justify-content: flex-start;
-}
+    // Tags row (muscle group + difficulty + badges)
+    const tagsRow = document.createElement('div');
+    tagsRow.className = 'badges';
 
-.stat-pill {
-  background: var(--clr-primary-soft);
-  border: 1.5px solid var(--clr-border-strong);
-  border-radius: var(--radius-md);
-  padding: var(--space-2) var(--space-3);
-  text-align: center;
-  min-width: 64px;
-}
+    if (exercise.muscleGroup) {
+      const muscle = document.createElement('span');
+      muscle.className = 'badge badge-muscle';
+      muscle.textContent = exercise.muscleGroup;
+      tagsRow.appendChild(muscle);
+    }
 
-.stat-pill-value {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-black);
-  color: var(--clr-primary);
-  line-height: 1;
-}
+    if (exercise.difficulty) {
+      const diff = document.createElement('span');
+      diff.className = `badge badge-difficulty badge-${exercise.difficulty.toLowerCase()}`;
+      diff.textContent = exercise.difficulty;
+      tagsRow.appendChild(diff);
+    }
 
-.stat-pill-label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  color: var(--clr-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 2px;
-}
+    if (exercise.badges) {
+      exercise.badges.forEach(badge => {
+        const span = document.createElement('span');
+        span.className = badge.type ? `badge ${badge.type}` : 'badge';
+        span.textContent = badge.label;
+        tagsRow.appendChild(span);
+      });
+    }
 
-/* Badge variants */
-.badge-muscle {
-  background: var(--clr-primary-soft);
-  color: var(--clr-primary-dark);
-  border-color: var(--clr-border-strong);
-}
+    if (tagsRow.children.length > 0) body.appendChild(tagsRow);
 
-.badge-difficulty {
-  background: var(--clr-gray-100);
-  color: var(--clr-gray-700);
-  border-color: var(--clr-gray-300);
-}
+    // ── STAT PILLS (sets / reps / rest) ──
+    if (exercise.meta) {
+      const pills = document.createElement('div');
+      pills.className = 'stat-pills';
 
-.badge-beginner { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
-.badge-intermediate { background: #fff8e1; color: #e65100; border-color: #ffe082; }
-.badge-advanced { background: #fce4ec; color: #c2185b; border-color: #f48fb1; }
+      const parts = exercise.meta.split('|').map(s => s.trim());
+      const labels = ['Sets', 'Reps', 'Rest'];
 
-/* Rest timer button */
-.rest-timer-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  margin-top: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  background: var(--clr-primary);
-  color: var(--clr-white);
-  border: 2px solid var(--clr-black);
-  border-radius: var(--radius-full);
-  font-family: var(--font-main);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 2px 2px 0px var(--clr-black);
-}
+      parts.forEach((part, i) => {
+        const pill = document.createElement('div');
+        pill.className = 'stat-pill';
 
-.rest-timer-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 3px 3px 0px var(--clr-black);
-}
+        const val = document.createElement('div');
+        val.className = 'stat-pill-value';
+        val.textContent = part;
 
-.rest-timer-btn i { font-size: 1rem; }
+        const lbl = document.createElement('div');
+        lbl.className = 'stat-pill-label';
+        lbl.textContent = labels[i] || '';
+
+        pill.appendChild(val);
+        pill.appendChild(lbl);
+        pills.appendChild(pill);
+      });
+
+      body.appendChild(pills);
+    }
+
+    // Coaching cue
+    if (exercise.cue) {
+      const cue = document.createElement('div');
+      cue.className = 'cue';
+      cue.textContent = exercise.cue;
+      body.appendChild(cue);
+    }
+
+    // ── SETS TRACKER ──
+    if (exercise.sets) {
+      const tracker = document.createElement('div');
+      tracker.className = 'sets-tracker';
+
+      exercise.sets.forEach(set => {
+        const label = document.createElement('label');
+        label.className = 'set-checkbox';
+
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.dataset.id = set.id;
+
+        const indicator = document.createElement('span');
+        indicator.className = 'heart-indicator';
+
+        const number = document.createElement('span');
+        number.className = 'set-number';
+        number.textContent = set.label;
+
+        label.append(input, indicator, number);
+        tracker.appendChild(label);
+      });
+
+      // ── REST TIMER BUTTON ──
+      const restBtn = document.createElement('button');
+      restBtn.className = 'rest-timer-btn';
+      restBtn.innerHTML = '<i class="ph ph-timer"></i> Start Rest';
+      restBtn.style.display = 'none';
+      restBtn.addEventListener('click', () => startRestTimer(restBtn, exercise));
+
+      // Show rest button when any set is checked
+      tracker.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox') {
+          const anyChecked = [...tracker.querySelectorAll('input[type="checkbox"]')].some(cb => cb.checked);
+          restBtn.style.display = anyChecked ? 'inline-flex' : 'none';
+        }
+      });
+
+      tracker.appendChild(restBtn);
+      body.appendChild(tracker);
+    }
+
+    card.appendChild(body);
+    return card;
+  }
+
+  // ── REST TIMER ──────────────────────────────────────────────────
+  function startRestTimer(btn, exercise) {
+    const duration = parseInt((exercise.rest || '60').replace(/\D/g, '')) || 60;
+    let remaining = duration;
+    btn.disabled = true;
+    btn.innerHTML = `<i class="ph ph-timer"></i> ${remaining}s`;
+
+    const interval = setInterval(() => {
+      remaining--;
+      btn.innerHTML = `<i class="ph ph-timer"></i> ${remaining}s`;
+      if (remaining <= 0) {
+        clearInterval(interval);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ph ph-timer"></i> Start Rest';
+        showToast('Rest complete! Time for your next set 💪');
+      }
+    }, 1000);
+  }
+
   // ── SETUP TABS ──────────────────────────────────────────────────
   function setupTabs() {
     const nav = document.querySelector('.workout-nav');
     const pages = document.querySelectorAll('.workout-page');
-
     if (!nav) return;
 
     nav.addEventListener('click', (e) => {
       const btn = e.target.closest('.nav-btn');
       if (!btn) return;
-
       const targetPage = btn.dataset.page;
-
-      // Update active button
       nav.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
-      // Update active page
       pages.forEach(page => {
         page.classList.toggle('active', page.id === targetPage);
       });
@@ -181,13 +230,10 @@
   function setupHeroScroll() {
     const heroBtn = document.querySelector('.hero-cta');
     if (!heroBtn) return;
-
     heroBtn.addEventListener('click', (e) => {
       e.preventDefault();
       const callout = document.querySelector('.callout');
-      if (callout) {
-        callout.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      if (callout) callout.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
@@ -197,22 +243,17 @@
     if (!resetBtn) return;
 
     resetBtn.addEventListener('click', async () => {
-	window.appMain.showConfirm('Reset all checkboxes? This cannot be undone! 🎀', async () => {
-      const profileId = localStorage.getItem('profile_id');
-      if (!profileId) {
-        alert('Please save your profile first! 🌸');
-        return;
-      }
-
-      // Clear from database
-      await window.supabaseHelper.clearCheckboxStates(profileId);
-
-      // Uncheck all checkboxes
-      document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-        cb.checked = false;
-      });
-
-     showToast('Diary reset! Starting fresh 💖');
+      window.appMain.showConfirm('Reset all checkboxes? This cannot be undone!', async () => {
+        const profileId = localStorage.getItem('profile_id');
+        if (!profileId) {
+          showToast('Please save your profile first!');
+          return;
+        }
+        await window.supabaseHelper.clearCheckboxStates(profileId);
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+          cb.checked = false;
+        });
+        showToast('Diary reset! Starting fresh 💖');
       });
     });
   }
@@ -221,25 +262,18 @@
   function attachCheckboxListeners() {
     document.addEventListener('change', async (e) => {
       if (e.target.type !== 'checkbox') return;
-
       const checkboxId = e.target.dataset.id;
       if (!checkboxId) return;
 
       const profileId = localStorage.getItem('profile_id');
       if (!profileId) {
-        showToast('Please save your profile first! 🌸');
+        showToast('Please save your profile first!');
         e.target.checked = false;
         return;
       }
 
-      // Save checkbox state
-      await window.supabaseHelper.saveCheckboxState(
-        profileId,
-        checkboxId,
-        e.target.checked
-      );
+      await window.supabaseHelper.saveCheckboxState(profileId, checkboxId, e.target.checked);
 
-      // Check if this is a "Done!" checkbox
       if (DONE_CHECKBOX_MAP[checkboxId] && e.target.checked) {
         const workoutType = DONE_CHECKBOX_MAP[checkboxId];
         await saveWorkoutLog(profileId, workoutType);
@@ -254,24 +288,17 @@
       workout_type: workoutType,
       created_at: new Date().toISOString()
     };
-
     await window.supabaseHelper.saveWorkoutLog(log);
-    
-    // Refresh calendar to show new workout
     await setupCalendar();
-
     showToast(`${workoutType.charAt(0).toUpperCase() + workoutType.slice(1)} workout logged! 💪`);
   }
 
   // ── RESTORE CHECKBOX STATES ─────────────────────────────────────
   async function restoreCheckboxStates(profileId) {
     const states = await window.supabaseHelper.getCheckboxStates(profileId);
-
     Object.entries(states).forEach(([checkboxId, checked]) => {
       const checkbox = document.querySelector(`input[data-id="${checkboxId}"]`);
-      if (checkbox) {
-        checkbox.checked = checked;
-      }
+      if (checkbox) checkbox.checked = checked;
     });
   }
 
@@ -285,21 +312,19 @@
     const startDate = localStorage.getItem('profile_startDate');
 
     if (!profileId || !startDate) {
-      calendarGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column: 1 / -1;">Save your profile to see your calendar! 🌸</p>';
+      calendarGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column:1/-1;">Save your profile to see your calendar!</p>';
       if (streakEl) streakEl.textContent = '';
       return;
     }
 
-    // Show loading state
-    calendarGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column: 1 / -1;">Loading your calendar… 🌸</p>';
+    calendarGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column:1/-1;">Loading your calendar…</p>';
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     const logs = await window.supabaseHelper.getWorkoutLogs(profileId);
-    workoutLogsCache = logs; // Cache for modal
+    workoutLogsCache = logs;
 
-    // Build workout map
     const workoutMap = {};
     logs.forEach(log => {
       const date = new Date(log.created_at);
@@ -308,40 +333,32 @@
       workoutMap[dateKey].push(log.workout_type);
     });
 
-    // Calculate streak
     const streak = calculateStreak(workoutMap, today);
     if (streakEl) {
       streakEl.textContent = streak > 0 ? `🔥 ${streak}-day streak!` : '';
     }
 
-    // Render calendar - show current month
     calendarGrid.innerHTML = '';
-    
-    // Add weekday headers
+
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     weekdays.forEach(day => {
       const header = document.createElement('div');
-      header.style.cssText = 'text-align: center; font-size: 0.75rem; font-weight: 900; color: var(--kitty-pink); padding: 4px;';
+      header.style.cssText = 'text-align:center;font-size:0.75rem;font-weight:900;color:var(--clr-primary);padding:4px;';
       header.textContent = day;
       calendarGrid.appendChild(header);
     });
-    
-    // Get first and last day of current month
+
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    
-    // Get day of week for first day (0 = Sunday)
     const startDayOfWeek = firstDay.getDay();
-    
-    // Add empty cells for days before month starts
+
     for (let i = 0; i < startDayOfWeek; i++) {
       const emptyCell = document.createElement('div');
       emptyCell.className = 'calendar-day';
       emptyCell.style.visibility = 'hidden';
       calendarGrid.appendChild(emptyCell);
     }
-    
-    // Add actual days of the month
+
     let current = new Date(firstDay);
     while (current <= lastDay) {
       const dateKey = current.toISOString().split('T')[0];
@@ -349,26 +366,19 @@
 
       const cell = document.createElement('div');
       cell.className = 'calendar-day';
-      if (workouts.length > 0) {
-        cell.classList.add('has-workouts');
-      }
-      
-      // Highlight today
+      if (workouts.length > 0) cell.classList.add('has-workouts');
+
       if (current.toDateString() === today.toDateString()) {
-        cell.style.borderColor = 'var(--kitty-pink)';
-        cell.style.background = 'var(--kitty-pastel)';
+        cell.style.borderColor = 'var(--clr-primary)';
+        cell.style.background = 'var(--clr-primary-soft)';
         cell.style.fontWeight = '900';
       }
-      
-      // Make clickable (all dates, past and present)
+
       if (current <= today) {
         cell.dataset.date = dateKey;
         cell.style.cursor = 'pointer';
-        cell.addEventListener('click', () => {
-          openCalendarModal(dateKey);
-        });
+        cell.addEventListener('click', () => openCalendarModal(dateKey));
       } else {
-        // Future dates - make them look disabled
         cell.style.opacity = '0.3';
         cell.style.cursor = 'default';
       }
@@ -381,10 +391,10 @@
       if (workouts.length > 0) {
         const dots = document.createElement('div');
         dots.className = 'workout-dots';
-        const emojiMap = { glutes: '🍑', back: '🎀', core: '💪', cardio: '💦' };
         workouts.forEach(type => {
           const dot = document.createElement('span');
-          dot.textContent = emojiMap[type] || '✨';
+          dot.textContent = '●';
+          dot.style.color = 'var(--clr-primary)';
           dots.appendChild(dot);
         });
         cell.appendChild(dots);
@@ -401,64 +411,46 @@
     const dateTitle = document.getElementById('calendar-modal-date');
     const workoutsBody = document.getElementById('calendar-modal-workouts');
 
-    // Format date
     const date = new Date(dateKey + 'T00:00:00');
-    const formatted = date.toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      month: 'short', 
-      day: 'numeric', 
-      year: 'numeric' 
+    dateTitle.textContent = date.toLocaleDateString('en-US', {
+      weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'
     });
-    dateTitle.textContent = formatted;
 
-    // Filter workouts for this date
     const dayWorkouts = workoutLogsCache.filter(log => {
       const logDate = new Date(log.created_at);
       return logDate.toISOString().split('T')[0] === dateKey;
     });
 
-    // Render workouts
     workoutsBody.innerHTML = '';
-    
+
     if (dayWorkouts.length === 0) {
-      workoutsBody.innerHTML = '<div class="calendar-modal-empty">No workouts logged this day 🌸</div>';
+      workoutsBody.innerHTML = '<div class="calendar-modal-empty">No workouts logged this day</div>';
     } else {
-      const emojiMap = { glutes: '🍑', back: '🎀', core: '💪', cardio: '💦' };
       const nameMap = { glutes: 'Glutes', back: 'Back', core: 'Core', cardio: 'Cardio' };
-      
       dayWorkouts.forEach(log => {
         const entry = document.createElement('div');
         entry.className = 'workout-entry';
-        
+
         const time = new Date(log.created_at);
-        const timeStr = time.toLocaleTimeString('en-US', { 
-          hour: 'numeric', 
-          minute: '2-digit', 
-          hour12: true 
-        });
-        
-const entryType = document.createElement('div');
+        const timeStr = time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+        const entryType = document.createElement('div');
         entryType.className = 'workout-entry-type';
-        entryType.textContent = `${emojiMap[log.workout_type] || '✨'} ${nameMap[log.workout_type] || log.workout_type}`;
-        
+        entryType.textContent = nameMap[log.workout_type] || log.workout_type;
+
         const entryTime = document.createElement('div');
         entryTime.className = 'workout-entry-time';
         entryTime.textContent = timeStr;
-        
+
         entry.appendChild(entryType);
         entry.appendChild(entryTime);
-        
         workoutsBody.appendChild(entry);
       });
     }
 
     modal.classList.add('visible');
-
-    // Close on background click
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeCalendarModal();
-      }
+      if (e.target === modal) closeCalendarModal();
     });
   }
 
@@ -472,7 +464,6 @@ const entryType = document.createElement('div');
   function calculateStreak(workoutMap, today) {
     let streak = 0;
     let current = new Date(today);
-
     while (true) {
       const dateKey = current.toISOString().split('T')[0];
       if (workoutMap[dateKey] && workoutMap[dateKey].length > 0) {
@@ -482,7 +473,6 @@ const entryType = document.createElement('div');
         break;
       }
     }
-
     return streak;
   }
 
@@ -503,7 +493,7 @@ const entryType = document.createElement('div');
     }, 3000);
   }
 
-// ── SHOW CONFIRM MODAL ──────────────────────────────────────────
+  // ── SHOW CONFIRM MODAL ──────────────────────────────────────────
   function showConfirm(message, onConfirm) {
     const existing = document.querySelector('.confirm-modal');
     if (existing) existing.remove();
@@ -513,7 +503,7 @@ const entryType = document.createElement('div');
     modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1rem;';
 
     const box = document.createElement('div');
-    box.style.cssText = 'background:white;border:4px solid #1a1a1a;border-radius:20px;padding:2rem;max-width:360px;width:100%;text-align:center;box-shadow:6px 6px 0 #ff52a3;';
+    box.style.cssText = 'background:white;border:3px solid #1a1a1a;border-radius:20px;padding:2rem;max-width:360px;width:100%;text-align:center;box-shadow:5px 5px 0 var(--clr-primary);';
 
     const msg = document.createElement('p');
     msg.style.cssText = 'font-weight:700;font-size:1rem;margin-bottom:1.5rem;color:#1a1a1a;';
@@ -524,12 +514,12 @@ const entryType = document.createElement('div');
 
     const confirmBtn = document.createElement('button');
     confirmBtn.textContent = 'Yes, do it!';
-    confirmBtn.style.cssText = 'padding:10px 20px;background:#ff52a3;color:white;border:3px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;';
+    confirmBtn.style.cssText = 'padding:10px 20px;background:var(--clr-primary);color:white;border:2px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;font-family:var(--font-main);';
     confirmBtn.onclick = () => { modal.remove(); onConfirm(); };
 
     const cancelBtn = document.createElement('button');
     cancelBtn.textContent = 'Cancel';
-    cancelBtn.style.cssText = 'padding:10px 20px;background:white;color:#1a1a1a;border:3px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;';
+    cancelBtn.style.cssText = 'padding:10px 20px;background:white;color:#1a1a1a;border:2px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;font-family:var(--font-main);';
     cancelBtn.onclick = () => modal.remove();
 
     btnRow.appendChild(cancelBtn);

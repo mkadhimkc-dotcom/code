@@ -181,6 +181,9 @@
   --kitty-pastel:       #e3f2fd;
   --kitty-bg:           #f4f6f9;
   --shadow-cute:        4px 4px 0px #42a5f5;
+  --clr-danger: #1565c0;
+  --clr-danger-bg: #e3f2fd;
+  --kitty-red: #1565c0;
 }
 
 /* ══════════════════════════════════════════════════════════════

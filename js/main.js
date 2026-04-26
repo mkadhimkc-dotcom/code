@@ -2,7 +2,7 @@
  * main.js — Clulee Phase 2
  * ─────────────────────────────────────────────────────────────────
  * Main application logic for Clulee
- * Includes: Calendar, workout tracking, card redesign, rest timer
+ * Includes: Calendar, workout tracking, card redesign, rest timer, dashboard
  * ─────────────────────────────────────────────────────────────────
  */
 
@@ -10,7 +10,6 @@
   let workoutData = null;
   let workoutLogsCache = [];
 
-  // ── DONE CHECKBOX MAP ───────────────────────────────────────────
   const DONE_CHECKBOX_MAP = {
     'A-Cardio': 'glutes',
     'B-Cardio': 'back',
@@ -18,7 +17,6 @@
     'D-Activity': 'cardio'
   };
 
-  // ── LOAD WORKOUT DATA ───────────────────────────────────────────
   async function loadWorkoutData() {
     try {
       const response = await fetch('/data/workouts.json');
@@ -29,7 +27,6 @@
     }
   }
 
-  // ── RENDER WORKOUTS ─────────────────────────────────────────────
   function renderWorkouts() {
     if (!workoutData) return;
     workoutData.sections.forEach(section => {
@@ -43,12 +40,10 @@
     });
   }
 
-  // ── CREATE CARD ─────────────────────────────────────────────────
   function createCard(exercise) {
     const card = document.createElement('div');
     card.className = 'card';
 
-    // ── MEDIA (full width, top) ──
     const imgContainer = document.createElement('div');
     imgContainer.className = 'image-container';
 
@@ -67,17 +62,14 @@
     }
     card.appendChild(imgContainer);
 
-    // ── CARD BODY ──
     const body = document.createElement('div');
     body.className = 'card-body';
 
-    // Title
     const title = document.createElement('div');
     title.className = 'card-title';
     title.textContent = exercise.title;
     body.appendChild(title);
 
-    // Tags row (muscle group + difficulty + badges)
     const tagsRow = document.createElement('div');
     tagsRow.className = 'badges';
 
@@ -106,12 +98,10 @@
 
     if (tagsRow.children.length > 0) body.appendChild(tagsRow);
 
-    // ── STAT PILLS (sets / reps / rest) ──
     if (exercise.meta) {
       const pills = document.createElement('div');
       pills.className = 'stat-pills';
 
-      // Parse "4 Sets x 8-10 Reps | Rest: 90s" format
       const pipeParts = exercise.meta.split('|').map(s => s.trim());
       let parts = [];
       let labels = [];
@@ -128,17 +118,15 @@
       }
 
       parts.forEach((part, i) => {
+        if (!part) return;
         const pill = document.createElement('div');
         pill.className = 'stat-pill';
-
         const val = document.createElement('div');
         val.className = 'stat-pill-value';
         val.textContent = part;
-
         const lbl = document.createElement('div');
         lbl.className = 'stat-pill-label';
         lbl.textContent = labels[i] || '';
-
         pill.appendChild(val);
         pill.appendChild(lbl);
         pills.appendChild(pill);
@@ -147,7 +135,6 @@
       body.appendChild(pills);
     }
 
-    // Coaching cue
     if (exercise.cue) {
       const cue = document.createElement('div');
       cue.className = 'cue';
@@ -155,38 +142,31 @@
       body.appendChild(cue);
     }
 
-    // ── SETS TRACKER ──
-    if (exercise.sets) {
+    if (exercise.sets && exercise.sets.length > 0) {
       const tracker = document.createElement('div');
       tracker.className = 'sets-tracker';
 
       exercise.sets.forEach(set => {
         const label = document.createElement('label');
         label.className = 'set-checkbox';
-
         const input = document.createElement('input');
         input.type = 'checkbox';
         input.dataset.id = set.id;
-
         const indicator = document.createElement('span');
         indicator.className = 'heart-indicator';
-
         const number = document.createElement('span');
         number.className = 'set-number';
         number.textContent = set.label;
-
         label.append(input, indicator, number);
         tracker.appendChild(label);
       });
 
-      // ── REST TIMER BUTTON ──
       const restBtn = document.createElement('button');
       restBtn.className = 'rest-timer-btn';
       restBtn.innerHTML = '<i class="ph ph-timer"></i> Start Rest';
       restBtn.style.display = 'none';
       restBtn.addEventListener('click', () => startRestTimer(restBtn, exercise));
 
-      // Show rest button when any set is checked
       tracker.addEventListener('change', (e) => {
         if (e.target.type === 'checkbox') {
           const anyChecked = [...tracker.querySelectorAll('input[type="checkbox"]')].some(cb => cb.checked);
@@ -202,7 +182,6 @@
     return card;
   }
 
-  // ── REST TIMER ──────────────────────────────────────────────────
   function startRestTimer(btn, exercise) {
     const duration = parseInt((exercise.rest || '60').replace(/\D/g, '')) || 60;
     let remaining = duration;
@@ -221,7 +200,64 @@
     }, 1000);
   }
 
-  // ── SETUP TABS ──────────────────────────────────────────────────
+  function setupDashboard() {
+    const greeting = document.getElementById('dashGreeting');
+    const dateEl = document.getElementById('dashDate');
+    const name = localStorage.getItem('profile_name');
+
+    if (greeting) {
+      const hour = new Date().getHours();
+      const timeGreet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+      greeting.textContent = name ? `${timeGreet}, ${name}!` : 'Welcome to Clulee';
+    }
+
+    if (dateEl) {
+      dateEl.textContent = new Date().toLocaleDateString('en-US', {
+        weekday: 'long', month: 'long', day: 'numeric'
+      });
+    }
+  }
+
+  async function updateDashboardStats() {
+    const profileId = localStorage.getItem('profile_id');
+    if (!profileId) return;
+
+    const logs = await window.supabaseHelper.getWorkoutLogs(profileId);
+    workoutLogsCache = logs;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const workoutMap = {};
+    logs.forEach(log => {
+      const date = new Date(log.created_at);
+      const dateKey = date.toISOString().split('T')[0];
+      if (!workoutMap[dateKey]) workoutMap[dateKey] = [];
+      workoutMap[dateKey].push(log.workout_type);
+    });
+
+    const streak = calculateStreak(workoutMap, today);
+    const streakEl = document.getElementById('statStreak');
+    if (streakEl) streakEl.textContent = streak;
+
+    const totalEl = document.getElementById('statTotal');
+    if (totalEl) totalEl.textContent = logs.length;
+
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - today.getDay());
+    const thisWeek = logs.filter(log => new Date(log.created_at) >= weekStart).length;
+
+    const weekEl = document.getElementById('statWeek');
+    if (weekEl) weekEl.textContent = thisWeek;
+
+    const target = 3;
+    const pct = Math.min(100, Math.round((thisWeek / target) * 100));
+    const fill = document.getElementById('weekProgressFill');
+    const text = document.getElementById('weekProgressText');
+    if (fill) fill.style.width = pct + '%';
+    if (text) text.textContent = `${thisWeek} / ${target} workouts`;
+  }
+
   function setupTabs() {
     const nav = document.querySelector('.workout-nav');
     const pages = document.querySelectorAll('.workout-page');
@@ -239,7 +275,6 @@
     });
   }
 
-  // ── SETUP HERO SCROLL ───────────────────────────────────────────
   function setupHeroScroll() {
     const heroBtn = document.querySelector('.hero-cta');
     if (!heroBtn) return;
@@ -250,7 +285,6 @@
     });
   }
 
-  // ── SETUP RESET BUTTON ──────────────────────────────────────────
   function setupResetButton() {
     const resetBtn = document.getElementById('reset-diary');
     if (!resetBtn) return;
@@ -258,20 +292,14 @@
     resetBtn.addEventListener('click', async () => {
       window.appMain.showConfirm('Reset all checkboxes? This cannot be undone!', async () => {
         const profileId = localStorage.getItem('profile_id');
-        if (!profileId) {
-          showToast('Please save your profile first!');
-          return;
-        }
+        if (!profileId) { showToast('Please save your profile first!'); return; }
         await window.supabaseHelper.clearCheckboxStates(profileId);
-        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-          cb.checked = false;
-        });
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
         showToast('Diary reset! Starting fresh 💖');
       });
     });
   }
 
-  // ── ATTACH CHECKBOX LISTENERS ───────────────────────────────────
   function attachCheckboxListeners() {
     document.addEventListener('change', async (e) => {
       if (e.target.type !== 'checkbox') return;
@@ -288,25 +316,22 @@
       await window.supabaseHelper.saveCheckboxState(profileId, checkboxId, e.target.checked);
 
       if (DONE_CHECKBOX_MAP[checkboxId] && e.target.checked) {
-        const workoutType = DONE_CHECKBOX_MAP[checkboxId];
-        await saveWorkoutLog(profileId, workoutType);
+        await saveWorkoutLog(profileId, DONE_CHECKBOX_MAP[checkboxId]);
       }
     });
   }
 
-  // ── SAVE WORKOUT LOG ────────────────────────────────────────────
   async function saveWorkoutLog(profileId, workoutType) {
-    const log = {
+    await window.supabaseHelper.saveWorkoutLog({
       profile_id: profileId,
       workout_type: workoutType,
       created_at: new Date().toISOString()
-    };
-    await window.supabaseHelper.saveWorkoutLog(log);
+    });
     await setupCalendar();
+    await updateDashboardStats();
     showToast(`${workoutType.charAt(0).toUpperCase() + workoutType.slice(1)} workout logged! 💪`);
   }
 
-  // ── RESTORE CHECKBOX STATES ─────────────────────────────────────
   async function restoreCheckboxStates(profileId) {
     const states = await window.supabaseHelper.getCheckboxStates(profileId);
     Object.entries(states).forEach(([checkboxId, checked]) => {
@@ -315,7 +340,6 @@
     });
   }
 
-  // ── SETUP CALENDAR ──────────────────────────────────────────────
   async function setupCalendar() {
     const calendarGrid = document.getElementById('calendar-grid');
     const streakEl = document.getElementById('streak-counter');
@@ -347,14 +371,11 @@
     });
 
     const streak = calculateStreak(workoutMap, today);
-    if (streakEl) {
-      streakEl.textContent = streak > 0 ? `🔥 ${streak}-day streak!` : '';
-    }
+    if (streakEl) streakEl.textContent = streak > 0 ? `🔥 ${streak}-day streak!` : '';
 
     calendarGrid.innerHTML = '';
 
-    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    weekdays.forEach(day => {
+    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
       const header = document.createElement('div');
       header.style.cssText = 'text-align:center;font-size:0.75rem;font-weight:900;color:var(--clr-primary);padding:4px;';
       header.textContent = day;
@@ -363,9 +384,8 @@
 
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    const startDayOfWeek = firstDay.getDay();
 
-    for (let i = 0; i < startDayOfWeek; i++) {
+    for (let i = 0; i < firstDay.getDay(); i++) {
       const emptyCell = document.createElement('div');
       emptyCell.className = 'calendar-day';
       emptyCell.style.visibility = 'hidden';
@@ -404,7 +424,7 @@
       if (workouts.length > 0) {
         const dots = document.createElement('div');
         dots.className = 'workout-dots';
-        workouts.forEach(type => {
+        workouts.forEach(() => {
           const dot = document.createElement('span');
           dot.textContent = '●';
           dot.style.color = 'var(--clr-primary)';
@@ -418,7 +438,6 @@
     }
   }
 
-  // ── OPEN CALENDAR MODAL ─────────────────────────────────────────
   function openCalendarModal(dateKey) {
     const modal = document.getElementById('calendar-modal');
     const dateTitle = document.getElementById('calendar-modal-date');
@@ -429,10 +448,9 @@
       weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'
     });
 
-    const dayWorkouts = workoutLogsCache.filter(log => {
-      const logDate = new Date(log.created_at);
-      return logDate.toISOString().split('T')[0] === dateKey;
-    });
+    const dayWorkouts = workoutLogsCache.filter(log =>
+      new Date(log.created_at).toISOString().split('T')[0] === dateKey
+    );
 
     workoutsBody.innerHTML = '';
 
@@ -462,18 +480,13 @@
     }
 
     modal.classList.add('visible');
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeCalendarModal();
-    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeCalendarModal(); });
   }
 
-  // ── CLOSE CALENDAR MODAL ────────────────────────────────────────
   function closeCalendarModal() {
-    const modal = document.getElementById('calendar-modal');
-    modal.classList.remove('visible');
+    document.getElementById('calendar-modal').classList.remove('visible');
   }
 
-  // ── CALCULATE STREAK ────────────────────────────────────────────
   function calculateStreak(workoutMap, today) {
     let streak = 0;
     let current = new Date(today);
@@ -482,23 +495,18 @@
       if (workoutMap[dateKey] && workoutMap[dateKey].length > 0) {
         streak++;
         current.setDate(current.getDate() - 1);
-      } else {
-        break;
-      }
+      } else { break; }
     }
     return streak;
   }
 
-  // ── SHOW TOAST ──────────────────────────────────────────────────
   function showToast(message) {
     const existing = document.querySelector('.toast');
     if (existing) existing.remove();
-
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.textContent = message;
     document.body.appendChild(toast);
-
     setTimeout(() => toast.classList.add('visible'), 10);
     setTimeout(() => {
       toast.classList.remove('visible');
@@ -506,7 +514,6 @@
     }, 3000);
   }
 
-  // ── SHOW CONFIRM MODAL ──────────────────────────────────────────
   function showConfirm(message, onConfirm) {
     const existing = document.querySelector('.confirm-modal');
     if (existing) existing.remove();
@@ -543,22 +550,23 @@
     document.body.appendChild(modal);
   }
 
-  // ── EXPOSE ──────────────────────────────────────────────────────
   window.appMain = {
     setupCalendar,
     restoreCheckboxStates,
     showToast,
     showConfirm,
-    closeCalendarModal
+    closeCalendarModal,
+    setupDashboard,
+    updateDashboardStats
   };
 
-  // ── INITIALIZE ──────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', async () => {
     await loadWorkoutData();
     setupTabs();
     setupHeroScroll();
     setupResetButton();
     attachCheckboxListeners();
+    setupDashboard();
     window.customWorkouts.initialize();
   });
 })();

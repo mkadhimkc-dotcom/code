@@ -30,7 +30,7 @@
   function renderWorkouts() {
     if (!workoutData) return;
     workoutData.sections.forEach(section => {
-      const grid = document.querySelector(`[data-workout-grid="${section.id}"]`);
+      const grid = document.querySelector('[data-workout-grid="' + section.id + '"]');
       if (!grid) return;
       grid.innerHTML = '';
       section.exercises.forEach(exercise => {
@@ -82,15 +82,15 @@
 
     if (exercise.difficulty) {
       const diff = document.createElement('span');
-      diff.className = `badge badge-difficulty badge-${exercise.difficulty.toLowerCase()}`;
+      diff.className = 'badge badge-difficulty badge-' + exercise.difficulty.toLowerCase();
       diff.textContent = exercise.difficulty;
       tagsRow.appendChild(diff);
     }
 
     if (exercise.badges) {
-      exercise.badges.forEach(badge => {
+      exercise.badges.forEach(function(badge) {
         const span = document.createElement('span');
-        span.className = badge.type ? `badge ${badge.type}` : 'badge';
+        span.className = badge.type ? 'badge ' + badge.type : 'badge';
         span.textContent = badge.label;
         tagsRow.appendChild(span);
       });
@@ -102,14 +102,14 @@
       const pills = document.createElement('div');
       pills.className = 'stat-pills';
 
-      const pipeParts = exercise.meta.split('|').map(s => s.trim());
+      const pipeParts = exercise.meta.split('|').map(function(s) { return s.trim(); });
       let parts = [];
       let labels = [];
 
       if (pipeParts.length >= 2) {
         const setsReps = pipeParts[0];
         const rest = pipeParts[1].replace('Rest:', '').trim();
-        const xParts = setsReps.split('x').map(s => s.trim());
+        const xParts = setsReps.split('x').map(function(s) { return s.trim(); });
         parts = [xParts[0] || setsReps, xParts[1] || '', rest];
         labels = ['Sets', 'Reps', 'Rest'];
       } else {
@@ -117,7 +117,7 @@
         labels = [''];
       }
 
-      parts.forEach((part, i) => {
+      parts.forEach(function(part, i) {
         if (!part) return;
         const pill = document.createElement('div');
         pill.className = 'stat-pill';
@@ -146,7 +146,7 @@
       const tracker = document.createElement('div');
       tracker.className = 'sets-tracker';
 
-      exercise.sets.forEach(set => {
+      exercise.sets.forEach(function(set) {
         const label = document.createElement('label');
         label.className = 'set-checkbox';
         const input = document.createElement('input');
@@ -163,13 +163,13 @@
 
       const restBtn = document.createElement('button');
       restBtn.className = 'rest-timer-btn';
-      restBtn.innerHTML = '<i class="ph ph-timer"></i> Start Rest';
+      restBtn.textContent = '\u23F1 Start Rest';
       restBtn.style.display = 'none';
-      restBtn.addEventListener('click', () => startRestTimer(restBtn, exercise));
+      restBtn.addEventListener('click', function() { startRestTimer(restBtn, exercise); });
 
-      tracker.addEventListener('change', (e) => {
+      tracker.addEventListener('change', function(e) {
         if (e.target.type === 'checkbox') {
-          const anyChecked = [...tracker.querySelectorAll('input[type="checkbox"]')].some(cb => cb.checked);
+          const anyChecked = Array.from(tracker.querySelectorAll('input[type="checkbox"]')).some(function(cb) { return cb.checked; });
           restBtn.style.display = anyChecked ? 'inline-flex' : 'none';
         }
       });
@@ -186,16 +186,16 @@
     const duration = parseInt((exercise.rest || '60').replace(/\D/g, '')) || 60;
     let remaining = duration;
     btn.disabled = true;
-    btn.innerHTML = `<i class="ph ph-timer"></i> ${remaining}s`;
+    btn.textContent = '\u23F1 ' + remaining + 's';
 
-    const interval = setInterval(() => {
+    const interval = setInterval(function() {
       remaining--;
-      btn.innerHTML = `<i class="ph ph-timer"></i> ${remaining}s`;
+      btn.textContent = '\u23F1 ' + remaining + 's';
       if (remaining <= 0) {
         clearInterval(interval);
         btn.disabled = false;
-        btn.innerHTML = '<i class="ph ph-timer"></i> Start Rest';
-        showToast('Rest complete! Time for your next set 💪');
+        btn.textContent = '\u23F1 Start Rest';
+        showToast('Rest complete! Time for your next set \uD83D\uDCAA');
       }
     }, 1000);
   }
@@ -208,7 +208,7 @@
     if (greeting) {
       const hour = new Date().getHours();
       const timeGreet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-      greeting.textContent = name ? `${timeGreet}, ${name}!` : 'Welcome to Clulee';
+      greeting.textContent = name ? timeGreet + ', ' + name + '!' : 'Welcome to Clulee';
     }
 
     if (dateEl) {
@@ -229,7 +229,7 @@
     today.setHours(0, 0, 0, 0);
 
     const workoutMap = {};
-    logs.forEach(log => {
+    logs.forEach(function(log) {
       const date = new Date(log.created_at);
       const dateKey = date.toISOString().split('T')[0];
       if (!workoutMap[dateKey]) workoutMap[dateKey] = [];
@@ -245,7 +245,7 @@
 
     const weekStart = new Date(today);
     weekStart.setDate(today.getDate() - today.getDay());
-    const thisWeek = logs.filter(log => new Date(log.created_at) >= weekStart).length;
+    const thisWeek = logs.filter(function(log) { return new Date(log.created_at) >= weekStart; }).length;
 
     const weekEl = document.getElementById('statWeek');
     if (weekEl) weekEl.textContent = thisWeek;
@@ -255,7 +255,7 @@
     const fill = document.getElementById('weekProgressFill');
     const text = document.getElementById('weekProgressText');
     if (fill) fill.style.width = pct + '%';
-    if (text) text.textContent = `${thisWeek} / ${target} workouts`;
+    if (text) text.textContent = thisWeek + ' / ' + target + ' workouts';
   }
 
   function setupTabs() {
@@ -263,13 +263,13 @@
     const pages = document.querySelectorAll('.workout-page');
     if (!nav) return;
 
-    nav.addEventListener('click', (e) => {
+    nav.addEventListener('click', function(e) {
       const btn = e.target.closest('.nav-btn');
       if (!btn) return;
       const targetPage = btn.dataset.page;
-      nav.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      nav.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      pages.forEach(page => {
+      pages.forEach(function(page) {
         page.classList.toggle('active', page.id === targetPage);
       });
     });
@@ -278,7 +278,7 @@
   function setupHeroScroll() {
     const heroBtn = document.querySelector('.hero-cta');
     if (!heroBtn) return;
-    heroBtn.addEventListener('click', (e) => {
+    heroBtn.addEventListener('click', function(e) {
       e.preventDefault();
       const callout = document.querySelector('.callout');
       if (callout) callout.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -289,19 +289,19 @@
     const resetBtn = document.getElementById('reset-diary');
     if (!resetBtn) return;
 
-    resetBtn.addEventListener('click', async () => {
-      window.appMain.showConfirm('Reset all checkboxes? This cannot be undone!', async () => {
+    resetBtn.addEventListener('click', async function() {
+      window.appMain.showConfirm('Reset all checkboxes? This cannot be undone!', async function() {
         const profileId = localStorage.getItem('profile_id');
         if (!profileId) { showToast('Please save your profile first!'); return; }
         await window.supabaseHelper.clearCheckboxStates(profileId);
-        document.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
-        showToast('Diary reset! Starting fresh 💖');
+        document.querySelectorAll('input[type="checkbox"]').forEach(function(cb) { cb.checked = false; });
+        showToast('Diary reset! Starting fresh');
       });
     });
   }
 
   function attachCheckboxListeners() {
-    document.addEventListener('change', async (e) => {
+    document.addEventListener('change', async function(e) {
       if (e.target.type !== 'checkbox') return;
       const checkboxId = e.target.dataset.id;
       if (!checkboxId) return;
@@ -329,13 +329,15 @@
     });
     await setupCalendar();
     await updateDashboardStats();
-    showToast(`${workoutType.charAt(0).toUpperCase() + workoutType.slice(1)} workout logged! 💪`);
+    showToast(workoutType.charAt(0).toUpperCase() + workoutType.slice(1) + ' workout logged!');
   }
 
   async function restoreCheckboxStates(profileId) {
     const states = await window.supabaseHelper.getCheckboxStates(profileId);
-    Object.entries(states).forEach(([checkboxId, checked]) => {
-      const checkbox = document.querySelector(`input[data-id="${checkboxId}"]`);
+    Object.entries(states).forEach(function(entry) {
+      const checkboxId = entry[0];
+      const checked = entry[1];
+      const checkbox = document.querySelector('input[data-id="' + checkboxId + '"]');
       if (checkbox) checkbox.checked = checked;
     });
   }
@@ -354,7 +356,7 @@
       return;
     }
 
-    calendarGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column:1/-1;">Loading your calendar…</p>';
+    calendarGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column:1/-1;">Loading your calendar...</p>';
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -363,7 +365,7 @@
     workoutLogsCache = logs;
 
     const workoutMap = {};
-    logs.forEach(log => {
+    logs.forEach(function(log) {
       const date = new Date(log.created_at);
       const dateKey = date.toISOString().split('T')[0];
       if (!workoutMap[dateKey]) workoutMap[dateKey] = [];
@@ -371,11 +373,11 @@
     });
 
     const streak = calculateStreak(workoutMap, today);
-    if (streakEl) streakEl.textContent = streak > 0 ? `🔥 ${streak}-day streak!` : '';
+    if (streakEl) streakEl.textContent = streak > 0 ? '\uD83D\uDD25 ' + streak + '-day streak!' : '';
 
     calendarGrid.innerHTML = '';
 
-    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => {
+    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(function(day) {
       const header = document.createElement('div');
       header.style.cssText = 'text-align:center;font-size:0.75rem;font-weight:900;color:var(--clr-primary);padding:4px;';
       header.textContent = day;
@@ -410,7 +412,9 @@
       if (current <= today) {
         cell.dataset.date = dateKey;
         cell.style.cursor = 'pointer';
-        cell.addEventListener('click', () => openCalendarModal(dateKey));
+        (function(dk) {
+          cell.addEventListener('click', function() { openCalendarModal(dk); });
+        })(dateKey);
       } else {
         cell.style.opacity = '0.3';
         cell.style.cursor = 'default';
@@ -424,9 +428,9 @@
       if (workouts.length > 0) {
         const dots = document.createElement('div');
         dots.className = 'workout-dots';
-        workouts.forEach(() => {
+        workouts.forEach(function() {
           const dot = document.createElement('span');
-          dot.textContent = '●';
+          dot.textContent = '\u25CF';
           dot.style.color = 'var(--clr-primary)';
           dots.appendChild(dot);
         });
@@ -448,17 +452,20 @@
       weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'
     });
 
-    const dayWorkouts = workoutLogsCache.filter(log =>
-      new Date(log.created_at).toISOString().split('T')[0] === dateKey
-    );
+    const dayWorkouts = workoutLogsCache.filter(function(log) {
+      return new Date(log.created_at).toISOString().split('T')[0] === dateKey;
+    });
 
     workoutsBody.innerHTML = '';
 
     if (dayWorkouts.length === 0) {
-      workoutsBody.innerHTML = '<div class="calendar-modal-empty">No workouts logged this day</div>';
+      const empty = document.createElement('div');
+      empty.className = 'calendar-modal-empty';
+      empty.textContent = 'No workouts logged this day';
+      workoutsBody.appendChild(empty);
     } else {
       const nameMap = { glutes: 'Glutes', back: 'Back', core: 'Core', cardio: 'Cardio' };
-      dayWorkouts.forEach(log => {
+      dayWorkouts.forEach(function(log) {
         const entry = document.createElement('div');
         entry.className = 'workout-entry';
 
@@ -480,7 +487,7 @@
     }
 
     modal.classList.add('visible');
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeCalendarModal(); });
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeCalendarModal(); });
   }
 
   function closeCalendarModal() {
@@ -507,10 +514,10 @@
     toast.className = 'toast';
     toast.textContent = message;
     document.body.appendChild(toast);
-    setTimeout(() => toast.classList.add('visible'), 10);
-    setTimeout(() => {
+    setTimeout(function() { toast.classList.add('visible'); }, 10);
+    setTimeout(function() {
       toast.classList.remove('visible');
-      setTimeout(() => toast.remove(), 300);
+      setTimeout(function() { toast.remove(); }, 300);
     }, 3000);
   }
 
@@ -535,12 +542,12 @@
     const confirmBtn = document.createElement('button');
     confirmBtn.textContent = 'Yes, do it!';
     confirmBtn.style.cssText = 'padding:10px 20px;background:var(--clr-primary);color:white;border:2px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;font-family:var(--font-main);';
-    confirmBtn.onclick = () => { modal.remove(); onConfirm(); };
+    confirmBtn.onclick = function() { modal.remove(); onConfirm(); };
 
     const cancelBtn = document.createElement('button');
     cancelBtn.textContent = 'Cancel';
     cancelBtn.style.cssText = 'padding:10px 20px;background:white;color:#1a1a1a;border:2px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;font-family:var(--font-main);';
-    cancelBtn.onclick = () => modal.remove();
+    cancelBtn.onclick = function() { modal.remove(); };
 
     btnRow.appendChild(cancelBtn);
     btnRow.appendChild(confirmBtn);
@@ -560,7 +567,7 @@
     updateDashboardStats
   };
 
-  document.addEventListener('DOMContentLoaded', async () => {
+  document.addEventListener('DOMContentLoaded', async function() {
     await loadWorkoutData();
     setupTabs();
     setupHeroScroll();

@@ -1256,3 +1256,9 @@ h2 {
 
   .library-card-add { width: 100%; }
 }
+.callout-warning {
+  border-color: var(--clr-danger);
+}
+.callout-warning h3 {
+  color: var(--clr-danger);
+}

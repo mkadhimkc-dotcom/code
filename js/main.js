@@ -47,88 +47,112 @@
     });
   }
 
-  // ── CREATE CARD ─────────────────────────────────────────────────
-  function createCard(exercise) {
-    const card = document.createElement('div');
-    card.className = 'card';
+/* ══════════════════════════════════════════════════════════════
+   CARD REDESIGN — US-6.1 / US-6.2
+   ══════════════════════════════════════════════════════════════ */
 
-    // Image
-    if (exercise.images && exercise.images.length > 0) {
-      const imgContainer = document.createElement('div');
-      imgContainer.className = 'image-container';
-      const img = document.createElement('img');
-      img.src = exercise.images[0].src;
-      img.alt = exercise.title;
-      img.onerror = function() {
-        this.style.display = 'none';
-      };
-      imgContainer.appendChild(img);
-      card.appendChild(imgContainer);
-    }
+.card-body {
+  padding: var(--space-3) var(--space-1) var(--space-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+}
 
-    // Title
-    const title = document.createElement('div');
-    title.className = 'card-title';
-    title.textContent = exercise.title;
-    card.appendChild(title);
+.image-container {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  min-height: 160px;
+}
 
-    // Meta
-    if (exercise.meta) {
-      const meta = document.createElement('div');
-      meta.className = 'card-meta';
-      meta.textContent = exercise.meta;
-      card.appendChild(meta);
-    }
+.image-container.no-media {
+  background: var(--clr-primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+}
 
-    // Badges
-    if (exercise.badges) {
-      const badgesDiv = document.createElement('div');
-      badgesDiv.className = 'badges';
-      exercise.badges.forEach(badge => {
-        const span = document.createElement('span');
-        span.className = badge.type ? `badge ${badge.type}` : 'badge';
-        span.textContent = badge.label;
-        badgesDiv.appendChild(span);
-      });
-      card.appendChild(badgesDiv);
-    }
+.image-container.no-media::after {
+  content: '💪';
+  font-size: 3rem;
+  opacity: 0.4;
+}
 
-    // Cue
-    if (exercise.cue) {
-      const cue = document.createElement('div');
-      cue.className = 'cue';
-      cue.textContent = exercise.cue;
-      card.appendChild(cue);
-    }
+/* Stat pills */
+.stat-pills {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-start;
+}
 
-    // Sets tracker
-    if (exercise.sets) {
-      const tracker = document.createElement('div');
-      tracker.className = 'sets-tracker';
-      exercise.sets.forEach(set => {
-        const label = document.createElement('label');
-        label.className = 'set-checkbox';
+.stat-pill {
+  background: var(--clr-primary-soft);
+  border: 1.5px solid var(--clr-border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  text-align: center;
+  min-width: 64px;
+}
 
-        const input = document.createElement('input');
-        input.type = 'checkbox';
-        input.dataset.id = set.id;
+.stat-pill-value {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-black);
+  color: var(--clr-primary);
+  line-height: 1;
+}
 
-        const indicator = document.createElement('span');
-        indicator.className = 'heart-indicator';
+.stat-pill-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
 
-        const number = document.createElement('span');
-        number.className = 'set-number';
-        number.textContent = set.label;
+/* Badge variants */
+.badge-muscle {
+  background: var(--clr-primary-soft);
+  color: var(--clr-primary-dark);
+  border-color: var(--clr-border-strong);
+}
 
-        label.append(input, indicator, number);
-        tracker.appendChild(label);
-      });
-      card.appendChild(tracker);
-    }
+.badge-difficulty {
+  background: var(--clr-gray-100);
+  color: var(--clr-gray-700);
+  border-color: var(--clr-gray-300);
+}
 
-    return card;
-  }
+.badge-beginner { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
+.badge-intermediate { background: #fff8e1; color: #e65100; border-color: #ffe082; }
+.badge-advanced { background: #fce4ec; color: #c2185b; border-color: #f48fb1; }
 
+/* Rest timer button */
+.rest-timer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--clr-primary);
+  color: var(--clr-white);
+  border: 2px solid var(--clr-black);
+  border-radius: var(--radius-full);
+  font-family: var(--font-main);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 0px var(--clr-black);
+}
+
+.rest-timer-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0px var(--clr-black);
+}
+
+.rest-timer-btn i { font-size: 1rem; }
   // ── SETUP TABS ──────────────────────────────────────────────────
   function setupTabs() {
     const nav = document.querySelector('.workout-nav');

@@ -95,6 +95,7 @@
 
     if (dbProfile) {
       const profile = { name: dbProfile.username, startDate: dbProfile.start_date };
+	  if (window.themeManager) window.themeManager.applyFromProfile(dbProfile.theme);
       localStorage.setItem('profile_id', dbProfile.id);
       localStorage.setItem('profile_name', dbProfile.username);
       localStorage.setItem('profile_startDate', dbProfile.start_date);

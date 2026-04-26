@@ -111,8 +111,21 @@
       const pills = document.createElement('div');
       pills.className = 'stat-pills';
 
-      const parts = exercise.meta.split('|').map(s => s.trim());
-      const labels = ['Sets', 'Reps', 'Rest'];
+      // Parse "4 Sets x 8-10 Reps | Rest: 90s" format
+      const pipeParts = exercise.meta.split('|').map(s => s.trim());
+      let parts = [];
+      let labels = [];
+
+      if (pipeParts.length >= 2) {
+        const setsReps = pipeParts[0];
+        const rest = pipeParts[1].replace('Rest:', '').trim();
+        const xParts = setsReps.split('x').map(s => s.trim());
+        parts = [xParts[0] || setsReps, xParts[1] || '', rest];
+        labels = ['Sets', 'Reps', 'Rest'];
+      } else {
+        parts = [exercise.meta];
+        labels = [''];
+      }
 
       parts.forEach((part, i) => {
         const pill = document.createElement('div');

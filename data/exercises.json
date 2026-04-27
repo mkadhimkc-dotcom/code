@@ -1,0 +1,3065 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-04-26",
+  "exercises": [
+    {
+      "id": "EX001",
+      "name": "Barbell Hip Thrust",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 4,
+      "reps": "8-10",
+      "rest": 90,
+      "excludeIf": [],
+      "coachingCue": "Drive through your heels and squeeze hard at the top. Control the descent.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_barbell_hip_thrust"
+    },
+    {
+      "id": "EX002",
+      "name": "Dumbbell Hip Thrust",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 75,
+      "excludeIf": [],
+      "coachingCue": "Place the dumbbell on your hips and drive upward. Full squeeze at the top.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_dumbbell_hip_thrust"
+    },
+    {
+      "id": "EX003",
+      "name": "Glute Bridge",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20",
+      "rest": 60,
+      "excludeIf": [],
+      "coachingCue": "Press through your heels, squeeze the glutes, hold for one second at the top.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_glute_bridge"
+    },
+    {
+      "id": "EX004",
+      "name": "Single-Leg Glute Bridge",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12 each side",
+      "rest": 60,
+      "excludeIf": [
+        "hip"
+      ],
+      "coachingCue": "Keep your hips level. Drive through the heel of the working leg.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_single_leg_glute_bridge"
+    },
+    {
+      "id": "EX005",
+      "name": "Cable Kickback",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15 each side",
+      "rest": 60,
+      "excludeIf": [],
+      "coachingCue": "Lean forward slightly and kick directly back. Squeeze at full extension.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_cable_kickback"
+    },
+    {
+      "id": "EX006",
+      "name": "Resistance Band Kickback",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "resistance_band"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20 each side",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Keep your core tight and kick back in a controlled arc. Feel the glute fire.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_band_kickback"
+    },
+    {
+      "id": "EX007",
+      "name": "Leg Press (High Foot Placement)",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings",
+        "quads"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 75,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Place feet high and wide. Push through heels. Feel the stretch at the bottom.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_leg_press_high"
+    },
+    {
+      "id": "EX008",
+      "name": "Hip Abduction Machine",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20",
+      "rest": 45,
+      "excludeIf": [
+        "hip"
+      ],
+      "coachingCue": "Sit tall and press knees out with control. Slow return.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_hip_abduction"
+    },
+    {
+      "id": "EX009",
+      "name": "Sumo Deadlift",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings",
+        "back",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "both",
+      "sets": 4,
+      "reps": "6-8",
+      "rest": 120,
+      "excludeIf": [
+        "lowerBack",
+        "hip"
+      ],
+      "coachingCue": "Wide stance, toes out. Push the floor away and drive your hips forward at the top.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_sumo_deadlift"
+    },
+    {
+      "id": "EX010",
+      "name": "Donkey Kick",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20 each side",
+      "rest": 45,
+      "excludeIf": [
+        "wrist"
+      ],
+      "coachingCue": "Keep your back flat and kick your heel toward the ceiling. Squeeze at the top.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_donkey_kick"
+    },
+    {
+      "id": "EX011",
+      "name": "Frog Pump",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "20-25",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Feet together and flat, knees out. Short range pump focusing on the glute contraction.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_frog_pump"
+    },
+    {
+      "id": "EX012",
+      "name": "Cable Pull-Through",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "lowerBack"
+      ],
+      "coachingCue": "Hinge at the hips and pull the cable through with a powerful hip drive.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_cable_pull_through"
+    },
+    {
+      "id": "EX013",
+      "name": "Romanian Deadlift",
+      "muscleGroup": "hamstrings",
+      "secondaryMuscles": [
+        "glutes",
+        "back",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "both",
+      "sets": 4,
+      "reps": "8-10",
+      "rest": 90,
+      "excludeIf": [
+        "lowerBack"
+      ],
+      "coachingCue": "Push hips back like closing a door with your hips. Long spine throughout.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_romanian_deadlift"
+    },
+    {
+      "id": "EX014",
+      "name": "Dumbbell Romanian Deadlift",
+      "muscleGroup": "hamstrings",
+      "secondaryMuscles": [
+        "glutes",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "lowerBack"
+      ],
+      "coachingCue": "Dumbbells stay close to your legs. Feel the hamstring stretch at the bottom.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_dumbbell_rdl"
+    },
+    {
+      "id": "EX015",
+      "name": "Lying Leg Curl",
+      "muscleGroup": "hamstrings",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [],
+      "coachingCue": "Curl smoothly and squeeze hard at the top. Lower with control.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_lying_leg_curl"
+    },
+    {
+      "id": "EX016",
+      "name": "Seated Leg Curl",
+      "muscleGroup": "hamstrings",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [],
+      "coachingCue": "Keep your back flat against the pad and curl through full range.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_seated_leg_curl"
+    },
+    {
+      "id": "EX017",
+      "name": "Good Morning",
+      "muscleGroup": "hamstrings",
+      "secondaryMuscles": [
+        "glutes",
+        "back"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "lowerBack"
+      ],
+      "coachingCue": "Soft knee bend, hinge forward until torso is near parallel. Keep the bar against your traps.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_good_morning"
+    },
+    {
+      "id": "EX018",
+      "name": "Nordic Curl",
+      "muscleGroup": "hamstrings",
+      "secondaryMuscles": [
+        "core"
+      ],
+      "difficulty": "advanced",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "5-8",
+      "rest": 90,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Lower slowly resisting with your hamstrings. Use your hands to push back up.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_nordic_curl"
+    },
+    {
+      "id": "EX019",
+      "name": "Barbell Back Squat",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "both",
+      "sets": 4,
+      "reps": "6-8",
+      "rest": 120,
+      "excludeIf": [
+        "knee",
+        "lowerBack",
+        "shoulder"
+      ],
+      "coachingCue": "Chest up, knees track over toes. Drive through the whole foot on the way up.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_barbell_squat"
+    },
+    {
+      "id": "EX020",
+      "name": "Goblet Squat",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Hold the dumbbell at chest height. Sit between your heels and keep your chest tall.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_goblet_squat"
+    },
+    {
+      "id": "EX021",
+      "name": "Bodyweight Squat",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20",
+      "rest": 45,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Sit back and down like you are lowering into a chair. Keep weight in your heels.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_bodyweight_squat"
+    },
+    {
+      "id": "EX022",
+      "name": "Bulgarian Split Squat",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "dumbbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "8-10 each side",
+      "rest": 90,
+      "excludeIf": [
+        "knee",
+        "hip"
+      ],
+      "coachingCue": "Back foot elevated, front foot forward. Lower until back knee nearly touches the floor.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_bulgarian_split_squat"
+    },
+    {
+      "id": "EX023",
+      "name": "Leg Extension",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Full extension at the top and a slow controlled lowering phase.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_leg_extension"
+    },
+    {
+      "id": "EX024",
+      "name": "Walking Lunge",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "dumbbell",
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12 each side",
+      "rest": 75,
+      "excludeIf": [
+        "knee",
+        "hip"
+      ],
+      "coachingCue": "Step forward and lower your back knee toward the floor. Stay upright.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_walking_lunge"
+    },
+    {
+      "id": "EX025",
+      "name": "Step Up",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12 each side",
+      "rest": 60,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Drive through the heel of your front foot. Stand tall at the top.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_step_up"
+    },
+    {
+      "id": "EX026",
+      "name": "Neutral-Grip Lat Pulldown",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 4,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [],
+      "coachingCue": "Pull elbows to your back pockets. Keep wrists straight throughout.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_neutral_lat_pulldown"
+    },
+    {
+      "id": "EX027",
+      "name": "Wide-Grip Lat Pulldown",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Lean back slightly and pull the bar to your upper chest. Lead with your elbows.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_wide_lat_pulldown"
+    },
+    {
+      "id": "EX028",
+      "name": "Seated Cable Row",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [],
+      "coachingCue": "Pull the handle to your lower sternum. Squeeze shoulder blades together at the end.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_seated_cable_row"
+    },
+    {
+      "id": "EX029",
+      "name": "Chest-Supported Dumbbell Row",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps",
+        "rear deltoid"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12 each side",
+      "rest": 75,
+      "excludeIf": [],
+      "coachingCue": "Chest on the bench. Pull the dumbbell toward your hip, not your shoulder.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_chest_supported_row"
+    },
+    {
+      "id": "EX030",
+      "name": "Single-Arm Dumbbell Row",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12 each side",
+      "rest": 60,
+      "excludeIf": [],
+      "coachingCue": "Brace your core and row the dumbbell to your hip. Keep your torso still.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_single_arm_row"
+    },
+    {
+      "id": "EX031",
+      "name": "Back Extension",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "lowerBack"
+      ],
+      "coachingCue": "Round slightly at the top and extend with control. Squeeze glutes at the top.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_back_extension"
+    },
+    {
+      "id": "EX032",
+      "name": "Barbell Bent-Over Row",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps",
+        "core"
+      ],
+      "difficulty": "advanced",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "both",
+      "sets": 4,
+      "reps": "6-8",
+      "rest": 90,
+      "excludeIf": [
+        "lowerBack",
+        "wrist"
+      ],
+      "coachingCue": "Hinge to 45 degrees and row the bar to your lower chest. Keep your back flat.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_barbell_row"
+    },
+    {
+      "id": "EX033",
+      "name": "Face Pull",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "rear deltoid",
+        "external rotators"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20",
+      "rest": 45,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Pull the rope to your face and externally rotate at the end. Slow and controlled.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_face_pull"
+    },
+    {
+      "id": "EX034",
+      "name": "Resistance Band Row",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "resistance_band"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Anchor the band low and row both hands back toward your hips.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_band_row"
+    },
+    {
+      "id": "EX035",
+      "name": "Dumbbell Bench Press",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "triceps",
+        "front deltoid"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "dumbbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 4,
+      "reps": "8-10",
+      "rest": 90,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Lower dumbbells to chest level with control. Press up and slightly inward.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_dumbbell_bench_press"
+    },
+    {
+      "id": "EX036",
+      "name": "Incline Dumbbell Press",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "triceps",
+        "front deltoid"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "dumbbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Bench at 30-45 degrees. Press up and in. Squeeze the chest at the top.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_incline_dumbbell_press"
+    },
+    {
+      "id": "EX037",
+      "name": "Cable Chest Fly",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "front deltoid"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Arms slightly bent, bring them together like hugging a tree. Feel the chest stretch.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_cable_fly"
+    },
+    {
+      "id": "EX038",
+      "name": "Push-Up",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "triceps",
+        "core",
+        "front deltoid"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-15",
+      "rest": 60,
+      "excludeIf": [
+        "wrist",
+        "shoulder"
+      ],
+      "coachingCue": "Body in a straight line from head to heels. Lower with control and push through your palms.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_push_up"
+    },
+    {
+      "id": "EX039",
+      "name": "Incline Push-Up",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "triceps",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 45,
+      "excludeIf": [
+        "wrist"
+      ],
+      "coachingCue": "Hands on a bench or surface. Keep your body rigid and lower your chest toward the surface.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_incline_push_up"
+    },
+    {
+      "id": "EX040",
+      "name": "Dumbbell Lateral Raise",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Slight lean forward, raise arms to shoulder height. Lead with your elbows.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_lateral_raise"
+    },
+    {
+      "id": "EX041",
+      "name": "Cable Lateral Raise",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20",
+      "rest": 45,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Cable at the bottom. Raise arm across your body to shoulder height. Slow and controlled.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_cable_lateral_raise"
+    },
+    {
+      "id": "EX042",
+      "name": "Seated Dumbbell Shoulder Press",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [
+        "triceps"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "dumbbell",
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Elbows at 90 degrees to start. Press up until arms are almost fully extended.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_seated_shoulder_press"
+    },
+    {
+      "id": "EX043",
+      "name": "Dumbbell Front Raise",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Raise to shoulder height with a slight bend in the elbow. Lower slowly.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_front_raise"
+    },
+    {
+      "id": "EX044",
+      "name": "Band Pull-Apart",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [
+        "back",
+        "rear deltoid"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "resistance_band"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "15-20",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Arms straight out front. Pull the band apart until arms are fully open. Squeeze shoulder blades.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_band_pull_apart"
+    },
+    {
+      "id": "EX045",
+      "name": "Dead Bug",
+      "muscleGroup": "core",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "8-10 each side",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Lower back pressed to floor. Extend opposite arm and leg simultaneously. Breathe out on extension.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_dead_bug"
+    },
+    {
+      "id": "EX046",
+      "name": "Plank",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "shoulders",
+        "glutes"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "30-45 seconds",
+      "rest": 45,
+      "excludeIf": [
+        "wrist",
+        "shoulder"
+      ],
+      "coachingCue": "Straight line from head to heels. Squeeze everything. Breathe steadily.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_plank"
+    },
+    {
+      "id": "EX047",
+      "name": "Forearm Plank",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "shoulders",
+        "glutes"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "30-45 seconds",
+      "rest": 45,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Elbows under shoulders. Body in a straight line. Breathe and hold.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_forearm_plank"
+    },
+    {
+      "id": "EX048",
+      "name": "Bird Dog",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "glutes",
+        "back"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10 each side",
+      "rest": 45,
+      "excludeIf": [
+        "wrist"
+      ],
+      "coachingCue": "On all fours. Extend opposite arm and leg keeping hips square. Hold briefly at the top.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_bird_dog"
+    },
+    {
+      "id": "EX049",
+      "name": "Cable Crunch",
+      "muscleGroup": "core",
+      "secondaryMuscles": [],
+      "difficulty": "intermediate",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "postpartumCore"
+      ],
+      "coachingCue": "Hold the rope at your temples. Curl your spine \u2014 elbows to knees. Control the return.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_cable_crunch"
+    },
+    {
+      "id": "EX050",
+      "name": "Side Plank",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "glutes",
+        "shoulders"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "20-30 seconds each side",
+      "rest": 45,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Hips up and forward. Stack your feet or stagger them. Breathe steadily.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_side_plank"
+    },
+    {
+      "id": "EX051",
+      "name": "Pallof Press",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "shoulders"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "cable",
+        "resistance_band"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12 each side",
+      "rest": 60,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Press straight out from your chest and resist the rotation. Hold briefly at extension.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_pallof_press"
+    },
+    {
+      "id": "EX052",
+      "name": "Hollow Body Hold",
+      "muscleGroup": "core",
+      "secondaryMuscles": [],
+      "difficulty": "intermediate",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "20-30 seconds",
+      "rest": 60,
+      "excludeIf": [
+        "postpartumCore"
+      ],
+      "coachingCue": "Lower back pressed to the floor. Arms overhead, legs low. Breathe shallow and hold.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_hollow_body"
+    },
+    {
+      "id": "EX053",
+      "name": "Diaphragmatic Breathing",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "pelvic floor"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "8-10 breaths",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Breathe into your belly and sides. Feel your ribcage expand 360 degrees. Slow exhale through pursed lips.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_diaphragmatic_breathing"
+    },
+    {
+      "id": "EX054",
+      "name": "Pelvic Floor Activation",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "pelvic floor"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10 holds x 5 seconds",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Think of lifting and squeezing gently from the inside. Breathe throughout. Release fully between reps.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_pelvic_floor"
+    },
+    {
+      "id": "EX055",
+      "name": "Dumbbell Bicep Curl",
+      "muscleGroup": "biceps",
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 60,
+      "excludeIf": [
+        "wrist"
+      ],
+      "coachingCue": "Keep elbows pinned to your sides. Full range, full squeeze at the top.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_dumbbell_curl"
+    },
+    {
+      "id": "EX056",
+      "name": "Hammer Curl",
+      "muscleGroup": "biceps",
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 60,
+      "excludeIf": [],
+      "coachingCue": "Neutral grip, thumbs up. Curl and squeeze. Wrist-friendly alternative to standard curl.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_hammer_curl"
+    },
+    {
+      "id": "EX057",
+      "name": "Cable Curl",
+      "muscleGroup": "biceps",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "wrist"
+      ],
+      "coachingCue": "Constant tension from the cable. Curl and squeeze, lower slowly.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_cable_curl"
+    },
+    {
+      "id": "EX058",
+      "name": "Tricep Rope Pushdown",
+      "muscleGroup": "triceps",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "wrist",
+        "shoulder"
+      ],
+      "coachingCue": "Elbows pinned to your sides. Push down and flare the rope slightly at the bottom.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_tricep_pushdown"
+    },
+    {
+      "id": "EX059",
+      "name": "Overhead Tricep Extension",
+      "muscleGroup": "triceps",
+      "secondaryMuscles": [],
+      "difficulty": "intermediate",
+      "equipment": [
+        "dumbbell",
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 60,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Keep elbows close to your head. Lower behind your head and extend fully.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_overhead_tricep_extension"
+    },
+    {
+      "id": "EX060",
+      "name": "Tricep Dip (Bench)",
+      "muscleGroup": "triceps",
+      "secondaryMuscles": [
+        "chest",
+        "shoulders"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "bench"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "wrist",
+        "shoulder"
+      ],
+      "coachingCue": "Hands on a bench behind you. Lower your hips toward the floor and press back up.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_bench_dip"
+    },
+    {
+      "id": "EX061",
+      "name": "Incline Treadmill Walk",
+      "muscleGroup": "cardio",
+      "secondaryMuscles": [
+        "glutes",
+        "calves"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 1,
+      "reps": "15-20 minutes",
+      "rest": 0,
+      "excludeIf": [],
+      "coachingCue": "Incline at 8-12 percent. Steady pace. Do not hold the rails.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_incline_walk"
+    },
+    {
+      "id": "EX062",
+      "name": "Stair Climber",
+      "muscleGroup": "cardio",
+      "secondaryMuscles": [
+        "glutes",
+        "quads"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 1,
+      "reps": "10-15 minutes",
+      "rest": 0,
+      "excludeIf": [
+        "knee",
+        "hip"
+      ],
+      "coachingCue": "Full step through the whole foot. Keep an upright posture. Steady pace.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_stair_climber"
+    },
+    {
+      "id": "EX063",
+      "name": "Stationary Bike",
+      "muscleGroup": "cardio",
+      "secondaryMuscles": [
+        "quads",
+        "hamstrings"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 1,
+      "reps": "15-20 minutes",
+      "rest": 0,
+      "excludeIf": [],
+      "coachingCue": "Moderate resistance. Keep a steady cadence. Breathe rhythmically.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_stationary_bike"
+    },
+    {
+      "id": "EX064",
+      "name": "Rowing Machine",
+      "muscleGroup": "cardio",
+      "secondaryMuscles": [
+        "back",
+        "arms",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 1,
+      "reps": "10-15 minutes",
+      "rest": 0,
+      "excludeIf": [
+        "lowerBack",
+        "wrist"
+      ],
+      "coachingCue": "Legs first, then lean back, then arms. Reverse on the return. Smooth chain throughout.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_rowing_machine"
+    },
+    {
+      "id": "EX065",
+      "name": "Gentle Walking",
+      "muscleGroup": "cardio",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 1,
+      "reps": "15-30 minutes",
+      "rest": 0,
+      "excludeIf": [],
+      "coachingCue": "Comfortable pace. Focus on breathing and gentle movement.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_gentle_walking"
+    },
+    {
+      "id": "EX066",
+      "name": "Hip Flexor Stretch",
+      "muscleGroup": "mobility",
+      "secondaryMuscles": [
+        "quads"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 2,
+      "reps": "30-45 seconds each side",
+      "rest": 30,
+      "excludeIf": [
+        "knee",
+        "hip"
+      ],
+      "coachingCue": "Low lunge position. Tuck your tailbone and lean forward slightly into the stretch.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_hip_flexor_stretch"
+    },
+    {
+      "id": "EX067",
+      "name": "90-90 Hip Stretch",
+      "muscleGroup": "mobility",
+      "secondaryMuscles": [
+        "glutes",
+        "hip"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 2,
+      "reps": "30-45 seconds each side",
+      "rest": 30,
+      "excludeIf": [
+        "knee",
+        "hip"
+      ],
+      "coachingCue": "Both legs at 90 degrees. Sit tall and fold over the front shin gently.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_90_90_stretch"
+    },
+    {
+      "id": "EX068",
+      "name": "Cat-Cow",
+      "muscleGroup": "mobility",
+      "secondaryMuscles": [
+        "core",
+        "back"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 2,
+      "reps": "10 slow repetitions",
+      "rest": 30,
+      "excludeIf": [
+        "wrist"
+      ],
+      "coachingCue": "Breathe in as you arch (cow), breathe out as you round (cat). Slow and fluid.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_cat_cow"
+    },
+    {
+      "id": "EX069",
+      "name": "Child's Pose",
+      "muscleGroup": "mobility",
+      "secondaryMuscles": [
+        "back",
+        "hips"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 2,
+      "reps": "30-60 seconds",
+      "rest": 30,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Hips toward heels, arms stretched forward. Breathe into your back body.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_childs_pose"
+    },
+    {
+      "id": "EX070",
+      "name": "World's Greatest Stretch",
+      "muscleGroup": "mobility",
+      "secondaryMuscles": [
+        "hips",
+        "thoracic spine",
+        "hamstrings"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 2,
+      "reps": "5 each side",
+      "rest": 30,
+      "excludeIf": [
+        "wrist",
+        "hip"
+      ],
+      "coachingCue": "Step into a lunge. Place same-side hand on the floor and rotate opposite arm to the sky.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_worlds_greatest_stretch"
+    },
+    {
+      "id": "EX071",
+      "name": "Wrist Circles",
+      "muscleGroup": "mobility",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 2,
+      "reps": "15 each direction",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Slow controlled circles in both directions. Feel the full range of wrist motion.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_wrist_circles"
+    },
+    {
+      "id": "EX072",
+      "name": "Thoracic Rotation",
+      "muscleGroup": "mobility",
+      "secondaryMuscles": [
+        "back",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 2,
+      "reps": "10 each side",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Seated or on all fours. Rotate from your mid-back not your lower back. Follow your hand with your eyes.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_thoracic_rotation"
+    },
+    {
+      "id": "EX073",
+      "name": "Supported Wall Squat",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 60,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Back against a wall. Feet forward. Lower to comfortable depth. Breathe steadily.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_wall_squat"
+    },
+    {
+      "id": "EX074",
+      "name": "Seated Resistance Band Row",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "resistance_band"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Sit tall on the floor or a chair. Row the band to your lower ribs. Squeeze your back.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_seated_band_row"
+    },
+    {
+      "id": "EX075",
+      "name": "Standing Hip Circle",
+      "muscleGroup": "mobility",
+      "secondaryMuscles": [
+        "glutes",
+        "hip"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "her",
+      "sets": 2,
+      "reps": "10 each direction",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Hands on hips. Draw slow circles with your hips. Great for relieving pelvic pressure.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_hip_circle"
+    },
+    {
+      "id": "EX076",
+      "name": "Seated Calf Raise",
+      "muscleGroup": "cardio",
+      "secondaryMuscles": [
+        "calves"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "20",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Seated in a chair. Rise onto toes and lower slowly. Helps with circulation during pregnancy.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_seated_calf_raise"
+    },
+    {
+      "id": "EX077",
+      "name": "Standing Dumbbell Lateral Raise (Light)",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 45,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Very light weight. Raise to shoulder height and lower with full control.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_light_lateral_raise"
+    },
+    {
+      "id": "EX078",
+      "name": "Prenatal Side-Lying Hip Abduction",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight",
+        "resistance_band"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "15-20 each side",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Lie on your side with a pillow for support. Lift the top leg with control. Safe at all trimesters.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_side_lying_abduction"
+    },
+    {
+      "id": "EX079",
+      "name": "Supported Standing Row (Band)",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "resistance_band"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Anchor band at chest height. Stand and row both arms to your sides. Great for all trimesters.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_standing_band_row"
+    },
+    {
+      "id": "EX080",
+      "name": "Pelvic Tilt",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "pelvic floor",
+        "back"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "10-15",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Lying on your back with knees bent. Gently flatten your back to the floor and hold. Safe early pregnancy only.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_pelvic_tilt"
+    },
+    {
+      "id": "EX081",
+      "name": "Standing Pelvic Tilt",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "pelvic floor"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "10-15",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Stand with back against a wall. Gently tuck your tailbone and hold. Safe throughout pregnancy.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_standing_pelvic_tilt"
+    },
+    {
+      "id": "EX082",
+      "name": "Supported Squat with Strap",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "pelvic floor"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "resistance_band"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "8-10",
+      "rest": 60,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Hold a strap or band anchored to a door. Lower into a deep squat with support. Excellent for third trimester.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_supported_squat"
+    },
+    {
+      "id": "EX083",
+      "name": "Heel Slide",
+      "muscleGroup": "core",
+      "secondaryMuscles": [
+        "pelvic floor"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "her",
+      "sets": 2,
+      "reps": "10 each side",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Lying on back. Breathe out and gently brace. Slide one heel away. Keep lower back still.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_heel_slide"
+    },
+    {
+      "id": "EX084",
+      "name": "Clam Shell",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hip"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight",
+        "resistance_band"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "15-20 each side",
+      "rest": 45,
+      "excludeIf": [
+        "hip"
+      ],
+      "coachingCue": "Side lying with knees bent. Open the top knee like a clam. Keep feet together.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_clam_shell"
+    },
+    {
+      "id": "EX085",
+      "name": "Standing March",
+      "muscleGroup": "cardio",
+      "secondaryMuscles": [
+        "core",
+        "hip flexors"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "her",
+      "sets": 2,
+      "reps": "20 total steps",
+      "rest": 30,
+      "excludeIf": [],
+      "coachingCue": "Gentle march on the spot lifting knees to hip height. Breathe steadily.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_standing_march"
+    },
+    {
+      "id": "EX086",
+      "name": "Wall Push-Up",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "triceps",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-15",
+      "rest": 45,
+      "excludeIf": [
+        "wrist"
+      ],
+      "coachingCue": "Hands at chest height on the wall. Lower your chest toward the wall and push back.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_wall_push_up"
+    },
+    {
+      "id": "EX087",
+      "name": "Seated Dumbbell Hammer Curl",
+      "muscleGroup": "biceps",
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12",
+      "rest": 60,
+      "excludeIf": [],
+      "coachingCue": "Seated for stability. Neutral grip curls. Controlled pace.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_seated_hammer_curl"
+    },
+    {
+      "id": "EX088",
+      "name": "Banded Glute Bridge",
+      "muscleGroup": "glutes",
+      "secondaryMuscles": [
+        "hamstrings",
+        "pelvic floor"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "resistance_band"
+      ],
+      "gender": "her",
+      "sets": 3,
+      "reps": "15",
+      "rest": 45,
+      "excludeIf": [],
+      "coachingCue": "Band above knees. Drive hips up and press knees out against the band. Postpartum safe with pelvic floor activation.",
+      "prenatalSafe": [
+        1
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_banded_glute_bridge"
+    },
+    {
+      "id": "EX089",
+      "name": "Barbell Bench Press",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "triceps",
+        "front deltoid"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell",
+        "bench"
+      ],
+      "gender": "him",
+      "sets": 4,
+      "reps": "6-8",
+      "rest": 120,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Arch slightly, retract shoulder blades. Bar touches lower chest. Drive feet into the floor.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_barbell_bench"
+    },
+    {
+      "id": "EX090",
+      "name": "Conventional Deadlift",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings",
+        "core",
+        "traps"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "him",
+      "sets": 4,
+      "reps": "5-6",
+      "rest": 180,
+      "excludeIf": [
+        "lowerBack",
+        "wrist"
+      ],
+      "coachingCue": "Bar over mid-foot. Hinge and grip. Legs push the floor away, then hips drive through at the top.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_conventional_deadlift"
+    },
+    {
+      "id": "EX091",
+      "name": "Weighted Pull-Up",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps",
+        "core"
+      ],
+      "difficulty": "advanced",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "him",
+      "sets": 4,
+      "reps": "5-8",
+      "rest": 120,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Dead hang start. Pull chest to the bar. Lower fully between reps.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_weighted_pull_up"
+    },
+    {
+      "id": "EX092",
+      "name": "Barbell Overhead Press",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [
+        "triceps",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "him",
+      "sets": 4,
+      "reps": "6-8",
+      "rest": 90,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Bar at collar bone. Press overhead and slightly back. Lock out at the top.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_barbell_ohp"
+    },
+    {
+      "id": "EX093",
+      "name": "Barbell Row",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps",
+        "core"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "him",
+      "sets": 4,
+      "reps": "6-8",
+      "rest": 90,
+      "excludeIf": [
+        "lowerBack",
+        "wrist"
+      ],
+      "coachingCue": "Hinge to 45 degrees. Row bar to lower chest. Keep back flat throughout.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_him_barbell_row"
+    },
+    {
+      "id": "EX094",
+      "name": "Dip",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "triceps",
+        "shoulders"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "bodyweight"
+      ],
+      "gender": "him",
+      "sets": 3,
+      "reps": "8-12",
+      "rest": 90,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Lean forward slightly for chest emphasis. Lower until upper arms are parallel to the floor.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_dip"
+    },
+    {
+      "id": "EX095",
+      "name": "Incline Barbell Press",
+      "muscleGroup": "chest",
+      "secondaryMuscles": [
+        "front deltoid",
+        "triceps"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell",
+        "bench"
+      ],
+      "gender": "him",
+      "sets": 4,
+      "reps": "8-10",
+      "rest": 90,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Bench at 30 degrees. Bar touches upper chest. Full press and controlled lowering.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_incline_barbell"
+    },
+    {
+      "id": "EX096",
+      "name": "Hack Squat",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "him",
+      "sets": 4,
+      "reps": "8-10",
+      "rest": 90,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Feet shoulder-width at the bottom of the platform. Full depth and drive through heels.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_hack_squat"
+    },
+    {
+      "id": "EX097",
+      "name": "EZ Bar Curl",
+      "muscleGroup": "biceps",
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "him",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 60,
+      "excludeIf": [
+        "wrist"
+      ],
+      "coachingCue": "Grip the angled part of the EZ bar. Full curl and squeeze. Lower all the way down.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_ez_bar_curl"
+    },
+    {
+      "id": "EX098",
+      "name": "Skull Crusher",
+      "muscleGroup": "triceps",
+      "secondaryMuscles": [],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell",
+        "dumbbell"
+      ],
+      "gender": "him",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "wrist",
+        "shoulder"
+      ],
+      "coachingCue": "Lower bar to your forehead by bending only at the elbows. Press back to start.",
+      "prenatalSafe": [],
+      "postpartumSafe": [],
+      "mediaUrl": "PLACEHOLDER_skull_crusher"
+    },
+    {
+      "id": "EX099",
+      "name": "Trap Bar Deadlift",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "glutes",
+        "quads",
+        "hamstrings"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "barbell"
+      ],
+      "gender": "both",
+      "sets": 4,
+      "reps": "5-8",
+      "rest": 120,
+      "excludeIf": [
+        "lowerBack"
+      ],
+      "coachingCue": "Stand inside the trap bar. Hinge and grip. Push the floor away. More quad-dominant than conventional.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_trap_bar_deadlift"
+    },
+    {
+      "id": "EX100",
+      "name": "Pull-Up (Assisted)",
+      "muscleGroup": "back",
+      "secondaryMuscles": [
+        "biceps",
+        "core"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine",
+        "resistance_band"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "8-10",
+      "rest": 90,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Use band or machine for assistance. Pull chest toward the bar and lower fully.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_assisted_pull_up"
+    },
+    {
+      "id": "EX101",
+      "name": "Arnold Press",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [
+        "triceps"
+      ],
+      "difficulty": "intermediate",
+      "equipment": [
+        "dumbbell"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "shoulder",
+        "wrist"
+      ],
+      "coachingCue": "Start with palms facing you. Rotate palms outward as you press overhead. Reverse on the way down.",
+      "prenatalSafe": [],
+      "postpartumSafe": [
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_arnold_press"
+    },
+    {
+      "id": "EX102",
+      "name": "Incline Walk (Treadmill)",
+      "muscleGroup": "cardio",
+      "secondaryMuscles": [
+        "glutes",
+        "calves"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "machine"
+      ],
+      "gender": "both",
+      "sets": 1,
+      "reps": "20 minutes",
+      "rest": 0,
+      "excludeIf": [],
+      "coachingCue": "Incline 10-15 percent at a comfortable pace. Arms swinging naturally.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_treadmill_incline"
+    },
+    {
+      "id": "EX103",
+      "name": "Cable Tricep Kickback",
+      "muscleGroup": "triceps",
+      "secondaryMuscles": [],
+      "difficulty": "beginner",
+      "equipment": [
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Hinge forward. Upper arm parallel to the floor. Extend and squeeze the tricep fully.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_cable_kickback_tricep"
+    },
+    {
+      "id": "EX104",
+      "name": "Reverse Fly",
+      "muscleGroup": "shoulders",
+      "secondaryMuscles": [
+        "back",
+        "rear deltoid"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "dumbbell",
+        "cable"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "12-15",
+      "rest": 60,
+      "excludeIf": [
+        "shoulder"
+      ],
+      "coachingCue": "Hinge forward to 45 degrees. Raise arms out to the sides like wings. Lead with elbows.",
+      "prenatalSafe": [
+        1,
+        2,
+        3
+      ],
+      "postpartumSafe": [
+        2,
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_reverse_fly"
+    },
+    {
+      "id": "EX105",
+      "name": "Box Squat",
+      "muscleGroup": "quads",
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "difficulty": "beginner",
+      "equipment": [
+        "barbell",
+        "dumbbell",
+        "bodyweight"
+      ],
+      "gender": "both",
+      "sets": 3,
+      "reps": "10-12",
+      "rest": 75,
+      "excludeIf": [
+        "knee"
+      ],
+      "coachingCue": "Sit back to a box or bench. Touch and go \u2014 do not relax at the bottom. Drive back up.",
+      "prenatalSafe": [
+        1,
+        2
+      ],
+      "postpartumSafe": [
+        3,
+        4
+      ],
+      "mediaUrl": "PLACEHOLDER_box_squat"
+    }
+  ]
+}

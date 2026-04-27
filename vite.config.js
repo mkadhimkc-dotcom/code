@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
-import { copyFileSync, readdirSync } from 'fs'
+import { copyFileSync, readdirSync, mkdirSync, existsSync } from 'fs'
 import { resolve } from 'path'
 
 function syncJsPlugin() {
   return {
     name: 'sync-js',
     buildStart() {
+      // Sync js/ → public/js/
       const jsDir = resolve(__dirname, 'js')
       const publicJsDir = resolve(__dirname, 'public/js')
       readdirSync(jsDir).forEach(file => {
@@ -15,6 +16,20 @@ function syncJsPlugin() {
             resolve(publicJsDir, file)
           )
           console.log(`Synced: js/${file} → public/js/${file}`)
+        }
+      })
+
+      // Sync data/ → public/data/
+      const dataDir = resolve(__dirname, 'data')
+      const publicDataDir = resolve(__dirname, 'public/data')
+      if (!existsSync(publicDataDir)) mkdirSync(publicDataDir, { recursive: true })
+      readdirSync(dataDir).forEach(file => {
+        if (file.endsWith('.json')) {
+          copyFileSync(
+            resolve(dataDir, file),
+            resolve(publicDataDir, file)
+          )
+          console.log(`Synced: data/${file} → public/data/${file}`)
         }
       })
     }

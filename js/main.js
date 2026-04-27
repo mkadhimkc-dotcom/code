@@ -557,6 +557,89 @@
     document.body.appendChild(modal);
   }
 
+  // ── LOAD WORKOUTS TAB ────────────────────────────────────────────
+  async function loadWorkoutsTab() {
+    var emptyEl = document.getElementById('workoutsEmpty');
+    var programEl = document.getElementById('workoutProgram');
+    var programNameEl = document.getElementById('programName');
+    var programBadgesEl = document.getElementById('programBadges');
+    var programDaysEl = document.getElementById('programDays');
+    if (!emptyEl || !programEl) return;
+    if (!window.quizGenerator) {
+      emptyEl.style.display = 'flex';
+      programEl.style.display = 'none';
+      return;
+    }
+    var program = await window.quizGenerator.loadProgram();
+    if (!program || !program.days || program.days.length === 0) {
+      emptyEl.style.display = 'flex';
+      programEl.style.display = 'none';
+      return;
+    }
+    emptyEl.style.display = 'none';
+    programEl.style.display = 'block';
+    if (programNameEl) programNameEl.textContent = program.splitName;
+    if (programBadgesEl) {
+      programBadgesEl.innerHTML = '';
+      if (program.isModified) {
+        var b1 = document.createElement('span');
+        b1.className = 'preview-badge preview-badge-modified';
+        b1.textContent = 'Modified for your limitations';
+        programBadgesEl.appendChild(b1);
+      }
+      if (program.isPrenatal) {
+        var b2 = document.createElement('span');
+        b2.className = 'preview-badge preview-badge-prenatal';
+        b2.textContent = 'Prenatal Program';
+        programBadgesEl.appendChild(b2);
+      }
+      if (program.isPostpartum) {
+        var b3 = document.createElement('span');
+        b3.className = 'preview-badge preview-badge-postpartum';
+        b3.textContent = 'Recovery Training';
+        programBadgesEl.appendChild(b3);
+      }
+    }
+    if (programDaysEl) {
+      programDaysEl.innerHTML = '';
+      program.days.forEach(function (day, dayIdx) {
+        var dayDiv = document.createElement('div');
+        dayDiv.className = 'program-day';
+        var dayHeader = document.createElement('div');
+        dayHeader.className = 'program-day-header';
+        dayHeader.textContent = 'Day ' + (dayIdx + 1) + ': ' + day.label;
+        dayDiv.appendChild(dayHeader);
+        var exList = document.createElement('div');
+        exList.className = 'program-day-exercises';
+        day.exercises.forEach(function (ex) {
+          var row = document.createElement('div');
+          row.className = 'program-exercise-row';
+          var name = document.createElement('div');
+          name.className = 'program-exercise-name';
+          name.textContent = ex.name;
+          var detail = document.createElement('div');
+          detail.className = 'program-exercise-detail';
+          detail.textContent = ex.sets + ' sets x ' + ex.reps + '  |  Rest ' + ex.rest + 's';
+          var muscle = document.createElement('span');
+          muscle.className = 'program-exercise-muscle';
+          muscle.textContent = ex.muscleGroup;
+          row.appendChild(name);
+          row.appendChild(detail);
+          row.appendChild(muscle);
+          if (ex.coachingCue) {
+            var cue = document.createElement('div');
+            cue.className = 'program-exercise-cue';
+            cue.textContent = ex.coachingCue;
+            row.appendChild(cue);
+          }
+          exList.appendChild(row);
+        });
+        dayDiv.appendChild(exList);
+        programDaysEl.appendChild(dayDiv);
+      });
+    }
+  }
+
   window.appMain = {
     setupCalendar,
     restoreCheckboxStates,
@@ -564,7 +647,8 @@
     showConfirm,
     closeCalendarModal,
     setupDashboard,
-    updateDashboardStats
+    updateDashboardStats,
+    loadWorkoutsTab
   };
 
   document.addEventListener('DOMContentLoaded', async function() {
@@ -575,5 +659,6 @@
     attachCheckboxListeners();
     setupDashboard();
     window.customWorkouts.initialize();
+    setTimeout(function() { loadWorkoutsTab(); }, 600);
   });
 })();

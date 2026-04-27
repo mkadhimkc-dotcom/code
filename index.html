@@ -32,6 +32,7 @@
     </button>
 </nav>
 
+<!-- HOME PAGE -->
 <div id="home" class="page active workout-page">
 
     <div class="dash-header">
@@ -102,15 +103,31 @@
 
 </div>
 
+<!-- MY WORKOUTS PAGE -->
 <div id="workouts" class="page workout-page">
-    <h2>My Workouts</h2>
-    <p style="text-align:center;color:#999;padding:2rem;">Your workout program will appear here once you complete the setup quiz.</p>
+    <div id="workoutsContent">
+        <div class="workouts-empty" id="workoutsEmpty">
+            <i class="ph ph-barbell" style="font-size:3rem;color:var(--clr-primary);opacity:0.3;"></i>
+            <p>No program yet. Complete the setup quiz to get your personalized program.</p>
+            <button class="btn-save" style="max-width:280px;margin:var(--space-4) auto 0;" onclick="window.cluleeQuiz && window.cluleeQuiz.open(false)">
+                Start Setup Quiz
+            </button>
+        </div>
+        <div id="workoutProgram" style="display:none;">
+            <div class="program-header">
+                <div class="program-name" id="programName"></div>
+                <div class="program-badges" id="programBadges"></div>
+            </div>
+            <div id="programDays"></div>
+        </div>
+    </div>
 </div>
 
+<!-- PROFILE PAGE -->
 <div id="profile-page" class="page workout-page">
     <h2>My Profile</h2>
-    <p style="text-align:center;color:#999;padding:2rem;">Full profile view coming soon!</p>
-    <div style="text-align:center;padding:0 1rem 2rem;">
+    <p style="text-align:center;color:#999;padding:1rem 2rem 0;">Full profile view coming soon!</p>
+    <div style="text-align:center;padding:var(--space-4) var(--space-4) var(--space-8);">
         <button class="btn-save" onclick="window.cluleeQuiz && window.cluleeQuiz.open(true)" style="max-width:300px;margin:0 auto;">
             Regenerate My Program
         </button>
@@ -134,41 +151,36 @@
 <div id="quiz-overlay" class="quiz-overlay" style="display:none;">
     <div class="quiz-container">
 
-        <!-- Header -->
         <div class="quiz-header">
             <div class="quiz-progress-bar">
                 <div class="quiz-progress-fill" id="quizProgressFill"></div>
             </div>
             <div class="quiz-progress-text" id="quizProgressText">Step 1 of 8</div>
-            <button class="quiz-close-btn" id="quizCloseBtn" style="display:none;" title="Cancel and keep current program">
+            <button class="quiz-close-btn" id="quizCloseBtn" style="display:none;" title="Cancel">
                 <i class="ph ph-x"></i>
             </button>
         </div>
 
-        <!-- Steps container -->
         <div class="quiz-steps" id="quizSteps">
 
-            <!-- Q1: Who are you training as? -->
+            <!-- Q1 -->
             <div class="quiz-step active" data-step="1">
                 <div class="quiz-question">Who are you training as?</div>
                 <div class="quiz-subtitle">This helps us personalise your program and tone.</div>
                 <div class="quiz-options">
                     <button class="quiz-option" data-q="gender" data-v="her">
-                        <span class="quiz-option-icon">&#9792;</span>
                         <span class="quiz-option-label">A woman</span>
                     </button>
                     <button class="quiz-option" data-q="gender" data-v="him">
-                        <span class="quiz-option-icon">&#9794;</span>
                         <span class="quiz-option-label">A man</span>
                     </button>
                     <button class="quiz-option" data-q="gender" data-v="both">
-                        <span class="quiz-option-icon">&#9632;</span>
                         <span class="quiz-option-label">Prefer not to say</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Q2a: Goal (Women) -->
+            <!-- Q2a Women -->
             <div class="quiz-step" data-step="2a">
                 <div class="quiz-question">What is your main goal?</div>
                 <div class="quiz-subtitle">We will build your program around this.</div>
@@ -194,7 +206,7 @@
                 </div>
             </div>
 
-            <!-- Q2b: Goal (Men / Prefer not to say) -->
+            <!-- Q2b Men -->
             <div class="quiz-step" data-step="2b">
                 <div class="quiz-question">What is your main goal?</div>
                 <div class="quiz-subtitle">We will build your program around this.</div>
@@ -214,7 +226,7 @@
                 </div>
             </div>
 
-            <!-- Q3: Experience -->
+            <!-- Q3 -->
             <div class="quiz-step" data-step="3">
                 <div class="quiz-question">What is your experience level?</div>
                 <div class="quiz-subtitle">Be honest — we will match the difficulty to where you are right now.</div>
@@ -234,7 +246,7 @@
                 </div>
             </div>
 
-            <!-- Q4: Days per week -->
+            <!-- Q4 -->
             <div class="quiz-step" data-step="4">
                 <div class="quiz-question">How many days per week can you train?</div>
                 <div class="quiz-subtitle">Be realistic. Consistency beats ambition.</div>
@@ -254,7 +266,7 @@
                 </div>
             </div>
 
-            <!-- Q5: Equipment -->
+            <!-- Q5 -->
             <div class="quiz-step" data-step="5">
                 <div class="quiz-question">Where do you train?</div>
                 <div class="quiz-subtitle">We will only give you exercises you can actually do.</div>
@@ -274,7 +286,7 @@
                 </div>
             </div>
 
-            <!-- Q6: Pain points (multi-select) -->
+            <!-- Q6 Multi -->
             <div class="quiz-step" data-step="6">
                 <div class="quiz-question">Any pain points or physical limitations?</div>
                 <div class="quiz-subtitle">Select all that apply. We will exclude movements that could aggravate these.</div>
@@ -311,7 +323,7 @@
                 <button class="quiz-next-btn" id="limitationsNext">Continue</button>
             </div>
 
-            <!-- Q7a: Trimester (Prenatal) -->
+            <!-- Q7a Prenatal -->
             <div class="quiz-step" data-step="7a">
                 <div class="quiz-disclaimer">
                     <i class="ph ph-warning"></i>
@@ -338,7 +350,7 @@
                 </label>
             </div>
 
-            <!-- Q7b: Postpartum stage -->
+            <!-- Q7b Postpartum -->
             <div class="quiz-step" data-step="7b">
                 <div class="quiz-disclaimer">
                     <i class="ph ph-warning"></i>
@@ -369,7 +381,7 @@
                 </label>
             </div>
 
-            <!-- Q8: Energy level -->
+            <!-- Q8 -->
             <div class="quiz-step" data-step="8">
                 <div class="quiz-question">What is your energy like most days?</div>
                 <div class="quiz-subtitle">This sets your starting volume. You can always adjust later.</div>
@@ -390,16 +402,37 @@
             </div>
 
         </div>
-        <!-- /quiz-steps -->
 
-        <!-- Back button -->
         <button class="quiz-back-btn" id="quizBackBtn" style="display:none;">
             <i class="ph ph-arrow-left"></i> Back
         </button>
 
     </div>
 </div>
-<!-- /quiz-overlay -->
+
+<!-- Program Preview Overlay -->
+<div id="program-preview" class="program-preview" style="display:none;">
+    <div class="preview-container">
+
+        <div class="preview-header">
+            <div class="preview-title">Your program is ready</div>
+            <div class="preview-program-name" id="previewProgramName"></div>
+            <div class="preview-badges" id="previewBadges"></div>
+        </div>
+
+        <div class="preview-days" id="previewDays"></div>
+
+        <div class="preview-actions">
+            <button class="preview-accept-btn" id="previewAcceptBtn">
+                <i class="ph ph-check"></i> Accept This Program
+            </button>
+            <button class="preview-regen-btn" id="previewRegenBtn">
+                <i class="ph ph-arrows-clockwise"></i> Generate a Different One
+            </button>
+        </div>
+
+    </div>
+</div>
 
 <script type="module" src="/src/main.js"></script>
 <script src="/js/theme.js" defer></script>

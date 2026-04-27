@@ -104,16 +104,22 @@
 
 <div id="workouts" class="page workout-page">
     <h2>My Workouts</h2>
-    <p style="text-align:center;color:#999;padding:2rem;">Your workout program will appear here. Coming soon!</p>
+    <p style="text-align:center;color:#999;padding:2rem;">Your workout program will appear here once you complete the setup quiz.</p>
 </div>
 
 <div id="profile-page" class="page workout-page">
     <h2>My Profile</h2>
     <p style="text-align:center;color:#999;padding:2rem;">Full profile view coming soon!</p>
+    <div style="text-align:center;padding:0 1rem 2rem;">
+        <button class="btn-save" onclick="window.cluleeQuiz && window.cluleeQuiz.open(true)" style="max-width:300px;margin:0 auto;">
+            Regenerate My Program
+        </button>
+    </div>
 </div>
 
 </div>
 
+<!-- Calendar Modal -->
 <div id="calendar-modal" class="calendar-modal">
     <div class="calendar-modal-content">
         <div class="calendar-modal-header">
@@ -124,11 +130,283 @@
     </div>
 </div>
 
+<!-- Quiz Overlay -->
+<div id="quiz-overlay" class="quiz-overlay" style="display:none;">
+    <div class="quiz-container">
+
+        <!-- Header -->
+        <div class="quiz-header">
+            <div class="quiz-progress-bar">
+                <div class="quiz-progress-fill" id="quizProgressFill"></div>
+            </div>
+            <div class="quiz-progress-text" id="quizProgressText">Step 1 of 8</div>
+            <button class="quiz-close-btn" id="quizCloseBtn" style="display:none;" title="Cancel and keep current program">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+
+        <!-- Steps container -->
+        <div class="quiz-steps" id="quizSteps">
+
+            <!-- Q1: Who are you training as? -->
+            <div class="quiz-step active" data-step="1">
+                <div class="quiz-question">Who are you training as?</div>
+                <div class="quiz-subtitle">This helps us personalise your program and tone.</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="gender" data-v="her">
+                        <span class="quiz-option-icon">&#9792;</span>
+                        <span class="quiz-option-label">A woman</span>
+                    </button>
+                    <button class="quiz-option" data-q="gender" data-v="him">
+                        <span class="quiz-option-icon">&#9794;</span>
+                        <span class="quiz-option-label">A man</span>
+                    </button>
+                    <button class="quiz-option" data-q="gender" data-v="both">
+                        <span class="quiz-option-icon">&#9632;</span>
+                        <span class="quiz-option-label">Prefer not to say</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q2a: Goal (Women) -->
+            <div class="quiz-step" data-step="2a">
+                <div class="quiz-question">What is your main goal?</div>
+                <div class="quiz-subtitle">We will build your program around this.</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="goal" data-v="strength">
+                        <span class="quiz-option-label">Build functional strength</span>
+                    </button>
+                    <button class="quiz-option" data-q="goal" data-v="energy">
+                        <span class="quiz-option-label">Improve energy and endurance</span>
+                    </button>
+                    <button class="quiz-option" data-q="goal" data-v="feel_stronger">
+                        <span class="quiz-option-label">Feel stronger and more capable</span>
+                    </button>
+                    <button class="quiz-option" data-q="goal" data-v="prenatal">
+                        <span class="quiz-option-label">Prenatal training — I am currently pregnant</span>
+                    </button>
+                    <button class="quiz-option" data-q="goal" data-v="postpartum">
+                        <span class="quiz-option-label">Postpartum recovery</span>
+                    </button>
+                    <button class="quiz-option" data-q="goal" data-v="general">
+                        <span class="quiz-option-label">General fitness and movement</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q2b: Goal (Men / Prefer not to say) -->
+            <div class="quiz-step" data-step="2b">
+                <div class="quiz-question">What is your main goal?</div>
+                <div class="quiz-subtitle">We will build your program around this.</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="goal" data-v="strength">
+                        <span class="quiz-option-label">Build muscle and strength</span>
+                    </button>
+                    <button class="quiz-option" data-q="goal" data-v="performance">
+                        <span class="quiz-option-label">Athletic performance</span>
+                    </button>
+                    <button class="quiz-option" data-q="goal" data-v="energy">
+                        <span class="quiz-option-label">Get leaner and fitter</span>
+                    </button>
+                    <button class="quiz-option" data-q="goal" data-v="general">
+                        <span class="quiz-option-label">General fitness and movement</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q3: Experience -->
+            <div class="quiz-step" data-step="3">
+                <div class="quiz-question">What is your experience level?</div>
+                <div class="quiz-subtitle">Be honest — we will match the difficulty to where you are right now.</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="experience" data-v="beginner">
+                        <span class="quiz-option-label">New to structured training</span>
+                        <span class="quiz-option-sub">I am just getting started</span>
+                    </button>
+                    <button class="quiz-option" data-q="experience" data-v="intermediate">
+                        <span class="quiz-option-label">Trained before, getting back into it</span>
+                        <span class="quiz-option-sub">I know the movements but lost consistency</span>
+                    </button>
+                    <button class="quiz-option" data-q="experience" data-v="advanced">
+                        <span class="quiz-option-label">Consistent and ready to push</span>
+                        <span class="quiz-option-sub">I train regularly and want a challenge</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q4: Days per week -->
+            <div class="quiz-step" data-step="4">
+                <div class="quiz-question">How many days per week can you train?</div>
+                <div class="quiz-subtitle">Be realistic. Consistency beats ambition.</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="days" data-v="2">
+                        <span class="quiz-option-label">2 to 3 days</span>
+                        <span class="quiz-option-sub">Full body sessions</span>
+                    </button>
+                    <button class="quiz-option" data-q="days" data-v="4">
+                        <span class="quiz-option-label">4 days</span>
+                        <span class="quiz-option-sub">Upper and lower split</span>
+                    </button>
+                    <button class="quiz-option" data-q="days" data-v="5">
+                        <span class="quiz-option-label">5 or more days</span>
+                        <span class="quiz-option-sub">Push, pull, legs structure</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q5: Equipment -->
+            <div class="quiz-step" data-step="5">
+                <div class="quiz-question">Where do you train?</div>
+                <div class="quiz-subtitle">We will only give you exercises you can actually do.</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="equipment" data-v="gym">
+                        <span class="quiz-option-label">Full gym</span>
+                        <span class="quiz-option-sub">Barbells, cables, machines, dumbbells</span>
+                    </button>
+                    <button class="quiz-option" data-q="equipment" data-v="home">
+                        <span class="quiz-option-label">Home with dumbbells or bands</span>
+                        <span class="quiz-option-sub">Limited equipment at home</span>
+                    </button>
+                    <button class="quiz-option" data-q="equipment" data-v="bodyweight">
+                        <span class="quiz-option-label">Bodyweight only</span>
+                        <span class="quiz-option-sub">No equipment needed</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q6: Pain points (multi-select) -->
+            <div class="quiz-step" data-step="6">
+                <div class="quiz-question">Any pain points or physical limitations?</div>
+                <div class="quiz-subtitle">Select all that apply. We will exclude movements that could aggravate these.</div>
+                <div class="quiz-options quiz-multi">
+                    <button class="quiz-option quiz-option-multi" data-q="limitations" data-v="wrist">
+                        <span class="quiz-check"><i class="ph ph-check"></i></span>
+                        <span class="quiz-option-label">Wrist or carpal tunnel sensitivity</span>
+                    </button>
+                    <button class="quiz-option quiz-option-multi" data-q="limitations" data-v="knee">
+                        <span class="quiz-check"><i class="ph ph-check"></i></span>
+                        <span class="quiz-option-label">Knee pain or instability</span>
+                    </button>
+                    <button class="quiz-option quiz-option-multi" data-q="limitations" data-v="lowerBack">
+                        <span class="quiz-check"><i class="ph ph-check"></i></span>
+                        <span class="quiz-option-label">Lower back issues</span>
+                    </button>
+                    <button class="quiz-option quiz-option-multi" data-q="limitations" data-v="shoulder">
+                        <span class="quiz-check"><i class="ph ph-check"></i></span>
+                        <span class="quiz-option-label">Shoulder impingement</span>
+                    </button>
+                    <button class="quiz-option quiz-option-multi" data-q="limitations" data-v="hip">
+                        <span class="quiz-check"><i class="ph ph-check"></i></span>
+                        <span class="quiz-option-label">Hip pain</span>
+                    </button>
+                    <button class="quiz-option quiz-option-multi" data-q="limitations" data-v="postpartumCore">
+                        <span class="quiz-check"><i class="ph ph-check"></i></span>
+                        <span class="quiz-option-label">Postpartum core or pelvic floor</span>
+                    </button>
+                    <button class="quiz-option quiz-option-multi quiz-option-none" data-q="limitations" data-v="none">
+                        <span class="quiz-check"><i class="ph ph-check"></i></span>
+                        <span class="quiz-option-label">None — I am good to go</span>
+                    </button>
+                </div>
+                <button class="quiz-next-btn" id="limitationsNext">Continue</button>
+            </div>
+
+            <!-- Q7a: Trimester (Prenatal) -->
+            <div class="quiz-step" data-step="7a">
+                <div class="quiz-disclaimer">
+                    <i class="ph ph-warning"></i>
+                    Always consult your OB-GYN or midwife before starting or continuing exercise during pregnancy. Clulee provides general fitness guidance only.
+                </div>
+                <div class="quiz-question">How far along are you?</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="trimester" data-v="1">
+                        <span class="quiz-option-label">First trimester</span>
+                        <span class="quiz-option-sub">Weeks 1 to 12</span>
+                    </button>
+                    <button class="quiz-option" data-q="trimester" data-v="2">
+                        <span class="quiz-option-label">Second trimester</span>
+                        <span class="quiz-option-sub">Weeks 13 to 26</span>
+                    </button>
+                    <button class="quiz-option" data-q="trimester" data-v="3">
+                        <span class="quiz-option-label">Third trimester</span>
+                        <span class="quiz-option-sub">Weeks 27 to 40</span>
+                    </button>
+                </div>
+                <label class="quiz-disclaimer-confirm">
+                    <input type="checkbox" id="prenatalConfirm">
+                    I understand this is general fitness guidance and I will consult my healthcare provider
+                </label>
+            </div>
+
+            <!-- Q7b: Postpartum stage -->
+            <div class="quiz-step" data-step="7b">
+                <div class="quiz-disclaimer">
+                    <i class="ph ph-warning"></i>
+                    Recovery is different for everyone. Always listen to your body and check with your healthcare provider before returning to exercise.
+                </div>
+                <div class="quiz-question">How far postpartum are you?</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="postpartumStage" data-v="1">
+                        <span class="quiz-option-label">Less than 6 weeks</span>
+                        <span class="quiz-option-sub">Very gentle recovery only</span>
+                    </button>
+                    <button class="quiz-option" data-q="postpartumStage" data-v="2">
+                        <span class="quiz-option-label">6 weeks to 3 months</span>
+                        <span class="quiz-option-sub">Beginning gentle movement</span>
+                    </button>
+                    <button class="quiz-option" data-q="postpartumStage" data-v="3">
+                        <span class="quiz-option-label">3 to 6 months</span>
+                        <span class="quiz-option-sub">Gradually rebuilding strength</span>
+                    </button>
+                    <button class="quiz-option" data-q="postpartumStage" data-v="4">
+                        <span class="quiz-option-label">6 months or more</span>
+                        <span class="quiz-option-sub">Ready to build proper strength</span>
+                    </button>
+                </div>
+                <label class="quiz-disclaimer-confirm">
+                    <input type="checkbox" id="postpartumConfirm">
+                    I understand this is general fitness guidance and I will listen to my body
+                </label>
+            </div>
+
+            <!-- Q8: Energy level -->
+            <div class="quiz-step" data-step="8">
+                <div class="quiz-question">What is your energy like most days?</div>
+                <div class="quiz-subtitle">This sets your starting volume. You can always adjust later.</div>
+                <div class="quiz-options">
+                    <button class="quiz-option" data-q="energy" data-v="high">
+                        <span class="quiz-option-label">High</span>
+                        <span class="quiz-option-sub">I feel strong and recovered most days</span>
+                    </button>
+                    <button class="quiz-option" data-q="energy" data-v="moderate">
+                        <span class="quiz-option-label">Moderate</span>
+                        <span class="quiz-option-sub">Some days are harder than others</span>
+                    </button>
+                    <button class="quiz-option" data-q="energy" data-v="low">
+                        <span class="quiz-option-label">Low</span>
+                        <span class="quiz-option-sub">Fatigue is a real factor for me right now</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <!-- /quiz-steps -->
+
+        <!-- Back button -->
+        <button class="quiz-back-btn" id="quizBackBtn" style="display:none;">
+            <i class="ph ph-arrow-left"></i> Back
+        </button>
+
+    </div>
+</div>
+<!-- /quiz-overlay -->
+
 <script type="module" src="/src/main.js"></script>
 <script src="/js/theme.js" defer></script>
 <script src="/js/profile.js" defer></script>
 <script src="/js/customWorkouts.js" defer></script>
 <script src="/js/main.js" defer></script>
+<script src="/js/quiz.js" defer></script>
 
 <footer style="text-align:center;padding:1.5rem;font-size:0.75rem;color:#999;border-top:1px solid #eee;margin-top:2rem;">
     <a href="https://www.iubenda.com/privacy-policy/59601073" target="_blank" rel="noopener" style="color:#999;text-decoration:none;margin:0 8px;">Privacy Policy</a>

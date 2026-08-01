@@ -121,16 +121,21 @@
 
   // ── RESTORE STEPS HTML ───────────────────────────────────────────
   var stepsHTML = null;
+  // Only true once the steps markup has actually been swapped out for the
+  // "generating" spinner. Restoring when it is false would rebuild the live
+  // DOM for no reason and destroy any listener bound to a node inside it.
+  var stepsDirty = false;
   function restoreQuizSteps() {
     var stepsEl = document.getElementById('quizSteps');
     if (!stepsEl) return;
     if (!stepsHTML) {
       stepsHTML = stepsEl.innerHTML;
-    } else {
+    } else if (stepsDirty) {
       stepsEl.innerHTML = stepsHTML;
-      // Re-setup disclaimer locks
-      setupDisclaimerLocks();
+      stepsDirty = false;
     }
+    // Re-apply on every open: openQuiz() clears the inline styles that enforce them.
+    setupDisclaimerLocks();
   }
 
   // ── HANDLE SINGLE-SELECT ─────────────────────────────────────────
@@ -207,7 +212,10 @@
   function finishQuiz() {
     var steps = document.getElementById('quizSteps');
     var backBtn = document.getElementById('quizBackBtn');
-    if (steps) steps.innerHTML = '<div class="quiz-generating"><div class="quiz-generating-spinner"></div><div class="quiz-generating-text">Building your program...</div><div class="quiz-generating-sub">This only takes a moment</div></div>';
+    if (steps) {
+      steps.innerHTML = '<div class="quiz-generating"><div class="quiz-generating-spinner"></div><div class="quiz-generating-text">Building your program...</div><div class="quiz-generating-sub">This only takes a moment</div></div>';
+      stepsDirty = true;
+    }
     if (backBtn) backBtn.style.display = 'none';
 
     var fill = document.getElementById('quizProgressFill');
@@ -375,16 +383,18 @@
       var step = document.querySelector(stepSelector);
       var cb = document.getElementById(checkboxId);
       if (!step || !cb) return;
-      step.querySelectorAll('.quiz-option').forEach(function (btn) {
-        btn.style.opacity = '0.5';
-        btn.style.pointerEvents = 'none';
-      });
-      cb.addEventListener('change', function () {
+      function applyLock() {
         step.querySelectorAll('.quiz-option').forEach(function (btn) {
           btn.style.opacity = cb.checked ? '1' : '0.5';
           btn.style.pointerEvents = cb.checked ? 'auto' : 'none';
         });
-      });
+      }
+      applyLock();
+      // Guard against stacking a fresh listener every time the quiz is opened.
+      if (!cb.dataset.lockBound) {
+        cb.dataset.lockBound = '1';
+        cb.addEventListener('change', applyLock);
+      }
     }
     lockStep('[data-step="7a"]', 'prenatalConfirm');
     lockStep('[data-step="7b"]', 'postpartumConfirm');
@@ -399,8 +409,19 @@
     var stepsEl = document.getElementById('quizSteps');
     if (stepsEl) stepsHTML = stepsEl.innerHTML;
 
-    // Single/multi select
+    // Single/multi select, plus the limitations "Continue" button.
+    // All delegated from the overlay, which is never re-rendered — binding
+    // directly to a node inside #quizSteps would not survive an innerHTML restore.
     overlay.addEventListener('click', function (e) {
+      if (e.target.closest('#limitationsNext')) {
+        if (answers.limitations.length === 0) {
+          if (window.appMain) window.appMain.showToast('Please select at least one option');
+          return;
+        }
+        advanceQuiz('6');
+        return;
+      }
+
       var btn = e.target.closest('.quiz-option');
       if (!btn) return;
       if (btn.classList.contains('quiz-option-multi')) {
@@ -409,18 +430,6 @@
       }
       handleOptionClick(btn);
     });
-
-    // Limitations continue
-    var limitationsNext = document.getElementById('limitationsNext');
-    if (limitationsNext) {
-      limitationsNext.addEventListener('click', function () {
-        if (answers.limitations.length === 0) {
-          if (window.appMain) window.appMain.showToast('Please select at least one option');
-          return;
-        }
-        advanceQuiz('6');
-      });
-    }
 
     // Back button
     var backBtn = document.getElementById('quizBackBtn');
@@ -464,7 +473,10 @@
         if (overlay2) overlay2.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         var steps2 = document.getElementById('quizSteps');
-        if (steps2) steps2.innerHTML = '<div class="quiz-generating"><div class="quiz-generating-spinner"></div><div class="quiz-generating-text">Generating a new program...</div><div class="quiz-generating-sub">This only takes a moment</div></div>';
+        if (steps2) {
+          steps2.innerHTML = '<div class="quiz-generating"><div class="quiz-generating-spinner"></div><div class="quiz-generating-text">Generating a new program...</div><div class="quiz-generating-sub">This only takes a moment</div></div>';
+          stepsDirty = true;
+        }
         var fill = document.getElementById('quizProgressFill');
         if (fill) fill.style.width = '100%';
 

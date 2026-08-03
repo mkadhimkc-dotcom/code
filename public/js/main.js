@@ -17,6 +17,19 @@
     'D-Activity': 'cardio'
   };
 
+  // Calendar keys must be in the user's own timezone. toISOString() converts to
+  // UTC first, which shifts the date across midnight — an 8pm workout in UTC-5
+  // lands on tomorrow, and a calendar cell built from local midnight in UTC+10
+  // lands on yesterday. Both make workouts appear on the wrong day.
+  function toLocalDateKey(value) {
+    const date = value instanceof Date ? value : new Date(value);
+    if (isNaN(date.getTime())) return '';
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return year + '-' + month + '-' + day;
+  }
+
   async function loadWorkoutData() {
     try {
       const response = await fetch('/data/workouts.json');
@@ -231,7 +244,7 @@
     const workoutMap = {};
     logs.forEach(function(log) {
       const date = new Date(log.created_at);
-      const dateKey = date.toISOString().split('T')[0];
+      const dateKey = toLocalDateKey(date);
       if (!workoutMap[dateKey]) workoutMap[dateKey] = [];
       workoutMap[dateKey].push(log.workout_type);
     });
@@ -367,7 +380,7 @@
     const workoutMap = {};
     logs.forEach(function(log) {
       const date = new Date(log.created_at);
-      const dateKey = date.toISOString().split('T')[0];
+      const dateKey = toLocalDateKey(date);
       if (!workoutMap[dateKey]) workoutMap[dateKey] = [];
       workoutMap[dateKey].push(log.workout_type);
     });
@@ -396,7 +409,7 @@
 
     let current = new Date(firstDay);
     while (current <= lastDay) {
-      const dateKey = current.toISOString().split('T')[0];
+      const dateKey = toLocalDateKey(current);
       const workouts = workoutMap[dateKey] || [];
 
       const cell = document.createElement('div');
@@ -453,7 +466,7 @@
     });
 
     const dayWorkouts = workoutLogsCache.filter(function(log) {
-      return new Date(log.created_at).toISOString().split('T')[0] === dateKey;
+      return toLocalDateKey(log.created_at) === dateKey;
     });
 
     workoutsBody.innerHTML = '';
@@ -487,7 +500,9 @@
     }
 
     modal.classList.add('visible');
-    modal.addEventListener('click', function(e) { if (e.target === modal) closeCalendarModal(); });
+    // Assigned rather than added, so reopening the modal does not stack a new
+    // backdrop listener on every click of a calendar day.
+    modal.onclick = function(e) { if (e.target === modal) closeCalendarModal(); };
   }
 
   function closeCalendarModal() {
@@ -498,7 +513,7 @@
     let streak = 0;
     let current = new Date(today);
     while (true) {
-      const dateKey = current.toISOString().split('T')[0];
+      const dateKey = toLocalDateKey(current);
       if (workoutMap[dateKey] && workoutMap[dateKey].length > 0) {
         streak++;
         current.setDate(current.getDate() - 1);
@@ -521,6 +536,8 @@
     }, 3000);
   }
 
+  // Returns a Promise<boolean> AND invokes the optional onConfirm callback, so
+  // both `showConfirm(msg, cb)` and `await showConfirm(msg)` are supported.
   function showConfirm(message, onConfirm) {
     const existing = document.querySelector('.confirm-modal');
     if (existing) existing.remove();
@@ -542,12 +559,10 @@
     const confirmBtn = document.createElement('button');
     confirmBtn.textContent = 'Yes, do it!';
     confirmBtn.style.cssText = 'padding:10px 20px;background:var(--clr-primary);color:white;border:2px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;font-family:var(--font-main);';
-    confirmBtn.onclick = function() { modal.remove(); onConfirm(); };
 
     const cancelBtn = document.createElement('button');
     cancelBtn.textContent = 'Cancel';
     cancelBtn.style.cssText = 'padding:10px 20px;background:white;color:#1a1a1a;border:2px solid #1a1a1a;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #1a1a1a;font-family:var(--font-main);';
-    cancelBtn.onclick = function() { modal.remove(); };
 
     btnRow.appendChild(cancelBtn);
     btnRow.appendChild(confirmBtn);
@@ -555,6 +570,18 @@
     box.appendChild(btnRow);
     modal.appendChild(box);
     document.body.appendChild(modal);
+
+    return new Promise(function (resolve) {
+      confirmBtn.onclick = function () {
+        modal.remove();
+        if (typeof onConfirm === 'function') onConfirm();
+        resolve(true);
+      };
+      cancelBtn.onclick = function () {
+        modal.remove();
+        resolve(false);
+      };
+    });
   }
 
   // ── LOAD WORKOUTS TAB ────────────────────────────────────────────

@@ -102,6 +102,9 @@
       showProfileDisplay(profile, profileForm, profileDisplay, profileGreeting, weekSchedule);
       await window.appMain.restoreCheckboxStates(dbProfile.id);
       await window.appMain.setupCalendar();
+      // Stats were previously only refreshed after logging a workout, so the
+      // dashboard sat empty on every page load.
+      await window.appMain.updateDashboardStats();
     } else {
       showForm(null, profileForm, profileDisplay);
       await window.appMain.setupCalendar();
@@ -138,6 +141,7 @@
         showProfileDisplay({ name, startDate: date }, profileForm, profileDisplay, profileGreeting, weekSchedule);
         await window.appMain.restoreCheckboxStates(saved.id);
         await window.appMain.setupCalendar();
+        await window.appMain.updateDashboardStats();
         window.appMain.showToast(`Profile saved! Welcome ${name} 💖`);
       });
     }
@@ -165,13 +169,14 @@
 
         try {
           const profileId = localStorage.getItem('profile_id');
-          const { supabase } = window.supabaseHelper;
+          // supabaseHelper exposes the client as `client`, not `supabase`.
+          const client = window.supabaseHelper.client;
 
           if (profileId) {
-            await supabase.from('workout_logs').delete().eq('profile_id', profileId);
-            await supabase.from('checkbox_states').delete().eq('profile_id', profileId);
-            await supabase.from('user_workouts').delete().eq('profile_id', profileId);
-            await supabase.from('profiles').delete().eq('id', profileId);
+            await client.from('workout_logs').delete().eq('profile_id', profileId);
+            await client.from('checkbox_states').delete().eq('profile_id', profileId);
+            await client.from('user_workouts').delete().eq('profile_id', profileId);
+            await client.from('profiles').delete().eq('id', profileId);
           }
 
           await window.supabaseHelper.signOut();

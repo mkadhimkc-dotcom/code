@@ -49,24 +49,25 @@
       if (isDeload) row.classList.add('deload-week');
 
       const badge = document.createElement('span');
-        badge.className = 'week-badge';
-        badge.textContent = weekEmojis[w] + (isCurrentWeek ? ' ← Now' : '');
+      badge.className = 'week-badge';
+      badge.textContent = weekEmojis[w] + (isCurrentWeek ? ' ← Now' : '');
 
-        const info = document.createElement('div');
+      const info = document.createElement('div');
 
-        const dates = document.createElement('div');
-        dates.className = 'week-dates';
-        dates.textContent = formatDate(weekStart) + ' – ' + formatDate(weekEnd);
+      const dates = document.createElement('div');
+      dates.className = 'week-dates';
+      dates.textContent = formatDate(weekStart) + ' – ' + formatDate(weekEnd);
 
-        const label = document.createElement('div');
-        label.className = 'week-label';
-        label.textContent = weekTypes[w];
+      const label = document.createElement('div');
+      label.className = 'week-label';
+      label.textContent = weekTypes[w];
 
-        info.appendChild(dates);
-        info.appendChild(label);
-        row.appendChild(badge);
-		row.appendChild(info);
-        container.appendChild(row);    }
+      info.appendChild(dates);
+      info.appendChild(label);
+      row.appendChild(badge);
+      row.appendChild(info);
+      container.appendChild(row);
+    }
   }
 
   function formatDate(date) {
@@ -81,26 +82,30 @@
     const profileGreeting = document.getElementById('profileGreeting');
     const weekSchedule    = document.getElementById('weekSchedule');
 
-// ── CHECK AUTH SESSION ──
-const session = await window.supabaseHelper.getSession();
+    // ── CHECK AUTH SESSION ──
+    const session = await window.supabaseHelper.getSession();
 
-if (!session) {
-  window.location.href = '/signin.html';
-  return;
-}
+    if (!session) {
+      window.location.href = '/signin.html';
+      return;
+    }
+
     // ── AUTO-LOAD PROFILE BY AUTH ID ──
     const dbProfile = await window.supabaseHelper.loadProfileByAuthId();
 
     if (dbProfile) {
       const profile = { name: dbProfile.username, startDate: dbProfile.start_date };
+	  if (window.themeManager) window.themeManager.applyFromProfile(dbProfile.theme);
       localStorage.setItem('profile_id', dbProfile.id);
       localStorage.setItem('profile_name', dbProfile.username);
       localStorage.setItem('profile_startDate', dbProfile.start_date);
       showProfileDisplay(profile, profileForm, profileDisplay, profileGreeting, weekSchedule);
       await window.appMain.restoreCheckboxStates(dbProfile.id);
       await window.appMain.setupCalendar();
+      // Stats were previously only refreshed after logging a workout, so the
+      // dashboard sat empty on every page load.
+      await window.appMain.updateDashboardStats();
     } else {
-      // Logged in but no profile yet — show form
       showForm(null, profileForm, profileDisplay);
       await window.appMain.setupCalendar();
     }
@@ -111,7 +116,7 @@ if (!session) {
         const name = document.getElementById('userName').value.trim();
         const date = document.getElementById('startDate').value;
 
-		if (!name) { window.appMain.showToast('Please enter your name, cutie! 🎀'); return; }
+        if (!name) { window.appMain.showToast('Please enter your name, cutie! 🎀'); return; }
         if (!date) { window.appMain.showToast('Please pick a start date! 📅'); return; }
 
         saveProfileBtn.textContent = 'Saving… 💾';
@@ -120,7 +125,7 @@ if (!session) {
         const saved = await window.supabaseHelper.saveProfile({ name, startDate: date });
 
         if (!saved) {
-		window.appMain.showToast('Could not save your profile. Please try again! 🌸');
+          window.appMain.showToast('Could not save your profile. Please try again! 🌸');
           saveProfileBtn.textContent = '💾 Save My Profile';
           saveProfileBtn.disabled = false;
           return;
@@ -136,6 +141,7 @@ if (!session) {
         showProfileDisplay({ name, startDate: date }, profileForm, profileDisplay, profileGreeting, weekSchedule);
         await window.appMain.restoreCheckboxStates(saved.id);
         await window.appMain.setupCalendar();
+        await window.appMain.updateDashboardStats();
         window.appMain.showToast(`Profile saved! Welcome ${name} 💖`);
       });
     }
@@ -148,18 +154,56 @@ if (!session) {
         showForm({ name, startDate }, profileForm, profileDisplay);
       });
     }
+
+    // ── DELETE ACCOUNT HANDLER ──
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    if (deleteAccountBtn) {
+      deleteAccountBtn.addEventListener('click', async () => {
+        const confirmed = await window.appMain.showConfirm(
+          'Delete your account? This will permanently erase all your workout data and cannot be undone.'
+        );
+        if (!confirmed) return;
+
+        deleteAccountBtn.textContent = 'Deleting…';
+        deleteAccountBtn.disabled = true;
+
+        try {
+          const profileId = localStorage.getItem('profile_id');
+          // supabaseHelper exposes the client as `client`, not `supabase`.
+          const client = window.supabaseHelper.client;
+
+          if (profileId) {
+            await client.from('workout_logs').delete().eq('profile_id', profileId);
+            await client.from('checkbox_states').delete().eq('profile_id', profileId);
+            await client.from('user_workouts').delete().eq('profile_id', profileId);
+            await client.from('profiles').delete().eq('id', profileId);
+          }
+
+          await window.supabaseHelper.signOut();
+          localStorage.clear();
+          window.location.href = '/signin.html?deleted=1';
+
+        } catch (err) {
+          console.error('Delete error:', err);
+          window.appMain.showToast('Could not delete account. Please email mkadhimkc@gmail.com 💌');
+          deleteAccountBtn.textContent = '🗑️ Delete Account';
+          deleteAccountBtn.disabled = false;
+        }
+      });
+    }
   }
 
   // Initialize on DOM ready
-async function waitForSupabase() {
-  while (!window.supabaseHelper) {
-    await new Promise(resolve => setTimeout(resolve, 10));
+  async function waitForSupabase() {
+    while (!window.supabaseHelper) {
+      await new Promise(resolve => setTimeout(resolve, 10));
+    }
   }
-}
 
-document.addEventListener('DOMContentLoaded', async () => {
-  await waitForSupabase();
-  setupProfile();
-});
+  document.addEventListener('DOMContentLoaded', async () => {
+    await waitForSupabase();
+    setupProfile();
+  });
+
   window.profileManager = { setupProfile };
 })();

@@ -1,85 +1,67 @@
 /*
- * theme.js — Theme Toggle System
+ * theme.js — Clulee Theme System
  * ─────────────────────────────────────────────────────────────────
- * Switches between Classic Sanrio and Modern 2026 themes.
+ * Applies Her/Him theme from profile (Supabase) or localStorage.
+ * Toggle button switches between light/dark within current theme.
  * ─────────────────────────────────────────────────────────────────
  */
-
 (function() {
-  const THEME_KEY = 'claire_workout_theme';
-  
-  // ── INITIALIZE THEME ────────────────────────────────────────────
-  function initTheme() {
-    const savedTheme = localStorage.getItem(THEME_KEY) || 'classic';
-    
-    if (savedTheme === 'modern') {
-      document.body.classList.add('modern-theme');
-      updateIcon('🎀');
-    } else {
-      updateIcon('✨');
-    }
+  const THEME_KEY = 'clulee_theme';
+
+  // ── APPLY THEME CLASS TO BODY ──────────────────────────────────
+  function applyTheme(theme) {
+    document.body.classList.remove('theme-her', 'theme-him');
+    document.body.classList.add(theme === 'him' ? 'theme-him' : 'theme-her');
+    localStorage.setItem(THEME_KEY, theme);
+    updateIcon(theme);
   }
-  
-  // ── TOGGLE THEME ────────────────────────────────────────────────
+
+  // ── UPDATE PHOSPHOR ICON ───────────────────────────────────────
+  function updateIcon(theme) {
+    const icon = document.getElementById('theme-icon');
+    if (!icon) return;
+    icon.className = theme === 'him' ? 'ph ph-moon' : 'ph ph-sun';
+  }
+
+  // ── TOGGLE BETWEEN HER AND HIM ─────────────────────────────────
   function toggleTheme() {
-    const isModern = document.body.classList.toggle('modern-theme');
-    
-    if (isModern) {
-      localStorage.setItem(THEME_KEY, 'modern');
-      updateIcon('🎀');
-      showThemeToast('Switched to Modern Theme! 💫');
-    } else {
-      localStorage.setItem(THEME_KEY, 'classic');
-      updateIcon('✨');
-      showThemeToast('Switched to Classic Theme! 🎀');
-    }
-  }
-  
-  // ── UPDATE ICON ─────────────────────────────────────────────────
-  function updateIcon(emoji) {
-    const icon = document.querySelector('.theme-icon');
-    if (icon) {
-      icon.textContent = emoji;
-    }
-  }
-  
-  // ── SHOW TOAST ──────────────────────────────────────────────────
-  function showThemeToast(message) {
-    // Use existing toast system if available
+    const current = localStorage.getItem(THEME_KEY) || 'her';
+    const next = current === 'her' ? 'him' : 'her';
+    applyTheme(next);
+
     if (window.appMain && window.appMain.showToast) {
-      window.appMain.showToast(message);
-    } else {
-      // Fallback toast
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      
-      setTimeout(() => toast.classList.add('visible'), 10);
-      setTimeout(() => {
-        toast.classList.remove('visible');
-        setTimeout(() => toast.remove(), 300);
-      }, 2000);
+      window.appMain.showToast(next === 'him' ? 'Switched to Him theme' : 'Switched to Her theme');
     }
   }
-  
-  // ── SETUP EVENT LISTENER ────────────────────────────────────────
+
+  // ── INIT: apply from localStorage immediately (no flash) ───────
+  function initTheme() {
+    const saved = localStorage.getItem(THEME_KEY) || 'her';
+    applyTheme(saved);
+  }
+
+  // ── SETUP TOGGLE BUTTON ────────────────────────────────────────
   function setupToggle() {
-    const toggleBtn = document.getElementById('theme-toggle');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', toggleTheme);
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.addEventListener('click', toggleTheme);
+  }
+
+  // ── APPLY THEME FROM SUPABASE PROFILE ─────────────────────────
+  // Called by profile.js after profile loads
+  function applyProfileTheme(theme) {
+    if (theme && (theme === 'her' || theme === 'him')) {
+      applyTheme(theme);
     }
   }
-  
-  // ── INITIALIZE ON DOM READY ─────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
-    setupToggle();
-  });
-  
-  // ── EXPOSE ──────────────────────────────────────────────────────
-  window.themeToggle = {
-    toggle: toggleTheme,
-    init: initTheme
+
+  // Apply immediately before DOM ready to prevent flash
+  initTheme();
+
+  document.addEventListener('DOMContentLoaded', setupToggle);
+
+  window.themeManager = {
+    apply: applyTheme,
+    applyFromProfile: applyProfileTheme,
+    toggle: toggleTheme
   };
 })();

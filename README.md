@@ -17,10 +17,19 @@ A simple, mobile-friendly workout tracking web app designed for glutes, back, co
 The app fetches workout data from `data/workouts.json`, so run it from a local static server:
 
 ```sh
-node scripts/dev-server.js
+npm run serve
 ```
 
 Then open `http://localhost:8000`.
+
+## Tests
+
+End-to-end checks drive the real app in headless Chromium against a stubbed
+backend, so no Supabase credentials or network access are required:
+
+```sh
+npm test
+```
 
 ....
  
